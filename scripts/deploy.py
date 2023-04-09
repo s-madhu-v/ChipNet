@@ -25,10 +25,23 @@ def main():
     print(f"Account balance: {web3.fromWei(myAccount.balance(), 'ether')} ETH")
     # post an advertisement
     txn = chipNet.postAd(
-        "My Ad", "I am selling 1000 chips for 1 ETH", 200, {"from": sellerAccount}
+        "My Ad",
+        "I am selling 1000 chips for 1 ETH",
+        2 * (10**18),
+        {"from": sellerAccount},
     )
     txn.wait(1)
     # print the number of ads
     print(f"Number of ads: {chipNet.getAdsCount()}")
     # print the latest ad
     print(f"Latest ad: {chipNet.getAd(chipNet.getAdsCount() - 1)}")
+    # print the balance of both buyer and seller
+    print(f"Buyer balance: {web3.fromWei(buyerAccount.balance(), 'ether')} ETH")
+    print(f"Seller balance: {web3.fromWei(sellerAccount.balance(), 'ether')} ETH")
+    # buy the latest ad from buyerAccount and print the balance of both buyer and seller
+    txn = chipNet.buy(
+        chipNet.getAdsCount() - 1, {"from": buyerAccount, "value": 2 * (10**18)}
+    )
+    txn.wait(1)
+    print(f"Buyer balance: {web3.fromWei(buyerAccount.balance(), 'ether')} ETH")
+    print(f"Seller balance: {web3.fromWei(sellerAccount.balance(), 'ether')} ETH")
