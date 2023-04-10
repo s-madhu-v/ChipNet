@@ -4,42 +4,43 @@ pragma solidity ^0.8.0;
 contract ChipNet {
     struct Advertisement {
         string title;
-        string description;
         uint256 price;
         address payable seller;
         bool active;
     }
 
+    // A struct for purchases of computing power
+    struct Purchase {
+        uint256 adIndex;
+        address payable buyer;
+        // string tcpAddress;
+        // uint256 port;
+    }
+
     // An array of Advertisement structs
     Advertisement[] public ads;
+
+    // An array of Purchase structs
+    Purchase[] public purchases;
 
     // A function that returns the number of ads
     function getAdsCount() public view returns (uint256) {
         return ads.length;
     }
 
-    // Get an ad at an index
+    // A function that returns an ad at an index
     function getAd(
         uint256 _index
-    )
-        public
-        view
-        returns (string memory, string memory, uint256, address, bool)
-    {
+    ) public view returns (string memory, uint256, address, bool) {
         Advertisement memory ad = ads[_index];
-        return (ad.title, ad.description, ad.price, ad.seller, ad.active);
+        return (ad.title, ad.price, ad.seller, ad.active);
     }
 
-    // A function that takes a title, description, and price to post an Advertisement
-    function postAd(
-        string memory _title,
-        string memory _description,
-        uint256 _price
-    ) public {
-        // create an Advertisement struct
+    // A function that takes a title and price to post an Advertisement
+    function postAd(string memory _title, uint256 _price) public {
+        // create a new Advertisement struct
         Advertisement memory ad = Advertisement({
             title: _title,
-            description: _description,
             price: _price,
             seller: payable(msg.sender),
             active: true
@@ -50,28 +51,12 @@ contract ChipNet {
     }
 
     // An event that will be emitted when an ad is purchased
-    event AdPurchased(
-        uint256 index,
-        address seller,
-        address buyer,
-        uint256 price
-    );
-
-    // A function to emit an AdPurchased event while also enforcing some rules
-    function onAdPurchased(
-        uint256 _index,
-        address _seller,
-        address _buyer,
-        uint256 _price
-    ) internal {
-        // emit the AdPurchased event
-        emit AdPurchased(_index, _seller, _buyer, _price);
-    }
+    event AdPurchased(uint256 adIndex, uint256 purchaseIndex);
 
     // A function that takes an Advertisement and buyer address and transfers money to seller
-    function buy(uint256 _index) public payable {
+    function purchaseAd(uint256 _adIndex) public payable {
         // get the Advertisement from the ads array
-        Advertisement storage ad = ads[_index];
+        Advertisement memory ad = ads[_adIndex];
 
         // require that the Advertisement is active
         require(ad.active == true, "Advertisement is not active");
@@ -80,15 +65,23 @@ contract ChipNet {
         require(msg.value >= ad.price, "Not enough money");
 
         // require that the buyer is not the seller
-        require(msg.sender != ad.seller, "You cannot buy your own ad");
+        require(msg.sender != ad.seller, "Buyer cannot be seller");
 
-        // transfer money to the seller
+        // transfer money to seller
         ad.seller.transfer(msg.value);
 
-        // deactivate the Advertisement
-        ad.active = false;
+        // create a new Purchase struct
+        Purchase memory purchase = Purchase({
+            adIndex: _adIndex,
+            buyer: payable(msg.sender)
+            // tcpAddress: _tcpAddress,
+            // port: _port
+        });
+
+        // push the Purchase to the purchases array
+        purchases.push(purchase);
 
         // emit the AdPurchased event
-        emit AdPurchased(_index, ad.seller, msg.sender, ad.price);
+        emit AdPurchased(_adIndex, purchases.length - 1);
     }
 }

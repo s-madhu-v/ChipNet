@@ -4,7 +4,8 @@ import os
 
 
 def main():
-    myAccount = accounts[0]
+    myAddress = accounts[0]
+    myAccount = accounts.at(myAddress)
     # deploy the contract to the network
     chipNet = ChipNet.deploy({"from": myAccount})
     # print the address of the contract
