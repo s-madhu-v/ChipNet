@@ -1,10 +1,7 @@
 from urllib.parse import urlparse
 import shutil
-import docker
 import git
-import os
 
-# client = docker.from_env()
 
 class dImage:
     def __init__(self, client, repo, imgName):
@@ -14,7 +11,7 @@ class dImage:
         self.imgName = imgName
         # path where all cloned github repos are stored
         self.clonesPath = "./cloned"
-        self.repoName = urlparse(repo).path.split('/')[-1].split('.')[0]
+        self.repoName = urlparse(repo).path.split("/")[-1].split(".")[0]
         self.localPath = f"{self.clonesPath}/{self.repoName}"
         self.dfilePath = "./Dockerfile"
         self.buildLogs = ""
@@ -33,7 +30,12 @@ class dImage:
 
     def buildImage(self, args):
         self.cloneRepo()
-        image, logs = self.client.images.build(path=self.localPath, dockerfile=self.dfilePath, tag=self.imgName, buildargs=args)
+        image, logs = self.client.images.build(
+            path=self.localPath,
+            dockerfile=self.dfilePath,
+            tag=self.imgName,
+            buildargs=args,
+        )
         self.buildLogs = logs
         self.deleteClone()
         print(f"Image is Built from {self.repo} with name: {self.imgName}")
@@ -41,4 +43,4 @@ class dImage:
 
     def printLogs(self):
         for line in self.buildLogs:
-            print(line.get('stream', '').strip())
+            print(line.get("stream", "").strip())
