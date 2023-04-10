@@ -49,6 +49,25 @@ contract ChipNet {
         ads.push(ad);
     }
 
+    // An event that will be emitted when an ad is purchased
+    event AdPurchased(
+        uint256 index,
+        address seller,
+        address buyer,
+        uint256 price
+    );
+
+    // A function to emit an AdPurchased event while also enforcing some rules
+    function onAdPurchased(
+        uint256 _index,
+        address _seller,
+        address _buyer,
+        uint256 _price
+    ) internal {
+        // emit the AdPurchased event
+        emit AdPurchased(_index, _seller, _buyer, _price);
+    }
+
     // A function that takes an Advertisement and buyer address and transfers money to seller
     function buy(uint256 _index) public payable {
         // get the Advertisement from the ads array
@@ -68,5 +87,8 @@ contract ChipNet {
 
         // deactivate the Advertisement
         ad.active = false;
+
+        // emit the AdPurchased event
+        emit AdPurchased(_index, ad.seller, msg.sender, ad.price);
     }
 }
