@@ -1,20 +1,16 @@
 from brownie import accounts, ChipNet, web3
+from random import randint
 import time
 import os
 
 
-def myFunc():
-    print("My Func")
-
-
 # write a function to post an ad
-def postAd(name):
+def postAd(name, priceInEth, sellerAccount=accounts[randint(0, 9)]):
     contractAddress = os.getenv("CONTRACT_ADDRESS")
     chipNet = ChipNet.at(contractAddress)
-    sellerAccount = accounts[2]
     txn = chipNet.postAd(
         name,
-        2 * (10**18),
+        priceInEth * (10**18),
         {"from": sellerAccount},
     )
     txn.wait(1)
