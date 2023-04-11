@@ -29,11 +29,8 @@ contract ChipNet {
     }
 
     // A function that returns an ad at an index
-    function getAd(
-        uint256 _index
-    ) public view returns (string memory, uint256, address, bool) {
-        Advertisement memory ad = ads[_index];
-        return (ad.title, ad.price, ad.seller, ad.active);
+    function getAd(uint256 _index) public view returns (Advertisement memory) {
+        return ads[_index];
     }
 
     // A function that takes a title and price to post an Advertisement and returns it index

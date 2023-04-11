@@ -3,19 +3,21 @@ import time
 import os
 
 
+def myFunc():
+    print("My Func")
+
+
 # write a function to post an ad
-def postAd():
+def postAd(name):
     contractAddress = os.getenv("CONTRACT_ADDRESS")
     chipNet = ChipNet.at(contractAddress)
     sellerAccount = accounts[2]
     txn = chipNet.postAd(
-        "My Ad",
+        name,
         2 * (10**18),
         {"from": sellerAccount},
     )
     txn.wait(1)
-    print(f"Number of ads: {chipNet.getAdsCount()}")
-    print(f"Latest ad: {chipNet.getAd(chipNet.getAdsCount() - 1)}")
 
 
 # write a function to buy an ad
