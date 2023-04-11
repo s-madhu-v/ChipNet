@@ -6,11 +6,5 @@ import os
 def main():
     myAddress = accounts[0]
     myAccount = accounts.at(myAddress)
-    # deploy the contract to the network
     chipNet = ChipNet.deploy({"from": myAccount})
-    # print the address of the contract
-    print(f"Contract address: {chipNet.address}")
-    # print the balance of the contract
-    print(f"Contract balance: {web3.fromWei(chipNet.balance(), 'ether')} ETH")
-    # print the balance of the account that deployed the contract
-    print(f"Account balance: {web3.fromWei(myAccount.balance(), 'ether')} ETH")
+    return chipNet.address

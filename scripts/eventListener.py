@@ -3,11 +3,12 @@ import time
 import os
 import git
 from scripts.backend import run
+from scripts.backend import fakeRun
 
 
 def handle_ad_purchase(event):
     print(f"\n\n\n\nEvent triggered with arguments: {event.args}\n\n\n\n")
-    run()
+    fakeRun()
 
 
 contractAddr = os.getenv("CONTRACT_ADDRESS")

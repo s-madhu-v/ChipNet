@@ -36,8 +36,11 @@ contract ChipNet {
         return (ad.title, ad.price, ad.seller, ad.active);
     }
 
-    // A function that takes a title and price to post an Advertisement
-    function postAd(string memory _title, uint256 _price) public {
+    // A function that takes a title and price to post an Advertisement and returns it index
+    function postAd(
+        string memory _title,
+        uint256 _price
+    ) public returns (uint256) {
         // create a new Advertisement struct
         Advertisement memory ad = Advertisement({
             title: _title,
@@ -48,13 +51,15 @@ contract ChipNet {
 
         // push the Advertisement to the ads array
         ads.push(ad);
+        // return the index of the ad
+        return ads.length - 1;
     }
 
     // An event that will be emitted when an ad is purchased
     event AdPurchased(uint256 adIndex, uint256 purchaseIndex);
 
-    // A function that takes an Advertisement and buyer address and transfers money to seller
-    function purchaseAd(uint256 _adIndex) public payable {
+    // A function that takes an Advertisement and buyer address and transfers money to seller and returns purchase index
+    function purchaseAd(uint256 _adIndex) public payable returns (uint256) {
         // get the Advertisement from the ads array
         Advertisement memory ad = ads[_adIndex];
 
@@ -83,5 +88,7 @@ contract ChipNet {
 
         // emit the AdPurchased event
         emit AdPurchased(_adIndex, purchases.length - 1);
+        // return the index of the purchase
+        return purchases.length - 1;
     }
 }
