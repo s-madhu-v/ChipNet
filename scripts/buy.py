@@ -8,14 +8,13 @@ def myFunc():
 
 
 # write a function to post an ad
-def postAd(name):
+def postAd(name, priceInETH, account):
     contractAddress = os.getenv("CONTRACT_ADDRESS")
     chipNet = ChipNet.at(contractAddress)
-    sellerAccount = accounts[2]
     txn = chipNet.postAd(
         name,
-        2 * (10**18),
-        {"from": sellerAccount},
+        priceInETH * (10**18),
+        {"from": account},
     )
     txn.wait(1)
 

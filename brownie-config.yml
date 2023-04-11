@@ -1,0 +1,12 @@
+dotenv: .env
+dependencies:
+  - OpenZeppelin/openzeppelin-contracts@4.8.2
+compiler:
+  solc:
+    remappings:
+      - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.8.2'
+networks:
+  ganache-gui:
+    host: 127.0.0.1
+    port: 7545
+    chainid: 5777
