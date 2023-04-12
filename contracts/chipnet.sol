@@ -9,19 +9,11 @@ contract ChipNet {
         bool active;
     }
 
-    // A struct for purchases of computing power
-    struct Purchase {
-        uint256 adIndex;
-        address payable buyer;
-        // string tcpAddress;
-        // uint256 port;
-    }
-
     // An array of Advertisement structs
     Advertisement[] public ads;
 
-    // An array of Purchase structs
-    Purchase[] public purchases;
+    // A mapping between the buyer address and the ad index called purchases
+    mapping(address => uint256) public purchases;
 
     // A function that returns the number of ads
     function getAdsCount() public view returns (uint256) {
@@ -53,7 +45,7 @@ contract ChipNet {
     }
 
     // An event that will be emitted when an ad is purchased
-    event AdPurchased(uint256 adIndex, uint256 purchaseIndex);
+    event AdPurchased(uint256 adIndex);
 
     // A function that takes an Advertisement and buyer address and transfers money to seller and returns purchase index
     function purchaseAd(uint256 _adIndex) public payable returns (uint256) {
@@ -72,20 +64,15 @@ contract ChipNet {
         // transfer money to seller
         ad.seller.transfer(msg.value);
 
-        // create a new Purchase struct
-        Purchase memory purchase = Purchase({
-            adIndex: _adIndex,
-            buyer: payable(msg.sender)
-            // tcpAddress: _tcpAddress,
-            // port: _port
-        });
+        // set the Advertisement to inactive
+        ads[_adIndex].active = false;
 
-        // push the Purchase to the purchases array
-        purchases.push(purchase);
+        // set the buyer address to the purchases mapping
+        purchases[msg.sender] = _adIndex;
 
         // emit the AdPurchased event
-        emit AdPurchased(_adIndex, purchases.length - 1);
+        emit AdPurchased(_adIndex);
         // return the index of the purchase
-        return purchases.length - 1;
+        return _adIndex;
     }
 }
