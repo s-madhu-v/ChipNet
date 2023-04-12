@@ -14,10 +14,7 @@ def main():
 def getAds():
     contractAddress = os.getenv("CONTRACT_ADDRESS")
     chipNet = ChipNet.at(contractAddress)
-    ads = []
-    for i in range(chipNet.getAdsCount()):
-        ads.append(chipNet.getAd(i))
-    return ads
+    return chipNet.getAllAds()
 
 
 def getAd(index):

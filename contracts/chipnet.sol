@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 contract ChipNet {
     struct Advertisement {
+        uint256 index;
         string title;
         uint256 price;
         address payable seller;
@@ -12,17 +13,17 @@ contract ChipNet {
     // An array of Advertisement structs
     Advertisement[] public ads;
 
-    // A mapping between the buyer address and the ad index called purchases
-    mapping(address => uint256) public purchases;
+    // A mapping between the buyer address and  called purchases
+    mapping(address => uint256[]) public purchases;
+
+    // A function that returns the ads array
+    function getAllAds() public view returns (Advertisement[] memory) {
+        return ads;
+    }
 
     // A function that returns the number of ads
     function getAdsCount() public view returns (uint256) {
         return ads.length;
-    }
-
-    // A function that returns an ad at an index
-    function getAd(uint256 _index) public view returns (Advertisement memory) {
-        return ads[_index];
     }
 
     // A function that takes a title and price to post an Advertisement and returns it index
@@ -33,6 +34,7 @@ contract ChipNet {
         // create a new Advertisement struct
         Advertisement memory ad = Advertisement({
             title: _title,
+            index: ads.length,
             price: _price,
             seller: payable(msg.sender),
             active: true
@@ -68,7 +70,7 @@ contract ChipNet {
         ads[_adIndex].active = false;
 
         // set the buyer address to the purchases mapping
-        purchases[msg.sender] = _adIndex;
+        purchases[msg.sender].push(_adIndex);
 
         // emit the AdPurchased event
         emit AdPurchased(_adIndex);

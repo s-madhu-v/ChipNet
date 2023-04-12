@@ -3,39 +3,28 @@ import time
 import os
 
 
-def myFunc():
-    print("My Func")
-
-
 # write a function to post an ad
-def postAd(name, priceInETH, account):
-    contractAddress = os.getenv("CONTRACT_ADDRESS")
+def postAd(title, priceInETH, account, contractAddress=os.getenv("CONTRACT_ADDRESS")):
     chipNet = ChipNet.at(contractAddress)
     txn = chipNet.postAd(
-        name,
-        priceInETH * (10**18),
+        title,
+        int(priceInETH) * (10**18),
         {"from": account},
     )
     txn.wait(1)
 
 
 # write a function to buy an ad
-def buyAd():
+def buyAd(adIndex, buyerAccount):
     contractAddress = os.getenv("CONTRACT_ADDRESS")
     chipNet = ChipNet.at(contractAddress)
-    buyerAccount = accounts[1]
-    sellerAccount = accounts[2]
-    txn = chipNet.purchaseAd(
-        chipNet.getAdsCount() - 1, {"from": buyerAccount, "value": 2 * (10**18)}
-    )
+    ad = chipNet.ads(adIndex)
+    print(chipNet.getAllAds())
+    print(f"\n\n\nBuying the ad: {ad}, with adIndex: {adIndex}\n\n\n")
+    txn = chipNet.purchaseAd(adIndex, {"from": buyerAccount, "value": ad["price"]})
     txn.wait(1)
-    print(f"Buyer balance: {web3.fromWei(buyerAccount.balance(), 'ether')} ETH")
-    print(f"Seller balance: {web3.fromWei(sellerAccount.balance(), 'ether')} ETH")
 
 
 def main():
-    print("Entered Main")
     postAd()
-    print("Posted Ad")
     buyAd()
-    print("Bought Ad")
