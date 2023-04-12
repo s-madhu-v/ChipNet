@@ -16,6 +16,11 @@ contract ChipNet {
     // A mapping between the buyer address and  called purchases
     mapping(address => uint256[]) public purchases;
 
+    // A function that returns the purchases array of a the address that is passed to it
+    function getPurchases(address _buyer) public view returns (uint256[] memory) {
+        return purchases[_buyer];
+    }
+
     // A function that returns the ads array
     function getAllAds() public view returns (Advertisement[] memory) {
         return ads;
