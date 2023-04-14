@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from scripts.data import Ad, myAddress, contractData
 from scripts.contract.setters import purchaseAd
+import scripts.backend as backend
 
 adFramebackground = "green"
 
@@ -28,6 +29,7 @@ class adFrame(ttk.Frame):
         purchaseAd(self.ad.index, myAddress)
         self.buyButton["text"] = "Bought!!!"
         contractData.updateAll()
+        backend.run()
 
     def createWidgets(self):
         # create the widgets

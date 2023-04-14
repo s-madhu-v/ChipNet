@@ -3,19 +3,21 @@
 TODO:
 
 - Smart Contract
-    - Advertising
+    - ~~Advertising~~
     - Buying
+    - Service
     - Storing sensitive data
     - Quality of Service
     - Deployment to a testnet
-    - Setup Event Listener
+    - ~~Setup Event Listener~~
     - Penalties & QoS
+    - ERC20 Token
 - Docker
-    - Create a base Alpine Linux image
-    - Install SSH
-    - Configure SSH
-    - Install ngrok
-    - Setup ngrok
+    - ~~Create a base Alpine Linux image~~
+    - ~~Automate Installing SSH~~
+    - ~~Configure SSH service to expose itself~~
+    - ~~Automate Installing ngrok~~
+    - ~~Setup ngrok to expose SSH endpoint~~
     - Automatically Send SSH Access Link securely
     - Automatically Send Password securely
     - Setup SSH Keys
@@ -23,8 +25,8 @@ TODO:
         - Network
         - System
     - Enforce limits
-        - cores
-        - memory
+        - ~~cores~~
+        - ~~memory~~
         - storage
     - Hadoop services
 - GUI dApp
