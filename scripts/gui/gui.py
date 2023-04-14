@@ -7,11 +7,11 @@ from scripts.contract.getters import getAllAds
 from scripts.gui.populate import populateAds
 
 
-if len(getAllAds()) == 0:
+if len(getAllAds()) == 1:
     print("Populating Ads")
     populateAds()
 
-print("Initializeing root")
+print("Initializing root")
 
 # Create the root window
 root = tk.Tk()

@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from scripts.data import Ad, myAddress, contractData
-from scripts.contract.setters import purchaseAd
-import scripts.backend as backend
+from scripts.contract.getters import getBidsOf
+from scripts.service.run import fakeRun
 
 adFramebackground = "green"
 
@@ -26,10 +26,9 @@ class adFrame(ttk.Frame):
 
     def buyThisAd(self):
         print("Buying Ad")
-        purchaseAd(self.ad.index, myAddress)
         self.buyButton["text"] = "Bought!!!"
         contractData.updateAll()
-        backend.run()
+        fakeRun()
 
     def createWidgets(self):
         # create the widgets

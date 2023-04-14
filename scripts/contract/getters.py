@@ -6,7 +6,7 @@ def getAllAds():
     return deployedChipnet.getAllAds()
 
 
-def getPurchases(account):
+def getBidsOf(account):
     return deployedChipnet.getPurchases(account)
 
 

@@ -93,6 +93,12 @@ contract ChipNet {
         return ads;
     }
 
+    // A function to get the bids of a user
+    function getBidsOf(address _user) public view returns (uint256[] memory) {
+        // create a new Bid array
+        return bidsOf[_user];
+    }
+
     // A function that returns the number of ads
     function getAdsCount() public view returns (uint256) {
         return ads.length;
@@ -124,7 +130,7 @@ contract ChipNet {
     event newBid(uint256 bidIndex);
 
     // A function that takes an ad index and a number of hours to create a new Bid and returns it index and is payable
-    function createBid(uint256 _adIndex, uint256 _noOfHours) public payable returns (uint256) {
+    function bidOnAd(uint256 _adIndex, uint256 _noOfHours) public payable returns (uint256) {
         // get the Advertisement from the ads array
         Advertisement memory ad = ads[_adIndex];
 
@@ -214,6 +220,9 @@ contract ChipNet {
         return services.length - 1;
     }
 
+    // an event that will be emitted when a bid is approved
+    event bidApproved(uint256 bidIndex);
+
     // A function that takes a Bid index and approves it and returns the index of the Service instance
     function approveBid(uint256 _bidIndex) public returns (uint256) {
         // get the Bid from the bids array
@@ -253,6 +262,8 @@ contract ChipNet {
         services.push(service);
         // push the index of the Service to the servicesOf mapping
         servicesOf[msg.sender].push(services.length - 1);
+        // emit the bidApproved event
+        emit bidApproved(_bidIndex);
         // return the index of the service
         return services.length - 1;
     }

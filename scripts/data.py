@@ -31,7 +31,7 @@ class Data:
         self.ads = convertAds(deployedChipnet.getAllAds())
 
     def updatePurchases(self):
-        self.purchases = deployedChipnet.getPurchases(myAccount)
+        self.purchases = deployedChipnet.getBidsOf(myAccount)
 
     def updateAll(self):
         self.updateAds()
