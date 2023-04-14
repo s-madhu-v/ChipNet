@@ -275,7 +275,8 @@ contract ChipNet {
 
         // make the bid inactive
         bids[_bidIndex].active = false;
-
+        // make the ad inactive
+        ads[bid.adIndex].active = false;
         // push the Service to the services array
         services.push(service);
         // push the index of the Service to the servicesOf mapping

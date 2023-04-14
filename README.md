@@ -4,12 +4,12 @@ TODO:
 
 - Smart Contract
     - ~~Advertising~~
-    - Buying
+    - ~~Buying~~
     - Service
-    - Storing sensitive data
-    - Quality of Service
+    - Authentication
+    - ~~Storing sensitive data~~
     - Deployment to a testnet
-    - ~~Setup Event Listener~~
+    - ~~Setup Event Listeners~~
     - Penalties & QoS
     - ERC20 Token
 - Docker
@@ -18,8 +18,9 @@ TODO:
     - ~~Configure SSH service to expose itself~~
     - ~~Automate Installing ngrok~~
     - ~~Setup ngrok to expose SSH endpoint~~
-    - Automatically Send SSH Access Link securely
-    - Automatically Send Password securely
+    - ~~Automatically Send SSH Access Link securely~~
+    - ~~Automatically Send Password securely~~
+    - ~~Creating a Docker container automatically~~
     - Setup SSH Keys
     - Disruption
         - Network
@@ -28,9 +29,8 @@ TODO:
         - ~~cores~~
         - ~~memory~~
         - storage
-    - Hadoop services
-- GUI dApp
-    - Windows
-    - Mac
-    - Linux
+    - Hadoop services?
+- GUI
+    - Make the GUI not ugly
+    - ~~Cross Platform Support~~
     - Non GUI (terminal based)

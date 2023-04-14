@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import tkinter.simpledialog as sd
 from scripts.data import Ad, myAddress, contractData
 from scripts.contract.setters import bidOnAd
 from scripts.service.run import fakeRun
@@ -25,11 +26,11 @@ class adFrame(ttk.Frame):
         self.grid_propagate(False)
 
     def buyThisAd(self):
-        print("Buying Ad")
-        bidOnAd(self.ad.index, myAddress)
+        print("Bidding on an Ad..")
+        noOfHours = sd.askstring("noOfHours", "How many Hours?")
+        bidOnAd(self.ad.index, myAddress, int(noOfHours))
         self.buyButton["text"] = "Bought!!!"
         contractData.updateAll()
-        fakeRun()
 
     def createWidgets(self):
         # create the widgets

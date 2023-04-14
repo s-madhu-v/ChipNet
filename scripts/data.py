@@ -25,17 +25,12 @@ def convertAds(ads):
 class Data:
     def __init__(self) -> None:
         self.ads = []
-        self.purchases = []
 
     def updateAds(self):
         self.ads = convertAds(deployedChipnet.getAllAds())
 
-    def updatePurchases(self):
-        self.purchases = deployedChipnet.getBidsOf(myAccount)
-
     def updateAll(self):
         self.updateAds()
-        self.updatePurchases()
 
 
 contractData = Data()

@@ -5,7 +5,6 @@ from scripts.data import myAddress
 
 adCreatorbackground = "red"
 
-
 class adCreator(ttk.Frame):
     def __init__(self, parent):
         super().__init__(

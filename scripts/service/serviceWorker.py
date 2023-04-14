@@ -1,4 +1,5 @@
 import time
+import base64
 from scripts.service.run import run
 from scripts.service.encrypt import encryptMsg
 from Crypto.PublicKey import RSA
@@ -39,25 +40,29 @@ def getAccessLink(containerName):
             link = line
     return link
 
+def theTerminator():
+    print("Terminating the service")
 
 def endServiceIn(seconds, terminator):
     start_time = time.monotonic()  # get current time in seconds
     end_time = start_time + seconds  # calculate end time
     while time.monotonic() < end_time:  # loop until end time is reached
-        time.sleep(1)  # wait for 5 second before next iteration
+        time.sleep(1)  # wait for 1 second before next iteration
     terminator()
 
 def postCredentials(serviceIndex, accessLink, password):
     service = deployedChipnet.getService(serviceIndex)
     bid = deployedChipnet.getBid(service["bidIndex"])
-    # publicKey = bid["publicKey"].encode('utf-8')
-    publicKey = RSA.import_key(bid["publicKey"].encode('ascii'))
+    publicKey = RSA.import_key(bid["publicKey"].encode('utf-8'))
     encryptedAccessLink = encryptMsg(accessLink.encode('utf-8'), publicKey)
+    encodedAccessLink = base64.b64encode(encryptedAccessLink).decode('utf-8')
     encryptedPassword = encryptMsg(password.encode('utf-8'), publicKey)
-    deployedChipnet.postCredentials(serviceIndex, encryptedAccessLink, encryptedPassword, {"from": sellAccount})
+    encodedPassword = base64.b64encode(encryptedPassword).decode('utf-8')
+    # change the sellAccount to sellerAccount
+    deployedChipnet.postCredentials(serviceIndex, encodedAccessLink, encodedPassword, {"from": sellAccount})
 
 def runService(serviceIndex):
     run(f"service-{serviceIndex}")
     accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
     postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
-    endServiceIn()
+    endServiceIn(60*60, theTerminator) # change this to time in the bid
