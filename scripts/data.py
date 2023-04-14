@@ -41,3 +41,5 @@ class Data:
 contractData = Data()
 myAddress = accounts[0]
 myAccount = accounts.at(myAddress)
+sellAccount = accounts[8]
+buyAccount = accounts[9]

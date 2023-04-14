@@ -1,13 +1,25 @@
 import time
 from scripts.service.run import run
+from scripts.service.encrypt import encryptMsg
+from Crypto.PublicKey import RSA
+from scripts.data import deployedChipnet, sellAccount, buyAccount
 import subprocess
+import random
+import string
+
+def generateRandomPassword(length):
+    # Define the character set to use for the password
+    characters = string.ascii_letters + string.digits # + string.punctuation
+    # Generate a password of the specified length
+    password = ''.join(random.choice(characters) for i in range(length))
+    return password
 
 
-def pollForAccessLink(args):
+def pollForAccessLink(containerName):
     link = ""
     while True:
         try:
-            link = getAccessLink(args.containerName)
+            link = getAccessLink(containerName)
             print(f"Access Link: {link}")
             break
         except subprocess.CalledProcessError:
@@ -35,9 +47,17 @@ def endServiceIn(seconds, terminator):
         time.sleep(1)  # wait for 5 second before next iteration
     terminator()
 
+def postCredentials(serviceIndex, accessLink, password):
+    service = deployedChipnet.getService(serviceIndex)
+    bid = deployedChipnet.getBid(service["bidIndex"])
+    # publicKey = bid["publicKey"].encode('utf-8')
+    publicKey = RSA.import_key(bid["publicKey"].encode('ascii'))
+    encryptedAccessLink = encryptMsg(accessLink.encode('utf-8'), publicKey)
+    encryptedPassword = encryptMsg(password.encode('utf-8'), publicKey)
+    deployedChipnet.postCredentials(serviceIndex, encryptedAccessLink, encryptedPassword, {"from": sellAccount})
 
-def runService(args):
-    run()
-    pollForAccessLink(args)
-    sendAccessLink()
+def runService(serviceIndex):
+    run(f"service-{serviceIndex}")
+    accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
+    postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
     endServiceIn()

@@ -29,7 +29,15 @@ class dImage:
             print(f"Error deleting folder: {e.strerror}")
 
     def buildImage(self, args):
-        self.cloneRepo()
+        try:
+            self.cloneRepo()
+        except:
+            print(f"Repository {self.repoName} already exists!")
+            print("Deleting the existing repository and cloning again")
+            self.deleteClone()
+            print("Deleted the cloned repository")
+            self.cloneRepo()
+            print("Cloning completed Successfully")
         image, logs = self.client.images.build(
             path=self.localPath,
             dockerfile=self.dfilePath,

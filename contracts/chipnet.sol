@@ -27,6 +27,7 @@ contract ChipNet {
         uint256 serviceIndex;
         address payable bidder;
         uint256 noOfHours; // in hours
+        string publicKey;
         bool approved;
         bool active;
     }
@@ -34,11 +35,26 @@ contract ChipNet {
     // An array of Advertisement structs
     Advertisement[] private ads;
 
+    // A function that returns an ad given its index
+    function getAd(uint256 _index) public view returns (Advertisement memory) {
+        return ads[_index];
+    }
+
     // An array of Service structs
     Service[] private services;
 
+    // A function that returns a service given its index
+    function getService(uint256 _index) public view returns (Service memory) {
+        return services[_index];
+    }
+
     // An array of Bid structs
     Bid[] private bids;
+
+    // A function that returns a bid given its index
+    function getBid(uint256 _index) public view returns (Bid memory) {
+        return bids[_index];
+    }
 
     // create and push a dummy ad to the ads array
     Advertisement initAd = Advertisement({
@@ -68,6 +84,7 @@ contract ChipNet {
         serviceIndex: 0,
         bidder: payable(address(0)),
         noOfHours: 0,
+        publicKey: "",
         approved: false,
         active: false
     });
@@ -127,10 +144,10 @@ contract ChipNet {
     }
 
     // An event that will be emitted when an ad is purchased
-    event newBid(uint256 bidIndex);
+    event newBid(uint256 bidIndex, uint256 adIndex);
 
     // A function that takes an ad index and a number of hours to create a new Bid and returns it index and is payable
-    function bidOnAd(uint256 _adIndex, uint256 _noOfHours) public payable returns (uint256) {
+    function bidOnAd(uint256 _adIndex, uint256 _noOfHours, string memory _pubKey) public payable returns (uint256) {
         // get the Advertisement from the ads array
         Advertisement memory ad = ads[_adIndex];
 
@@ -150,6 +167,7 @@ contract ChipNet {
             serviceIndex: 0,
             bidder: payable(msg.sender),
             noOfHours: _noOfHours,
+            publicKey: _pubKey,
             approved: false,
             active: true
         });
@@ -159,7 +177,7 @@ contract ChipNet {
         // push the index of the Bid to the bidsOf mapping
         bidsOf[msg.sender].push(bids.length - 1);
         // emit the newBid event
-        emit newBid(bids.length - 1);
+        emit newBid(bids.length - 1, _adIndex);
         // return the index of the bid
         return bids.length - 1;
     }
@@ -221,7 +239,7 @@ contract ChipNet {
     }
 
     // an event that will be emitted when a bid is approved
-    event bidApproved(uint256 bidIndex);
+    event bidApproved(uint256 bidIndex, uint256 serviceIndex);
 
     // A function that takes a Bid index and approves it and returns the index of the Service instance
     function approveBid(uint256 _bidIndex) public returns (uint256) {
@@ -263,7 +281,7 @@ contract ChipNet {
         // push the index of the Service to the servicesOf mapping
         servicesOf[msg.sender].push(services.length - 1);
         // emit the bidApproved event
-        emit bidApproved(_bidIndex);
+        emit bidApproved(_bidIndex, services.length - 1);
         // return the index of the service
         return services.length - 1;
     }

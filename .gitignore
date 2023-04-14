@@ -6,3 +6,8 @@ __pycache__
 build/
 reports/
 node_modules
+.DS_Store
+cloned
+private.pem
+public.pem
+access-link.txt

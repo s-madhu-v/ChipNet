@@ -1,5 +1,4 @@
 from scripts.data import deployedChipnet
-import os
 
 
 def getAllAds():
@@ -11,4 +10,4 @@ def getBidsOf(account):
 
 
 def getAd(index):
-    return deployedChipnet.ads(index)
+    return deployedChipnet.getAd(index)

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from scripts.data import Ad, myAddress, contractData
-from scripts.contract.getters import getBidsOf
+from scripts.contract.setters import bidOnAd
 from scripts.service.run import fakeRun
 
 adFramebackground = "green"
@@ -26,6 +26,7 @@ class adFrame(ttk.Frame):
 
     def buyThisAd(self):
         print("Buying Ad")
+        bidOnAd(self.ad.index, myAddress)
         self.buyButton["text"] = "Bought!!!"
         contractData.updateAll()
         fakeRun()
