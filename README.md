@@ -1,6 +1,6 @@
 # ChipNet
 
-TODO:
+## TODO:
 
 - Smart Contract
     - ~~Advertising~~
