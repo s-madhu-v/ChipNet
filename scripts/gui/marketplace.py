@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from scripts.gui.adConsole import createAdConsole
-from scripts.gui.bidConsole import createBidConsole
+from scripts.gui.allConsoles import createAdConsole, createBidConsole
 
 
 class marketplace(ttk.Frame):
