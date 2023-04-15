@@ -12,6 +12,7 @@
     - ~~Setup Event Listeners~~
     - Penalties & QoS
     - ERC20 Token
+    - Error Handling
 - Docker
     - ~~Create a base Alpine Linux image~~
     - ~~Automate Installing SSH~~
@@ -30,7 +31,9 @@
         - ~~memory~~
         - storage
     - Hadoop services?
+    - Error Handling
 - GUI
     - Make the GUI not ugly
     - Cross Platform Support
     - Non GUI (terminal based)
+    - Error Handling

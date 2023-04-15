@@ -17,10 +17,10 @@ class windowNotebook(ttk.Notebook):
         self.advertise = advertise(self)
         self.add(self.advertise, text="Advertise")
 
-        self.bids_tab = ttk.Frame(self)
-        self.add(self.bids_tab, text="Bids")
-        self.bids_label = tk.Label(self.bids_tab, text="Your Bids")
-        self.bids_label.pack()
+        self.services_tab = ttk.Frame(self)
+        self.add(self.services_tab, text="Services")
+        self.services_label = tk.Label(self.services_tab, text="Your Services")
+        self.services_label.pack()
 
         self.account_tab = ttk.Frame(self)
         self.add(self.account_tab, text="Account")

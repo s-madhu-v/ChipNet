@@ -1,21 +1,18 @@
+import time
 import tkinter as tk
 from tkinter import ttk
 import tkinter.simpledialog as sd
+from tkinter.messagebox import askyesno
 from scripts.data import Ad, myAddress, contractData
 from scripts.contract.setters import bidOnAd
-from scripts.service.run import fakeRun
 
 adFramebackground = "green"
 
 
 class adFrame(ttk.Frame):
-    def __init__(self, parent, ad: Ad):
+    def __init__(self, parent, ad: Ad, width=220, height=110):
         super().__init__(
-            parent,
-            padding=10,
-            relief="raised",
-            width=220,
-            height=110,
+            parent, padding=10, relief="raised", width=width, height=height
         )
         self.ad = ad
         self.createWidgets()
@@ -27,10 +24,21 @@ class adFrame(ttk.Frame):
 
     def buyThisAd(self):
         print("Bidding on an Ad..")
-        noOfHours = sd.askstring("noOfHours", "How many Hours?")
-        bidOnAd(self.ad.index, myAddress, int(noOfHours))
-        self.buyButton["text"] = "Bought!!!"
-        contractData.updateAll()
+        self.noOfHours = sd.askstring("Hours", "How many Hours?")
+        self.confirmBid()
+
+    def confirmBid(self):
+        answer = askyesno(
+            title="Confirmation",
+            message="Are you sure you want to make Bid on this Ad?",
+        )
+        if answer:
+            bidOnAd(self.ad.index, myAddress, int(self.noOfHours))
+            self.buyButton["text"] = "Bid Submitted"
+            time.sleep(1)
+            contractData.updateAllAds()
+        else:
+            print("Bid Cancelled")
 
     def createWidgets(self):
         # create the widgets
@@ -42,6 +50,20 @@ class adFrame(ttk.Frame):
         if isactive == False:
             self.buyButton["text"] = "Sold"
             self.buyButton["state"] = "disabled"
+
+    def updateWidget(self, ad):
+        # create the widgets
+        self.title["text"] = ad.title
+        # handle floating point numbers
+        self.price["text"] = f"Price: {int(ad.price/(10**18))} ETH"
+        self.sellerAddress["text"] = ad.seller
+        isactive = ad.isactive
+        if isactive == False:
+            self.buyButton["text"] = "Sold"
+            self.buyButton["state"] = "disabled"
+        else:
+            self.buyButton["text"] = "Buy"
+            self.buyButton["state"] = "normal"
 
     def layoutWidgets(self):
         # layout the widgets

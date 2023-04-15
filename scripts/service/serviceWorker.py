@@ -1,5 +1,6 @@
 import time
 import base64
+import docker
 from scripts.service.run import run
 from scripts.service.encrypt import encryptMsg
 from Crypto.PublicKey import RSA
@@ -8,11 +9,12 @@ import subprocess
 import random
 import string
 
+
 def generateRandomPassword(length):
     # Define the character set to use for the password
-    characters = string.ascii_letters + string.digits # + string.punctuation
+    characters = string.ascii_letters + string.digits  # + string.punctuation
     # Generate a password of the specified length
-    password = ''.join(random.choice(characters) for i in range(length))
+    password = "".join(random.choice(characters) for i in range(length))
     return password
 
 
@@ -40,8 +42,10 @@ def getAccessLink(containerName):
             link = line
     return link
 
+
 def theTerminator():
     print("Terminating the service")
+
 
 def endServiceIn(seconds, terminator):
     start_time = time.monotonic()  # get current time in seconds
@@ -50,19 +54,26 @@ def endServiceIn(seconds, terminator):
         time.sleep(1)  # wait for 1 second before next iteration
     terminator()
 
+
 def postCredentials(serviceIndex, accessLink, password):
     service = deployedChipnet.getService(serviceIndex)
     bid = deployedChipnet.getBid(service["bidIndex"])
-    publicKey = RSA.import_key(bid["publicKey"].encode('utf-8'))
-    encryptedAccessLink = encryptMsg(accessLink.encode('utf-8'), publicKey)
-    encodedAccessLink = base64.b64encode(encryptedAccessLink).decode('utf-8')
-    encryptedPassword = encryptMsg(password.encode('utf-8'), publicKey)
-    encodedPassword = base64.b64encode(encryptedPassword).decode('utf-8')
+    publicKey = RSA.import_key(bid["publicKey"].encode("utf-8"))
+    encryptedAccessLink = encryptMsg(accessLink.encode("utf-8"), publicKey)
+    encodedAccessLink = base64.b64encode(encryptedAccessLink).decode("utf-8")
+    encryptedPassword = encryptMsg(password.encode("utf-8"), publicKey)
+    encodedPassword = base64.b64encode(encryptedPassword).decode("utf-8")
     # change the sellAccount to sellerAccount
-    deployedChipnet.postCredentials(serviceIndex, encodedAccessLink, encodedPassword, {"from": sellAccount})
+    deployedChipnet.postCredentials(
+        serviceIndex, encodedAccessLink, encodedPassword, {"from": sellAccount}
+    )
+
 
 def runService(serviceIndex):
-    run(f"service-{serviceIndex}")
-    accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
-    postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
-    endServiceIn(60*60, theTerminator) # change this to time in the bid
+    try:
+        run(f"service-{serviceIndex}")
+        accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
+        postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
+        endServiceIn(60 * 60, theTerminator)  # change this to time in the bid
+    except docker.errors.DockerException:
+        print("Error: Docker is not running")

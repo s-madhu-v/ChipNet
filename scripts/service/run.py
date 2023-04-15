@@ -3,7 +3,7 @@ import docker
 
 buildargs = {
     "PASSWORD": "l",
-    "NGROK_AUTH_KEY": "2JVJ2QX6ten3b2UofO5a1RFZqL1_7NU96eFBqcWLP2KogBWAk"
+    "NGROK_AUTH_KEY": "2JVJ2QX6ten3b2UofO5a1RFZqL1_7NU96eFBqcWLP2KogBWAk",
 }
 
 

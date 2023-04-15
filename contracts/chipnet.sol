@@ -96,8 +96,42 @@ contract ChipNet {
         return ads;
     }
 
-    function getBidsOf(address _user) public view returns (uint256[] memory) {
-        return bidsOf[_user];
+    function getAllServices() public view returns (Service[] memory) {
+        return services;
+    }
+
+    function getAllBids() public view returns (Bid[] memory) {
+        return bids;
+    }
+
+    // A function called adsOf that returns the ad structs array corresponding to a user
+    function getAdsOf(address _user) public view returns (Advertisement[] memory) {
+        uint256[] memory adIndices = adsOf[_user];
+        Advertisement[] memory yourAds = new Advertisement[](adIndices.length);
+        for (uint256 i = 0; i < adIndices.length; i++) {
+            yourAds[i] = ads[adIndices[i]];
+        }
+        return yourAds;
+    }
+
+    // A function called bidsOf that returns the bid structs array corresponding to a user
+    function getBidsOf(address _user) public view returns (Bid[] memory) {
+        uint256[] memory bidIndices = bidsOf[_user];
+        Bid[] memory yourBids = new Bid[](bidIndices.length);
+        for (uint256 i = 0; i < bidIndices.length; i++) {
+            yourBids[i] = bids[bidIndices[i]];
+        }
+        return yourBids;
+    }
+
+    // A function called servicesOf that returns the service structs array corresponding to a user
+    function getServicesOf(address _user) public view returns (Service[] memory) {
+        uint256[] memory serviceIndices = servicesOf[_user];
+        Service[] memory yourServices = new Service[](serviceIndices.length);
+        for (uint256 i = 0; i < serviceIndices.length; i++) {
+            yourServices[i] = services[serviceIndices[i]];
+        }
+        return yourServices;
     }
 
     function getAdsCount() public view returns (uint256) {
