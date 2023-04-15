@@ -102,13 +102,13 @@ class Data:
     # def updateAllServices(self):
     #     self.allServices = convertServices(deployedChipnet.getAllServices())
 
-    def updateYourAds(self, account):
+    def updateYourAds(self, account=sellAccount):
         self.yourAds = convertAds(deployedChipnet.getAdsOf(account))
 
-    def updateYourBids(self, account):
+    def updateYourBids(self, account=buyAccount):
         self.yourBids = convertBids(deployedChipnet.getBidsOf(account))
 
-    def updateApprovedBids(self, account):
+    def updateApprovedBids(self, account=buyAccount):
         self.updateYourBids(account)
         self.approvedBids = []
         for bid in self.yourBids:

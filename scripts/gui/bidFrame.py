@@ -4,7 +4,6 @@ from scripts.data import contractData
 from scripts.gui.adFrame import adFrame
 
 
-# create a bidFrame from adFrame with a status label and a cancel bid button
 class bidFrame(adFrame):
     def __init__(self, parent, bid):
         self.ad = contractData.allAds[bid.adIndex]
@@ -21,6 +20,10 @@ class bidFrame(adFrame):
         self.status.pack()
         self.cancelButton.pack()
         self.buyButton.pack_forget()
+        self.sellerAddress.pack_forget()
 
     def cancelBid(self):
         print("Cancel Bid")
+
+    def updateWidget(self, bid):
+        super().updateWidget(contractData.allAds[bid.adIndex])

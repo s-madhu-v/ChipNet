@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from scripts.gui.adConsole import createAdConsole
-from scripts.gui.bidConsole import bidConsole
+from scripts.gui.bidConsole import createBidConsole
 
 
 class marketplace(ttk.Frame):
@@ -18,7 +18,7 @@ class marketplace(ttk.Frame):
         updateButton["command"] = lambda: self.adConsole.updateFramesContainer()
         updateButton.pack()
         # create a bidConsole
-        self.bidConsole = bidConsole(self)
+        self.bidConsole = createBidConsole(self)
         self.bidConsole.pack()
         updateButton = ttk.Button(self, text="Update")
         updateButton["command"] = lambda: self.bidConsole.updateBidsContainer()
