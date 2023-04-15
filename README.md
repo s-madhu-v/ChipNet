@@ -32,5 +32,5 @@ TODO:
     - Hadoop services?
 - GUI
     - Make the GUI not ugly
-    - ~~Cross Platform Support~~
+    - Cross Platform Support
     - Non GUI (terminal based)
