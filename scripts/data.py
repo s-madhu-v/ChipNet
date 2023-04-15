@@ -27,7 +27,7 @@ class Bid:
         self.isactive = isactive
 
 
-class service:
+class Service:
     def __init__(
         self,
         index,
@@ -69,7 +69,7 @@ def convertServices(services):
     serviceObjects = []
     for service in services:
         serviceObjects.append(
-            service(
+            Service(
                 service[0],
                 service[1],
                 service[2],
@@ -90,17 +90,18 @@ class Data:
         self.allServices = []
         self.yourAds = []
         self.yourBids = []
+        self.yourOrders = []
         self.approvedBids = []
         self.updateAll()
 
     def updateAllAds(self):
         self.allAds = convertAds(deployedChipnet.getAllAds())
 
-    # def updateAllBids(self):
-    #     self.allBids = convertBids(deployedChipnet.getAllBids())
+    def updateAllBids(self):
+        self.allBids = convertBids(deployedChipnet.getAllBids())
 
-    # def updateAllServices(self):
-    #     self.allServices = convertServices(deployedChipnet.getAllServices())
+    def updateAllServices(self):
+        self.allServices = convertServices(deployedChipnet.getAllServices())
 
     def updateYourAds(self, account=sellAccount):
         self.yourAds = convertAds(deployedChipnet.getAdsOf(account))
@@ -115,6 +116,9 @@ class Data:
             if bid.isApproved:
                 self.approvedBids.append(bid)
 
+    def updateYourOrders(self, account=buyAccount):
+        self.yourOrders = convertServices(deployedChipnet.getOrdersOf(account))
+
     def updateUserSpecificData(self, account=buyAccount):
         self.updateYourAds(account)
         self.updateYourBids(account)
@@ -122,8 +126,8 @@ class Data:
 
     def updateAll(self):
         self.updateAllAds()
-        # self.updateAllBids()
-        # self.updateAllServices()
+        self.updateAllBids()
+        self.updateAllServices()
         self.updateUserSpecificData()
 
 

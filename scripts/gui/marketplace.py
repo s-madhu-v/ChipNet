@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from scripts.gui.allConsoles import createAdConsole, createBidConsole
+from scripts.gui.allConsoles import (
+    createAdConsole,
+    createBidConsole,
+    createApprovedBidConsole,
+)
 
 
 class marketplace(ttk.Frame):
@@ -11,6 +15,7 @@ class marketplace(ttk.Frame):
         self["style"] = "marketplaceView.TFrame"
 
     def createWidgets(self):
+        # create a adConsole
         self.adConsole = createAdConsole(self)
         self.adConsole.pack()
         updateButton = ttk.Button(self, text="Update")
@@ -20,5 +25,13 @@ class marketplace(ttk.Frame):
         self.bidConsole = createBidConsole(self)
         self.bidConsole.pack()
         updateButton = ttk.Button(self, text="Update")
-        updateButton["command"] = lambda: self.bidConsole.updateBidsContainer()
+        updateButton["command"] = lambda: self.bidConsole.updateFramesContainer()
+        updateButton.pack()
+        # create a approvedBidConsole
+        self.approvedBidConsole = createApprovedBidConsole(self)
+        self.approvedBidConsole.pack()
+        updateButton = ttk.Button(self, text="Update")
+        updateButton[
+            "command"
+        ] = lambda: self.approvedBidConsole.updateFramesContainer()
         updateButton.pack()

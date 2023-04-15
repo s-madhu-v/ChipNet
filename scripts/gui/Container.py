@@ -52,7 +52,7 @@ class Container(ttk.Frame):
             self.frameWidgets = self.frameWidgets[: self.nofFrames]
         elif self.nofFrames > len(self.frameWidgets):
             for i in range(len(self.frameWidgets), self.nofFrames):
-                widget = self.frameClass(self, self.dataFunc()[self.startAdIndex + i])
+                widget = self.frameClass(self, self.dataFunc()[self.startIndex + i])
                 self.frameWidgets.append(widget)
                 widget.pack(side="left", padx=10)
 

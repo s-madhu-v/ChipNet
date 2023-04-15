@@ -92,6 +92,8 @@ contract ChipNet {
 
     mapping(address => uint256[]) private bidsOf;
 
+    mapping(address => uint256[]) private ordersOf;
+
     function getAllAds() public view returns (Advertisement[] memory) {
         return ads;
     }
@@ -132,6 +134,16 @@ contract ChipNet {
             yourServices[i] = services[serviceIndices[i]];
         }
         return yourServices;
+    }
+
+    // A function called ordersOf that returns the service structs array corresponding to a user
+    function getOrdersOf(address _user) public view returns (Service[] memory) {
+        uint256[] memory serviceIndices = ordersOf[_user];
+        Service[] memory yourOrders = new Service[](serviceIndices.length);
+        for (uint256 i = 0; i < serviceIndices.length; i++) {
+            yourOrders[i] = services[serviceIndices[i]];
+        }
+        return yourOrders;
     }
 
     function getAdsCount() public view returns (uint256) {
@@ -193,27 +205,6 @@ contract ChipNet {
         payable(msg.sender).transfer(bid.noOfHours * ads[bid.adIndex].pricePerHour);
     }
 
-    function createService(uint256 _bidIndex) public returns (uint256) {
-        Bid memory bid = bids[_bidIndex];
-        Advertisement memory ad = ads[bid.adIndex];
-        require(bid.approved == true, "Bid is not approved");
-        require(msg.sender == ad.seller, "Only seller can create service instance");
-        Service memory service = Service({
-            adIndex: bid.adIndex,
-            bidIndex: _bidIndex,
-            index: services.length,
-            accessLink: "",
-            password: "",
-            SOSTimestamp: 0,
-            EOSTimestamp: 0,
-            active: true
-        });
-
-        services.push(service);
-        servicesOf[msg.sender].push(services.length - 1);
-        return services.length - 1;
-    }
-
     event bidApproved(uint256 bidIndex, uint256 serviceIndex);
 
     function approveBid(uint256 _bidIndex) public returns (uint256) {
@@ -238,6 +229,7 @@ contract ChipNet {
         ads[bid.adIndex].active = false;
         services.push(service);
         servicesOf[msg.sender].push(services.length - 1);
+        ordersOf[bid.bidder].push(services.length - 1);
         emit bidApproved(_bidIndex, services.length - 1);
         return services.length - 1;
     }

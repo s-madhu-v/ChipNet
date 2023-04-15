@@ -1,11 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
-from scripts.gui.allContainers import createAdsContainer, createBidsContainer
+from scripts.gui.allContainers import (
+    createAdsContainer,
+    createBidsContainer,
+    createApprovedBidsContainer,
+)
 from scripts.gui.Console import Console
 
 # Ads Console
 
-adConsolebackground = "red"
+adConsolebackground = "blue"
 
 
 def createAdConsole(parent):
@@ -13,8 +17,16 @@ def createAdConsole(parent):
 
 
 # Bids Console
-bidConsolebackground = "red"
+bidConsolebackground = "pink"
 
 
 def createBidConsole(parent):
     return Console(parent, createBidsContainer)
+
+
+# Approved Bids Console
+approvedBidConsolebackground = "white"
+
+
+def createApprovedBidConsole(parent):
+    return Console(parent, createApprovedBidsContainer)
