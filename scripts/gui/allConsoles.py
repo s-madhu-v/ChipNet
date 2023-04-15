@@ -7,26 +7,17 @@ from scripts.gui.allContainers import (
 )
 from scripts.gui.Console import Console
 
+
 # Ads Console
-
-adConsolebackground = "blue"
-
-
 def createAdConsole(parent):
-    return Console(parent, createAdsContainer)
+    return Console(parent, createAdsContainer, "Marketplace")
 
 
 # Bids Console
-bidConsolebackground = "pink"
-
-
 def createBidConsole(parent):
-    return Console(parent, createBidsContainer)
+    return Console(parent, createBidsContainer, "Your Bids")
 
 
 # Approved Bids Console
-approvedBidConsolebackground = "white"
-
-
 def createApprovedBidConsole(parent):
-    return Console(parent, createApprovedBidsContainer)
+    return Console(parent, createApprovedBidsContainer, "Approved Bids")

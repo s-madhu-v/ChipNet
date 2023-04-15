@@ -48,7 +48,7 @@ def createBidsContainer(parent):
     container = Container(
         parent,
         width=770,
-        height=200,
+        height=130,
         dataFunc=GUIAllBids,
         updateFunc=contractData.updateYourBids,
         frameClass=bidFrame,
@@ -78,7 +78,7 @@ def createApprovedBidsContainer(parent):
     container = Container(
         parent,
         width=770,
-        height=200,
+        height=130,
         dataFunc=GUIAllApprovedBids,
         updateFunc=ordersUpdateFunc,
         frameClass=approvedBidFrame,

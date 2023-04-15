@@ -32,8 +32,6 @@ class Container(ttk.Frame):
         self.pack_propagate(False)
         self.grid_propagate(False)
         self.createWidgets()
-        ttk.Style().configure("framesContainer.TFrame", background=backgroundColor)
-        self["style"] = "framesContainer.TFrame"
         self.startAdIndx = 0  # remove this later; indentaion issues?
         print(f"\n\n====={self.nofFrames}=====\n\n")  # this too
 
@@ -42,7 +40,7 @@ class Container(ttk.Frame):
         for i in range(self.nofFrames):
             widget = self.frameClass(self, self.dataFunc()[self.startIndex + i])
             self.frameWidgets.append(widget)
-            widget.pack(side="left", padx=10)
+            widget.grid(row=0, column=i, sticky="nsew", padx=10)
 
     def handleNoOfFramesChange(self):
         self.nofFrames = min(self.containerSize, len(self.dataFunc()))
