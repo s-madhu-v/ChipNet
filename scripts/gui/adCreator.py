@@ -3,21 +3,18 @@ from tkinter import ttk
 from scripts.contract.setters import postAd
 from scripts.data import myAddress
 
-adCreatorbackground = "red"
 
 class adCreator(ttk.Frame):
     def __init__(self, parent):
         super().__init__(
             parent,
-            width=860,
-            height=170,
+            width=200,
+            height=200,
             relief="raised",
         )
         self.pack_propagate(False)
         self.grid_propagate(False)
         self.createWidgets()
-        ttk.Style().configure("createAd.TFrame", background=adCreatorbackground)
-        self["style"] = "createAd.TFrame"
 
     def createWidgets(self):
         # create the widgets

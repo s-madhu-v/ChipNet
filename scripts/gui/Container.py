@@ -9,12 +9,11 @@ class Container(ttk.Frame):
         self,
         parent,
         dataFunc,
-        updateFunc,
         widgetDataFunc,
         frameClass,
         width,
         height,
-        containerSize=3,
+        containerSize=4,
         startIndex=0,
         backgroundColor="green",
     ):
@@ -22,7 +21,6 @@ class Container(ttk.Frame):
             parent, width=width, height=height, relief="raised", padding=10
         )
         self.dataFunc = dataFunc
-        self.updateFunc = updateFunc
         self.widgetDataFunc = widgetDataFunc
         self.frameClass = frameClass
         self.startIndex = startIndex
@@ -36,7 +34,6 @@ class Container(ttk.Frame):
         print(f"\n\n====={self.nofFrames}=====\n\n")  # this too
 
     def createWidgets(self):
-        self.updateFunc()
         for i in range(self.nofFrames):
             widget = self.frameClass(self, self.dataFunc()[self.startIndex + i])
             self.frameWidgets.append(widget)
@@ -55,12 +52,11 @@ class Container(ttk.Frame):
                 widget.pack(side="left", padx=10)
 
     def moveContainer(self):
-        self.handleNoOfFramesChange()
+        # self.handleNoOfFramesChange()
         for i in range(self.nofFrames):
             self.widgetDataFunc(
                 self.frameWidgets[i], self.dataFunc()[self.startIndex + i]
             )
 
     def updateFrameWidgets(self):
-        self.updateFunc()
         self.moveContainer()

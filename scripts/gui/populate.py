@@ -1,5 +1,4 @@
 from scripts.contract.setters import postAd
-from brownie import accounts
 from scripts.data import sellAccount
 
 

@@ -25,7 +25,6 @@ def createAdsContainer(parent):
         width=770,
         height=130,
         dataFunc=GUIAllAds,
-        updateFunc=contractData.updateAllAds,
         frameClass=adFrame,
         widgetDataFunc=AdWidgetDataUpdateFunc,
     )
@@ -50,7 +49,6 @@ def createBidsContainer(parent):
         width=770,
         height=130,
         dataFunc=GUIAllBids,
-        updateFunc=contractData.updateYourBids,
         frameClass=bidFrame,
         widgetDataFunc=bidWidgetDataUpdateFunc,
     )
@@ -58,9 +56,6 @@ def createBidsContainer(parent):
 
 
 # Approved Bids Container
-approvedBidsContainerbackground = "green"
-
-
 def GUIAllApprovedBids():
     return contractData.yourOrders
 
@@ -69,19 +64,32 @@ def approvedBidWidgetDataUpdateFunc(approvedBidWidget, approvedBid):
     approvedBidWidget.updateWidget(approvedBid)
 
 
-def ordersUpdateFunc():
-    contractData.updateAllBids()
-    contractData.updateYourOrders()
-
-
 def createApprovedBidsContainer(parent):
     container = Container(
         parent,
         width=770,
         height=130,
         dataFunc=GUIAllApprovedBids,
-        updateFunc=ordersUpdateFunc,
         frameClass=approvedBidFrame,
         widgetDataFunc=approvedBidWidgetDataUpdateFunc,
+    )
+    return container
+
+
+# Ads Container
+
+
+def GUIYourAds():
+    return contractData.yourAds
+
+
+def createYourAdsContainer(parent):
+    container = Container(
+        parent,
+        width=770,
+        height=130,
+        dataFunc=GUIYourAds,
+        frameClass=adFrame,
+        widgetDataFunc=AdWidgetDataUpdateFunc,
     )
     return container

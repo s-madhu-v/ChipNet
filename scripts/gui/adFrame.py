@@ -10,7 +10,7 @@ adFramebackground = "green"
 
 
 class adFrame(tk.Frame):
-    def __init__(self, parent, ad: Ad, width=200, height=100):
+    def __init__(self, parent, ad: Ad, width=210, height=160):
         super().__init__(parent, width=width, height=height)
         self.ad = ad
         self.createWidgets()
@@ -20,20 +20,19 @@ class adFrame(tk.Frame):
 
     def buyThisAd(self):
         print("Bidding on an Ad..")
-        self.noOfHours = sd.askstring("Hours", "How many Hours?")
-        if self.noOfHours != None:
-            self.confirmBid()
+        noOfHours = sd.askstring("Hours", "How many Hours?")
+        if noOfHours != None:
+            self.confirmBid(noOfHours)
 
-    def confirmBid(self):
+    def confirmBid(self, noOfHours):
         answer = askyesno(
             title="Confirmation",
             message="Are you sure you want to make Bid on this Ad?",
         )
         if answer:
-            bidOnAd(self.ad.index, myAddress, int(self.noOfHours))
+            bidOnAd(self.ad.index, myAddress, int(noOfHours))
             self.buyButton["text"] = "Bid Submitted"
             time.sleep(1)
-            contractData.updateAllAds()
         else:
             print("Bid Cancelled")
 
@@ -50,6 +49,7 @@ class adFrame(tk.Frame):
 
     def updateWidget(self, ad):
         # create the widgets
+        self.ad = ad
         self.title["text"] = ad.title
         # handle floating point numbers
         self.price["text"] = f"Price: {int(ad.price/(10**18))} ETH"

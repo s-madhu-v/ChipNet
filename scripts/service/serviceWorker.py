@@ -2,20 +2,9 @@ import time
 import base64
 import docker
 from scripts.service.run import run
-from scripts.service.encrypt import encryptMsg
-from Crypto.PublicKey import RSA
+from scripts.service.encrypt import encryptCredentials, readPublicKeyFromString
 from scripts.data import deployedChipnet, sellAccount, buyAccount
 import subprocess
-import random
-import string
-
-
-def generateRandomPassword(length):
-    # Define the character set to use for the password
-    characters = string.ascii_letters + string.digits  # + string.punctuation
-    # Generate a password of the specified length
-    password = "".join(random.choice(characters) for i in range(length))
-    return password
 
 
 def pollForAccessLink(containerName):
@@ -58,14 +47,12 @@ def endServiceIn(seconds, terminator):
 def postCredentials(serviceIndex, accessLink, password):
     service = deployedChipnet.getService(serviceIndex)
     bid = deployedChipnet.getBid(service["bidIndex"])
-    publicKey = RSA.import_key(bid["publicKey"].encode("utf-8"))
-    encryptedAccessLink = encryptMsg(accessLink.encode("utf-8"), publicKey)
-    encodedAccessLink = base64.b64encode(encryptedAccessLink).decode("utf-8")
-    encryptedPassword = encryptMsg(password.encode("utf-8"), publicKey)
-    encodedPassword = base64.b64encode(encryptedPassword).decode("utf-8")
+    publicKey = readPublicKeyFromString(bid["publicKey"])
+    encryptedAccessLink = encryptCredentials(accessLink, publicKey)
+    encryptedPassword = encryptCredentials(password, publicKey)
     # change the sellAccount to sellerAccount
     deployedChipnet.postCredentials(
-        serviceIndex, encodedAccessLink, encodedPassword, {"from": sellAccount}
+        serviceIndex, encryptedAccessLink, encryptedPassword, {"from": sellAccount}
     )
 
 
@@ -76,4 +63,4 @@ def runService(serviceIndex):
         postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
         endServiceIn(60 * 60, theTerminator)  # change this to time in the bid
     except docker.errors.DockerException:
-        print("Error: Docker is not running")
+        print("Error: Docker is not running?")

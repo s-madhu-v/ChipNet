@@ -1,5 +1,6 @@
 from brownie import ChipNet, accounts
 import os
+import threading
 
 contractAddress = os.getenv("CONTRACT_ADDRESS")
 deployedChipnet = ChipNet.at(contractAddress)
@@ -91,7 +92,6 @@ class Data:
         self.yourAds = []
         self.yourBids = []
         self.yourOrders = []
-        self.approvedBids = []
         self.updateAll()
 
     def updateAllAds(self):
@@ -109,20 +109,13 @@ class Data:
     def updateYourBids(self, account=buyAccount):
         self.yourBids = convertBids(deployedChipnet.getBidsOf(account))
 
-    def updateApprovedBids(self, account=buyAccount):
-        self.updateYourBids(account)
-        self.approvedBids = []
-        for bid in self.yourBids:
-            if bid.isApproved:
-                self.approvedBids.append(bid)
-
     def updateYourOrders(self, account=buyAccount):
         self.yourOrders = convertServices(deployedChipnet.getOrdersOf(account))
 
     def updateUserSpecificData(self, account=buyAccount):
-        self.updateYourAds(account)
+        self.updateYourAds(account=sellAccount)
         self.updateYourBids(account)
-        self.updateApprovedBids(account)
+        self.updateYourOrders(account)
 
     def updateAll(self):
         self.updateAllAds()
@@ -132,3 +125,22 @@ class Data:
 
 
 contractData = Data()
+
+
+def setInterval(func, sec):
+    def func_wrapper():
+        setInterval(func, sec)
+        func()
+
+    t = threading.Timer(sec, func_wrapper)
+    t.start()
+    return t
+
+
+def updater():
+    contractData.updateAll()
+    print("Updated All")
+
+
+# update data every 7 seconds
+setInterval(updater, 7)

@@ -17,6 +17,7 @@ def postAd(title, priceInETH, sellerAccount):
 def bidOnAd(
     adIndex, buyerAccount, noOfHours=1
 ):  # change the buyAccount to buyerAccount
+    print(f"Bidding on an Ad: {adIndex}, with noOfHours: {noOfHours}")
     generateKeysIfTheyDontExist()
     ad = getAd(adIndex)
     print(f"\n\n\nBuying the ad: {ad}, with adIndex: {adIndex}\n\n\n")
