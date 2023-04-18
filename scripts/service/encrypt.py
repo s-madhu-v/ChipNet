@@ -36,11 +36,13 @@ def generateKeysIfTheyDontExist():
 
 
 def readPublicKey():
+    generateKeysIfTheyDontExist()
     publicKey = RSA.import_key(open("public.pem").read())
     return publicKey
 
 
 def readPrivateKey():
+    generateKeysIfTheyDontExist()
     privateKey = RSA.import_key(open("private.pem").read())
     return privateKey
 
