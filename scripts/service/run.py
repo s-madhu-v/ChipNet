@@ -19,11 +19,13 @@ def getBuildArgs():
 
 
 def run(imageName):
+    args = getBuildArgs()
     myClient = docker.from_env()
     repoLink = "https://github.com/s-madhu-v/Dockerf.git"
     # the image name should always be lowercase
     obj = Container.dContainer(myClient, repoLink, imageName)
-    obj.createContainer(cores=1, memory="2g", storage="4G", buildArgs=getBuildArgs())
+    obj.createContainer(cores=1, memory="2g", storage="4G", buildArgs=args)
+    return args["PASSWORD"]
 
 
 def main():

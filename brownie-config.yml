@@ -7,6 +7,6 @@ compiler:
       - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.8.2'
 networks:
   ganache-gui:
-    host: 127.0.0.1
-    port: 7545
-    chainid: 5777
+    host: 13.50.224.40
+    port: 8545
+    chainid: 1337

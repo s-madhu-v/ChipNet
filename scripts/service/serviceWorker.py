@@ -58,9 +58,9 @@ def postCredentials(serviceIndex, accessLink, password):
 
 def runService(serviceIndex):
     try:
-        run(f"service-{serviceIndex}")
+        password = run(f"service-{serviceIndex}")
         accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
-        postCredentials(serviceIndex, accessLink, generateRandomPassword(10))
+        postCredentials(serviceIndex, accessLink, password)
         endServiceIn(60 * 60, theTerminator)  # change this to time in the bid
     except docker.errors.DockerException:
         print("Error: Docker is not running?")

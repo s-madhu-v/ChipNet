@@ -58,14 +58,14 @@ def decryptMsg(encryptedMsg, privateKey):
 
 
 def decryptCredentials(msg):
-    msg.encode("utf-8")
+    msg = msg.encode("utf-8")
     msg = base64.b64decode(msg)
     msg = decryptMsg(msg, readPrivateKey()).decode("utf-8")
     return msg
 
 
 def encryptCredentials(msg, publicKey=readPublicKey()):
-    msg.encode("utf-8")
+    msg = msg.encode("utf-8")
     msg = encryptMsg(msg, publicKey)
     msg = base64.b64encode(msg).decode("utf-8")
     return msg
