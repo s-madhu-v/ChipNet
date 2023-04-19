@@ -29,7 +29,13 @@ def bidOnAd(adIndex, buyerAccount, noOfHours=1):
     return txn
 
 
-def approveBid(bidIndex, sellerAccount):
+def approveBid(bidIndex, sellerAccount=myAccount):
     txn = deployedChipnet.approveBid(bidIndex, {"from": sellerAccount})
+    txn.wait(1)
+    return txn
+
+
+def cancelBid(bidIndex, buyerAccount=myAccount):
+    txn = deployedChipnet.cancelBid(bidIndex, {"from": buyerAccount})
     txn.wait(1)
     return txn

@@ -1,10 +1,12 @@
 import tkinter as tk
 from scripts.data import contractData
 from scripts.gui.adFrame import adFrame
+from scripts.contract.setters import cancelBid
 
 
 class bidFrame(adFrame):
     def __init__(self, parent, bid):
+        self.bid = bid
         self.ad = contractData.allAds[bid.adIndex]
         super().__init__(parent, self.ad, width=210, height=160)
 
@@ -31,6 +33,9 @@ class bidFrame(adFrame):
 
     def cancelBid(self):
         print("Cancel Bid")
+        cancelBid(self.bid.index)
 
     def updateWidget(self, bid):
+        self.bid = bid
         super().updateWidget(contractData.allAds[bid.adIndex])
+        # update status here...

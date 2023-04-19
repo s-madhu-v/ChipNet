@@ -6,9 +6,9 @@ from scripts.service.encrypt import decryptCredentials
 
 
 class credetialsViewer(tk.Frame):
-    def __init__(self, parent, service):
+    def __init__(self, parent, serviceIndex):
         super().__init__(parent)
-        self.service = service
+        self.service = contractData.allServices[serviceIndex]
         self.createWidgets()
         self.layoutWidgets()
 
@@ -58,7 +58,7 @@ class approvedBidFrame(adFrame):
 
     def showCredentials(self):
         window = createNewWindow("Credentials", "")
-        credetialsViewer(window, self.service).pack(fill="both", expand=True)
+        credetialsViewer(window, self.service.index).pack(fill="both", expand=True)
 
     def createWidgets(self):
         super().createWidgets()

@@ -45,7 +45,7 @@ class Container(ttk.Frame):
         self.frameWidgets = []
 
     def moveContainer(self):
-        if self.nofFrames >= self.containerSize:
+        if self.nofFrames > self.containerSize:
             for i in range(self.nofFrames):
                 self.widgetDataFunc(
                     self.frameWidgets[i], self.dataFunc()[self.startIndex + i]

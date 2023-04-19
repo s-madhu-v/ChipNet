@@ -51,7 +51,7 @@ class Service:
         password,
         SOSTimestamp,
         EOSTimestamp,
-        isactive,
+        active,
     ) -> None:
         self.index = index
         self.adIndex = adIndex
@@ -61,7 +61,7 @@ class Service:
         self.password = password
         self.SOSTimestamp = SOSTimestamp
         self.EOSTimestamp = EOSTimestamp
-        self.isactive = isactive
+        self.active = active
 
 
 # convert ad array to Ad objects
@@ -119,7 +119,27 @@ class Data:
         self.yourBids = []
         self.yourOrders = []
         self.bidsOnYourAds = []
+        self.yourServices = []
+        self.changeMetric = [
+            len(self.allAds),
+            len(self.allBids),
+            len(self.allServices),
+        ]  # add more metrics here
         self.updateAll()
+
+    def isRefreshNeeded(self):
+        return self.changeMetric != [
+            len(self.allAds),
+            len(self.allBids),
+            len(self.allServices),
+        ]
+
+    def updateChangeMetric(self):
+        self.changeMetric = [
+            len(self.allAds),
+            len(self.allBids),
+            len(self.allServices),
+        ]
 
     def updateAllAds(self):
         self.allAds = convertAds(deployedChipnet.getAllAds())
@@ -154,11 +174,18 @@ class Data:
             if (self.allAds[bid.adIndex]).seller == account.address:
                 self.bidsOnYourAds.append(bid)
 
+    def updateYourServices(self, account=myAccount):
+        self.yourServices = []
+        for service in self.allServices:
+            if self.allAds[service.adIndex].seller == account.address:
+                self.yourServices.append(service)
+
     def updateUserSpecificData(self, account=myAccount):
         self.updateYourAds(account)
         self.updateYourBids(account)
         self.updateYourOrders(account)
         self.updateBidsOnYourAds(account)
+        self.updateYourServices(account)
 
     def updateAll(self):
         mutex.acquire()
@@ -187,5 +214,7 @@ def updater():
     print("Updated All")
 
 
+# also run event listener in gui.py
 # update data every 10 seconds
-setInterval(updater, 10)
+def updateDataRegularly():
+    setInterval(updater, 10)

@@ -2,6 +2,7 @@ from scripts.gui.adFrame import adFrame
 from scripts.gui.bidFrame import bidFrame
 from scripts.gui.approvedBidFrame import approvedBidFrame
 from scripts.gui.offerFrame import offerFrame
+from scripts.gui.serviceFrame import serviceFrame
 from scripts.gui.Container import Container
 from scripts.data import contractData
 
@@ -107,5 +108,27 @@ def createBidsOnYourAdsContainer(parent):
         dataFunc=GUIBidsOnYourAds,
         frameClass=offerFrame,
         widgetDataFunc=bidWidgetDataUpdateFunc,
+    )
+    return container
+
+
+# yourServices Container
+def GUIYourServices():
+    return contractData.yourServices
+
+
+def offerWidgetDataUpdateFunc(offerWidget, bid):
+    print("Called the offerWidgetDataUpdateFunc")
+    offerWidget.updateWidget(bid)
+
+
+def createYourServicesContainer(parent):
+    container = Container(
+        parent,
+        width=770,
+        height=130,
+        dataFunc=GUIYourServices,
+        frameClass=serviceFrame,
+        widgetDataFunc=offerWidgetDataUpdateFunc,
     )
     return container

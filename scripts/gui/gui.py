@@ -7,7 +7,8 @@ from scripts.gui.buyTab import buyPage
 from scripts.gui.homeTab import homePage
 from scripts.gui.sellTab import sellPage
 from scripts.gui.root import root
-from scripts.data import contractData
+from scripts.data import updateDataRegularly, contractData
+from scripts.events.listener import listen
 
 if len(getAllAds()) == 1:
     print("Populating Ads")
@@ -87,6 +88,8 @@ def showMyAccountTab(event):
 def showRefreshTab(event):
     buy.refresh()
     sell.refresh()
+    tabs.tabs[-1]["bg"] = "green"
+    contractData.updateChangeMetric()
     tabs.lastClickedTab = "Refresh"
 
 
@@ -105,5 +108,8 @@ home.grid(row=1, column=0, sticky="nsew")
 
 
 def main():
+    # start listening for events
+    listen()
+    updateDataRegularly()
     # run the event loop
     root.mainloop()

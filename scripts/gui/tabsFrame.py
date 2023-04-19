@@ -1,6 +1,7 @@
 import tkinter as tk
+from scripts.data import setInterval, contractData
 
-tabs = ["Home", "Buy", "Sell", "My Services", "My Account", "Refresh"]
+tabs = ["Home", "Buy", "Sell", "My Services", "Settings", "Refresh"]
 
 
 class TabFrame(tk.Frame):
@@ -13,6 +14,7 @@ class TabFrame(tk.Frame):
         self.tabs = []
         self.lastClickedTab = None
         self.createWidgets()
+        setInterval(self.checkForRefresh, 5)
 
     def createWidgets(self):
         for i in range(len(self.tabNames)):
@@ -29,3 +31,7 @@ class TabFrame(tk.Frame):
     def bindClickHandlers(self, clickHandlersListInOrder):
         for i in range(len(self.tabs)):
             self.tabs[i].bind("<Button-1>", clickHandlersListInOrder[i])
+
+    def checkForRefresh(self):
+        if contractData.isRefreshNeeded():
+            self.tabs[-1]["bg"] = "red"

@@ -1,6 +1,7 @@
 import tkinter as tk
 from scripts.data import contractData
 from scripts.gui.adFrame import adFrame
+from scripts.contract.setters import approveBid
 
 
 class offerFrame(adFrame):
@@ -12,10 +13,12 @@ class offerFrame(adFrame):
     def createWidgets(self):
         super().createWidgets()
         self.hours = tk.Label(self, text=f"Hours: {self.bid.noOfHours}")
-        self.approveButton = tk.Button(self, text="Approve", command=self.approveBid)
-        if self.bid.isApproved:
-            self.buyButton["text"] = "Approved"
-            self.buyButton["state"] = "disabled"
+        self.approveButton = tk.Button(
+            self, text="Approve", command=self.approveBidHandler
+        )
+        if self.bid.approved:
+            self.approveButton["text"] = "Approved"
+            self.approveButton["state"] = "disabled"
 
     def layoutWidgets(self):
         self.title.grid(row=0, column=0, sticky="nsew")
@@ -32,14 +35,15 @@ class offerFrame(adFrame):
         self.rowconfigure(2, weight=1)
         self.rowconfigure(3, weight=1)
 
-    def approveBid(self):
-        print("fake approving Bid")
+    def approveBidHandler(self):
+        approveBid(self.bid.index)
 
     def updateWidget(self, bid):
+        self.bid = bid
         super().updateWidget(contractData.allAds[bid.adIndex])
-        if self.bid.isApproved:
+        if self.bid.approved:
             self.buyButton["text"] = "Approved"
             self.buyButton["state"] = "disabled"
         else:
-            self.buyButton["text"] = "Approved"
+            self.buyButton["text"] = "Approve"
             self.buyButton["state"] = "normal"

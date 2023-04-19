@@ -4,6 +4,7 @@ from scripts.gui.allContainers import (
     createApprovedBidsContainer,
     createYourAdsContainer,
     createBidsOnYourAdsContainer,
+    createYourServicesContainer,
 )
 from scripts.gui.Console import Console
 
@@ -31,3 +32,8 @@ def createYourAdsConsole(parent):
 # bidsOnYourAds Console
 def createBidsOnYourAdsConsole(parent):
     return Console(parent, createBidsOnYourAdsContainer, "Bids On Your Ads")
+
+
+# yourServices Console
+def createYourServicesConsole(parent):
+    return Console(parent, createYourServicesContainer, "Your Services")

@@ -1,6 +1,9 @@
 import tkinter as tk
-from scripts.gui.allConsoles import createYourAdsConsole
-from scripts.gui.allConsoles import createBidsOnYourAdsConsole
+from scripts.gui.allConsoles import (
+    createYourAdsConsole,
+    createBidsOnYourAdsConsole,
+    createYourServicesConsole,
+)
 from scripts.gui.adCreator import adCreator
 from scripts.gui.root import root
 
@@ -42,11 +45,17 @@ class sellPage(tk.Frame):
         # create a bidsOnYourAdsConsole
         self.bidsOnYourAdsConsole = createBidsOnYourAdsConsole(self)
         self.bidsOnYourAdsConsole.grid(row=2, column=0, pady=5, sticky="nsew")
+        # create a yourServicesConsole
+        self.yourServicesConsole = createYourServicesConsole(self)
+        self.yourServicesConsole.grid(row=3, column=0, pady=5, sticky="nsew")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
+        self.rowconfigure(2, weight=1)
+        self.rowconfigure(3, weight=1)
 
     def refresh(self):
         print("refreshing")
         self.yourAdsConsole.updateFramesContainer()
         self.bidsOnYourAdsConsole.updateFramesContainer()
+        self.yourServicesConsole.updateFramesContainer()
