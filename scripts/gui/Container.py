@@ -24,6 +24,7 @@ class Container(ttk.Frame):
         self.frameClass = frameClass
         self.startIndex = startIndex
         self.containerSize = containerSize
+        self.dataFunc = dataFunc
         self.nofFrames = min(self.containerSize, len(dataFunc()))
         self.frameWidgets = []
         self.pack_propagate(False)
@@ -50,6 +51,7 @@ class Container(ttk.Frame):
                     self.frameWidgets[i], self.dataFunc()[self.startIndex + i]
                 )
         else:
+            self.nofFrames = min(self.containerSize, len(self.dataFunc()))
             self.destroyWidgets()
             self.createWidgets()
 

@@ -85,7 +85,6 @@ def showMyAccountTab(event):
 
 
 def showRefreshTab(event):
-    contractData.updateAll()
     buy.refresh()
     sell.refresh()
     tabs.lastClickedTab = "Refresh"

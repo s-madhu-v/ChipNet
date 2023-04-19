@@ -5,7 +5,7 @@ import threading
 contractAddress = os.getenv("CONTRACT_ADDRESS")
 deployedChipnet = ChipNet.at(contractAddress)
 chipnetEvents = network.contract.ContractEvents(deployedChipnet)
-myAccount = accounts[0]
+myAccount = accounts[9]
 mutex = threading.Lock()
 
 
