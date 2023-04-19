@@ -1,6 +1,7 @@
 from scripts.gui.adFrame import adFrame
 from scripts.gui.bidFrame import bidFrame
 from scripts.gui.approvedBidFrame import approvedBidFrame
+from scripts.gui.offerFrame import offerFrame
 from scripts.gui.Container import Container
 from scripts.data import contractData
 
@@ -89,5 +90,22 @@ def createYourAdsContainer(parent):
         dataFunc=GUIYourAds,
         frameClass=adFrame,
         widgetDataFunc=AdWidgetDataUpdateFunc,
+    )
+    return container
+
+
+# bidsOnYourAds Container
+def GUIBidsOnYourAds():
+    return contractData.bidsOnYourAds
+
+
+def createBidsOnYourAdsContainer(parent):
+    container = Container(
+        parent,
+        width=770,
+        height=130,
+        dataFunc=GUIBidsOnYourAds,
+        frameClass=offerFrame,
+        widgetDataFunc=bidWidgetDataUpdateFunc,
     )
     return container

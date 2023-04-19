@@ -5,26 +5,39 @@ import threading
 contractAddress = os.getenv("CONTRACT_ADDRESS")
 deployedChipnet = ChipNet.at(contractAddress)
 chipnetEvents = network.contract.ContractEvents(deployedChipnet)
-myAccount = accounts[9]
+myAccount = accounts[0]
 mutex = threading.Lock()
 
 
 class Ad:
-    def __init__(self, index, title, price, seller, isactive) -> None:
+    def __init__(self, index, title, price, seller, active) -> None:
         self.index = index
         self.title = title
-        self.price = price
+        self.pricePerHour = price
         self.seller = seller
-        self.isactive = isactive
+        self.active = active
 
 
 class Bid:
-    def __init__(self, index, adIndex, noOfHours, isApproved, isactive) -> None:
+    def __init__(
+        self,
+        index,
+        adIndex,
+        serviceIndex,
+        bidder,
+        noOfHours,
+        publicKey,
+        approved,
+        active,
+    ) -> None:
         self.index = index
         self.adIndex = adIndex
+        self.serviceIndex = serviceIndex
+        self.bidder = bidder
         self.noOfHours = noOfHours
-        self.isApproved = isApproved
-        self.isactive = isactive
+        self.publicKey = publicKey
+        self.approved = approved
+        self.active = active
 
 
 class Service:
@@ -33,6 +46,7 @@ class Service:
         index,
         adIndex,
         bidIndex,
+        serviceIndex,
         accessLink,
         password,
         SOSTimestamp,
@@ -42,6 +56,7 @@ class Service:
         self.index = index
         self.adIndex = adIndex
         self.bidIndex = bidIndex
+        self.serviceIndex = serviceIndex
         self.accessLink = accessLink
         self.password = password
         self.SOSTimestamp = SOSTimestamp
@@ -61,7 +76,18 @@ def convertAds(ads):
 def convertBids(bids):
     bidObjects = []
     for bid in bids:
-        bidObjects.append(Bid(bid[0], bid[1], bid[4], bid[6], bid[7]))
+        bidObjects.append(
+            Bid(
+                bid[0],
+                bid[1],
+                bid[2],
+                bid[3],
+                bid[4],
+                bid[5],
+                bid[6],
+                bid[7],
+            )
+        )
     return bidObjects
 
 
@@ -78,6 +104,7 @@ def convertServices(services):
                 service[5],
                 service[6],
                 service[7],
+                service[8],
             )
         )
     return serviceObjects
@@ -91,6 +118,7 @@ class Data:
         self.yourAds = []
         self.yourBids = []
         self.yourOrders = []
+        self.bidsOnYourAds = []
         self.updateAll()
 
     def updateAllAds(self):
@@ -103,18 +131,34 @@ class Data:
         self.allServices = convertServices(deployedChipnet.getAllServices())
 
     def updateYourAds(self, account=myAccount):
-        self.yourAds = convertAds(deployedChipnet.getAdsOf(account))
+        self.yourAds = []
+        for ad in self.allAds:
+            if ad.seller == account.address:
+                self.yourAds.append(ad)
 
     def updateYourBids(self, account=myAccount):
-        self.yourBids = convertBids(deployedChipnet.getBidsOf(account))
+        self.yourBids = []
+        for bid in self.allBids:
+            if bid.bidder == account.address:
+                self.yourBids.append(bid)
 
     def updateYourOrders(self, account=myAccount):
-        self.yourOrders = convertServices(deployedChipnet.getOrdersOf(account))
+        self.yourOrders = []
+        for service in self.allServices:
+            if self.allBids[service.bidIndex].bidder == account.address:
+                self.yourOrders.append(service)
+
+    def updateBidsOnYourAds(self, account=myAccount):
+        self.bidsOnYourAds = []
+        for bid in self.allBids:
+            if (self.allAds[bid.adIndex]).seller == account.address:
+                self.bidsOnYourAds.append(bid)
 
     def updateUserSpecificData(self, account=myAccount):
         self.updateYourAds(account)
         self.updateYourBids(account)
         self.updateYourOrders(account)
+        self.updateBidsOnYourAds(account)
 
     def updateAll(self):
         mutex.acquire()

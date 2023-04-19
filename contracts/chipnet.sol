@@ -14,6 +14,7 @@ contract ChipNet {
         uint256 index;
         uint256 adIndex;
         uint256 bidIndex;
+        uint256 serviceIndex;
         string accessLink;
         string password;
         uint256 SOSTimestamp;
@@ -50,35 +51,39 @@ contract ChipNet {
         return bids[_index];
     }
 
-    Advertisement initAd = Advertisement({
-        title: "",
-        index: 0,
-        pricePerHour: 0,
-        seller: payable(address(0)),
-        active: false
-    });
+    Advertisement initAd =
+        Advertisement({
+            title: "",
+            index: 0,
+            pricePerHour: 0,
+            seller: payable(address(0)),
+            active: false
+        });
 
-    Service initService = Service({
-        adIndex: 0,
-        bidIndex: 0,
-        index: 0,
-        accessLink: "",
-        password: "",
-        SOSTimestamp: 0,
-        EOSTimestamp: 0,
-        active: false
-    });
+    Service initService =
+        Service({
+            adIndex: 0,
+            bidIndex: 0,
+            index: 0,
+            serviceIndex: 0,
+            accessLink: "",
+            password: "",
+            SOSTimestamp: 0,
+            EOSTimestamp: 0,
+            active: false
+        });
 
-    Bid initBid = Bid({
-        adIndex: 0,
-        index: 0,
-        serviceIndex: 0,
-        bidder: payable(address(0)),
-        noOfHours: 0,
-        publicKey: "",
-        approved: false,
-        active: false
-    });
+    Bid initBid =
+        Bid({
+            adIndex: 0,
+            index: 0,
+            serviceIndex: 0,
+            bidder: payable(address(0)),
+            noOfHours: 0,
+            publicKey: "",
+            approved: false,
+            active: false
+        });
 
     constructor() {
         ads.push(initAd);
@@ -107,7 +112,9 @@ contract ChipNet {
     }
 
     // A function called adsOf that returns the ad structs array corresponding to a user
-    function getAdsOf(address _user) public view returns (Advertisement[] memory) {
+    function getAdsOf(
+        address _user
+    ) public view returns (Advertisement[] memory) {
         uint256[] memory adIndices = adsOf[_user];
         Advertisement[] memory yourAds = new Advertisement[](adIndices.length);
         for (uint256 i = 0; i < adIndices.length; i++) {
@@ -127,7 +134,9 @@ contract ChipNet {
     }
 
     // A function called servicesOf that returns the service structs array corresponding to a user
-    function getServicesOf(address _user) public view returns (Service[] memory) {
+    function getServicesOf(
+        address _user
+    ) public view returns (Service[] memory) {
         uint256[] memory serviceIndices = servicesOf[_user];
         Service[] memory yourServices = new Service[](serviceIndices.length);
         for (uint256 i = 0; i < serviceIndices.length; i++) {
@@ -169,14 +178,21 @@ contract ChipNet {
 
     event newBid(uint256 bidIndex, uint256 adIndex);
 
-    function bidOnAd(uint256 _adIndex, uint256 _noOfHours, string memory _pubKey) public payable returns (uint256) {
+    function bidOnAd(
+        uint256 _adIndex,
+        uint256 _noOfHours,
+        string memory _pubKey
+    ) public payable returns (uint256) {
         Advertisement memory ad = ads[_adIndex];
 
         require(ad.active == true, "Advertisement is inactive");
 
         require(msg.sender != ad.seller, "Seller cannot bid on their own ad");
 
-        require(msg.value == ad.pricePerHour * _noOfHours, "Value sent is not equal to the price of the ad");
+        require(
+            msg.value == ad.pricePerHour * _noOfHours,
+            "Value sent is not equal to the price of the ad"
+        );
 
         Bid memory bid = Bid({
             adIndex: _adIndex,
@@ -195,14 +211,15 @@ contract ChipNet {
         return bids.length - 1;
     }
 
-
     function cancelBid(uint256 _bidIndex) public {
         Bid memory bid = bids[_bidIndex];
         require(msg.sender == bid.bidder, "Only bidder can cancel bid");
         require(bid.active == true, "Bid is already inactive");
         require(bid.approved == false, "Bid is already approved");
         bids[_bidIndex].active = false;
-        payable(msg.sender).transfer(bid.noOfHours * ads[bid.adIndex].pricePerHour);
+        payable(msg.sender).transfer(
+            bid.noOfHours * ads[bid.adIndex].pricePerHour
+        );
     }
 
     event bidApproved(uint256 bidIndex, uint256 serviceIndex);
@@ -218,6 +235,7 @@ contract ChipNet {
             adIndex: bid.adIndex,
             bidIndex: _bidIndex,
             index: services.length,
+            serviceIndex: services.length,
             accessLink: "",
             password: "",
             SOSTimestamp: 0,
@@ -234,7 +252,11 @@ contract ChipNet {
         return services.length - 1;
     }
 
-    function postCredentials(uint256 _serviceIndex, string memory _accessLink, string memory _password) public {
+    function postCredentials(
+        uint256 _serviceIndex,
+        string memory _accessLink,
+        string memory _password
+    ) public {
         Service memory service = services[_serviceIndex];
         Bid memory bid = bids[service.bidIndex];
         Advertisement memory ad = ads[bid.adIndex];
@@ -246,7 +268,9 @@ contract ChipNet {
         services[_serviceIndex].accessLink = _accessLink;
         services[_serviceIndex].password = _password;
         services[_serviceIndex].SOSTimestamp = block.timestamp;
-        services[_serviceIndex].EOSTimestamp = block.timestamp + (bid.noOfHours * 1 hours);
+        services[_serviceIndex].EOSTimestamp =
+            block.timestamp +
+            (bid.noOfHours * 1 hours);
     }
 
     function endService(uint256 _serviceIndex) public {
@@ -256,7 +280,10 @@ contract ChipNet {
         require(msg.sender == ad.seller, "Only seller can end service");
         require(service.active == true, "Service is already inactive");
         require(service.SOSTimestamp > 0, "Service has not started");
-        require(service.EOSTimestamp > block.timestamp, "Service has already ended");
+        require(
+            service.EOSTimestamp > block.timestamp,
+            "Service has already ended"
+        );
         services[_serviceIndex].EOSTimestamp = block.timestamp;
         services[_serviceIndex].active = false;
         payable(ad.seller).transfer(bid.noOfHours * ad.pricePerHour);

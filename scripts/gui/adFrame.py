@@ -39,11 +39,12 @@ class adFrame(tk.Frame):
     def createWidgets(self):
         # create the widgets
         self.title = tk.Label(self, text=self.ad.title, font=("Monospace", 16))
-        self.price = tk.Label(self, text=f"Price: {int(self.ad.price/(10**18))} ETH")
+        self.price = tk.Label(
+            self, text=f"Price: {int(self.ad.pricePerHour/(10**18))} ETH"
+        )
         self.sellerAccount = tk.Label(self, text=self.ad.seller[:10])
-        isactive = self.ad.isactive
         self.buyButton = tk.Button(self, text="Make a Bid", command=self.buyThisAd)
-        if isactive == False:
+        if not self.ad.active:
             self.buyButton["text"] = "Sold"
             self.buyButton["state"] = "disabled"
 
@@ -52,14 +53,13 @@ class adFrame(tk.Frame):
         self.ad = ad
         self.title["text"] = ad.title
         # handle floating point numbers
-        self.price["text"] = f"Price: {int(ad.price/(10**18))} ETH"
+        self.price["text"] = f"Price: {int(ad.pricePerHour/(10**18))} ETH"
         self.sellerAccount["text"] = ad.seller[:10]
-        isactive = ad.isactive
-        if isactive == False:
+        if not ad.active:
             self.buyButton["text"] = "Sold"
             self.buyButton["state"] = "disabled"
         else:
-            self.buyButton["text"] = "Buy"
+            self.buyButton["text"] = "Make a Bid"
             self.buyButton["state"] = "normal"
 
     def layoutWidgets(self):
