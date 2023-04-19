@@ -38,24 +38,20 @@ class Container(ttk.Frame):
             self.frameWidgets.append(widget)
             widget.grid(row=0, column=i, sticky="nsew", padx=10)
 
-    def handleNoOfFramesChange(self):
-        self.nofFrames = min(self.containerSize, len(self.dataFunc()))
-        if self.nofFrames < len(self.frameWidgets):
-            for i in range(self.nofFrames, len(self.FrameWidgets)):
-                self.frameWidgets[i].destroy()
-            self.frameWidgets = self.frameWidgets[: self.nofFrames]
-        elif self.nofFrames > len(self.frameWidgets):
-            for i in range(len(self.frameWidgets), self.nofFrames):
-                widget = self.frameClass(self, self.dataFunc()[self.startIndex + i])
-                self.frameWidgets.append(widget)
-                widget.pack(side="left", padx=10)
+    def destroyWidgets(self):
+        for widget in self.frameWidgets:
+            widget.destroy()
+        self.frameWidgets = []
 
     def moveContainer(self):
-        self.handleNoOfFramesChange()
-        for i in range(self.nofFrames):
-            self.widgetDataFunc(
-                self.frameWidgets[i], self.dataFunc()[self.startIndex + i]
-            )
+        if self.nofFrames >= self.containerSize:
+            for i in range(self.nofFrames):
+                self.widgetDataFunc(
+                    self.frameWidgets[i], self.dataFunc()[self.startIndex + i]
+                )
+        else:
+            self.destroyWidgets()
+            self.createWidgets()
 
     def updateFrameWidgets(self):
         self.moveContainer()
