@@ -1,13 +1,12 @@
-from brownie import ChipNet, accounts
+from brownie import ChipNet, accounts, network
 import os
 import threading
 
 contractAddress = os.getenv("CONTRACT_ADDRESS")
 deployedChipnet = ChipNet.at(contractAddress)
-myAddress = accounts[0]
-myAccount = accounts.at(myAddress)
-sellAccount = accounts[8]
-buyAccount = accounts[9]
+chipnetEvents = network.contract.ContractEvents(deployedChipnet)
+myAccount = accounts[0]
+mutex = threading.Lock()
 
 
 class Ad:
@@ -103,25 +102,27 @@ class Data:
     def updateAllServices(self):
         self.allServices = convertServices(deployedChipnet.getAllServices())
 
-    def updateYourAds(self, account=sellAccount):
+    def updateYourAds(self, account=myAccount):
         self.yourAds = convertAds(deployedChipnet.getAdsOf(account))
 
-    def updateYourBids(self, account=buyAccount):
+    def updateYourBids(self, account=myAccount):
         self.yourBids = convertBids(deployedChipnet.getBidsOf(account))
 
-    def updateYourOrders(self, account=buyAccount):
+    def updateYourOrders(self, account=myAccount):
         self.yourOrders = convertServices(deployedChipnet.getOrdersOf(account))
 
-    def updateUserSpecificData(self, account=buyAccount):
-        self.updateYourAds(account=sellAccount)
+    def updateUserSpecificData(self, account=myAccount):
+        self.updateYourAds(account)
         self.updateYourBids(account)
         self.updateYourOrders(account)
 
     def updateAll(self):
+        mutex.acquire()
         self.updateAllAds()
         self.updateAllBids()
         self.updateAllServices()
         self.updateUserSpecificData()
+        mutex.release()
 
 
 contractData = Data()
@@ -142,5 +143,5 @@ def updater():
     print("Updated All")
 
 
-# update data every 7 seconds
-setInterval(updater, 7)
+# update data every 10 seconds
+setInterval(updater, 10)

@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from scripts.data import contractData
 from scripts.gui.adFrame import adFrame
 

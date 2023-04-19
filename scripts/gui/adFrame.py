@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.simpledialog as sd
 from tkinter.messagebox import askyesno
-from scripts.data import Ad, myAddress, contractData
+from scripts.data import Ad, myAccount
 from scripts.contract.setters import bidOnAd
 
 adFramebackground = "green"
@@ -30,7 +30,7 @@ class adFrame(tk.Frame):
             message="Are you sure you want to make Bid on this Ad?",
         )
         if answer:
-            bidOnAd(self.ad.index, myAddress, int(noOfHours))
+            bidOnAd(self.ad.index, myAccount, int(noOfHours))
             self.buyButton["text"] = "Bid Submitted"
             time.sleep(1)
         else:
@@ -40,7 +40,7 @@ class adFrame(tk.Frame):
         # create the widgets
         self.title = tk.Label(self, text=self.ad.title, font=("Monospace", 16))
         self.price = tk.Label(self, text=f"Price: {int(self.ad.price/(10**18))} ETH")
-        self.sellerAddress = tk.Label(self, text=self.ad.seller[:10])
+        self.sellerAccount = tk.Label(self, text=self.ad.seller[:10])
         isactive = self.ad.isactive
         self.buyButton = tk.Button(self, text="Make a Bid", command=self.buyThisAd)
         if isactive == False:
@@ -53,7 +53,7 @@ class adFrame(tk.Frame):
         self.title["text"] = ad.title
         # handle floating point numbers
         self.price["text"] = f"Price: {int(ad.price/(10**18))} ETH"
-        self.sellerAddress["text"] = ad.seller[:10]
+        self.sellerAccount["text"] = ad.seller[:10]
         isactive = ad.isactive
         if isactive == False:
             self.buyButton["text"] = "Sold"
@@ -68,8 +68,8 @@ class adFrame(tk.Frame):
         self.title["bg"] = "blue"
         self.price.grid(row=1, column=0, sticky="nsew")
         self.price["bg"] = "yellow"
-        self.sellerAddress.grid(row=2, column=0, sticky="nsew")
-        self.sellerAddress["bg"] = "pink"
+        self.sellerAccount.grid(row=2, column=0, sticky="nsew")
+        self.sellerAccount["bg"] = "pink"
         self.buyButton.grid(row=3, column=0, sticky="nsew")
         self.buyButton["bg"] = "orange"
         self.columnconfigure(0, weight=1)

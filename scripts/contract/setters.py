@@ -1,7 +1,7 @@
 from scripts.data import deployedChipnet
 from scripts.contract.getters import getAd
 from scripts.service.encrypt import generateKeysIfTheyDontExist, readPublicKey
-from scripts.data import buyAccount, sellAccount
+from scripts.data import myAccount
 
 
 def postAd(title, priceInETH, sellerAccount):
@@ -14,9 +14,7 @@ def postAd(title, priceInETH, sellerAccount):
     return txn
 
 
-def bidOnAd(
-    adIndex, buyerAccount, noOfHours=1
-):  # change the buyAccount to buyerAccount
+def bidOnAd(adIndex, buyerAccount, noOfHours=1):
     print(f"Bidding on an Ad: {adIndex}, with noOfHours: {noOfHours}")
     generateKeysIfTheyDontExist()
     ad = getAd(adIndex)
@@ -25,13 +23,13 @@ def bidOnAd(
         adIndex,
         noOfHours,
         readPublicKey().export_key().decode("utf-8"),
-        {"from": buyAccount, "value": ad["pricePerHour"] * noOfHours},
+        {"from": buyerAccount, "value": ad["pricePerHour"] * noOfHours},
     )
     txn.wait(1)
     return txn
 
 
-def approveBid(bidIndex, sellerAccount):  # change the sellAccount to sellerAccount
-    txn = deployedChipnet.approveBid(bidIndex, {"from": sellAccount})
+def approveBid(bidIndex, sellerAccount):
+    txn = deployedChipnet.approveBid(bidIndex, {"from": sellerAccount})
     txn.wait(1)
     return txn

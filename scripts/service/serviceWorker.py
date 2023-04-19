@@ -1,9 +1,9 @@
 import time
-import base64
 import docker
-from scripts.service.run import run
+from scripts.service.run import createServiceContainer, runCmdInContainer
 from scripts.service.encrypt import encryptCredentials, readPublicKeyFromString
-from scripts.data import deployedChipnet, sellAccount, buyAccount
+from scripts.contract.getters import getTimeSpan
+from scripts.data import deployedChipnet, myAccount
 import subprocess
 
 
@@ -32,10 +32,6 @@ def getAccessLink(containerName):
     return link
 
 
-def theTerminator():
-    print("Terminating the service")
-
-
 def endServiceIn(seconds, terminator):
     start_time = time.monotonic()  # get current time in seconds
     end_time = start_time + seconds  # calculate end time
@@ -50,17 +46,20 @@ def postCredentials(serviceIndex, accessLink, password):
     publicKey = readPublicKeyFromString(bid["publicKey"])
     encryptedAccessLink = encryptCredentials(accessLink, publicKey)
     encryptedPassword = encryptCredentials(password, publicKey)
-    # change the sellAccount to sellerAccount
     deployedChipnet.postCredentials(
-        serviceIndex, encryptedAccessLink, encryptedPassword, {"from": sellAccount}
+        serviceIndex, encryptedAccessLink, encryptedPassword, {"from": myAccount}
     )
 
 
-def runService(serviceIndex):
+def newService(serviceIndex):
+    def theTerminator():
+        runCmdInContainer(["killall ngrok"], f"service-{serviceIndex}" + "-container")
+
     try:
-        password = run(f"service-{serviceIndex}")
+        password = createServiceContainer(f"service-{serviceIndex}")
         accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
         postCredentials(serviceIndex, accessLink, password)
-        endServiceIn(60 * 60, theTerminator)  # change this to time in the bid
+        timeSpan = int(getTimeSpan(serviceIndex)) * 60 * 60
+        endServiceIn(timeSpan, theTerminator)
     except docker.errors.DockerException:
-        print("Error: Docker is not running?")
+        print("Error: Docker is not running???")

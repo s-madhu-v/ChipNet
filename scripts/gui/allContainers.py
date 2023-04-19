@@ -1,5 +1,3 @@
-import tkinter as tk
-from tkinter import ttk
 from scripts.gui.adFrame import adFrame
 from scripts.gui.bidFrame import bidFrame
 from scripts.gui.approvedBidFrame import approvedBidFrame

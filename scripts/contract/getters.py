@@ -1,4 +1,4 @@
-from scripts.data import deployedChipnet
+from scripts.data import deployedChipnet, myAccount, contractData
 
 
 def getAllAds():
@@ -11,3 +11,18 @@ def getBidsOf(account):
 
 def getAd(index):
     return deployedChipnet.getAd(index)
+
+
+def isYourAd(adIndex, account=myAccount):
+    return contractData.allAds[adIndex].seller == account.address
+
+
+# write a function to get the no of hours from the service index
+def getHours(serviceIndex):
+    try:
+        bid = contractData.allBids[contractData.allServices[serviceIndex].bidIndex]
+        return bid.noOfHours
+    except:
+        contractData.updateAll()
+        bid = contractData.allBids[contractData.allServices[serviceIndex].bidIndex]
+        return bid.noOfHours

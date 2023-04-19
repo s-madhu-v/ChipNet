@@ -1,6 +1,5 @@
 # The entrypoint for the GUI
 
-import tkinter as tk
 from scripts.contract.getters import getAllAds
 from scripts.gui.populate import populateAds
 from scripts.gui.tabsFrame import TabFrame

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from scripts.contract.setters import postAd
-from scripts.data import myAddress
+from scripts.data import myAccount
 
 
 class adCreator(ttk.Frame):
@@ -35,4 +35,4 @@ class adCreator(ttk.Frame):
     def createAd(self):
         title = self.titleEntry.get()
         price = self.priceEntry.get()
-        postAd(title, price, myAddress)
+        postAd(title, price, myAccount)

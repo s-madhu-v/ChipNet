@@ -3,6 +3,8 @@ import docker
 import random
 import string
 
+repoLink = "https://github.com/s-madhu-v/Dockerf.git"
+
 
 def generateRandomPassword(length):
     characters = string.ascii_letters + string.digits  # + string.punctuation
@@ -18,15 +20,17 @@ def getBuildArgs():
     return buildargs
 
 
-def run(imageName):
+def runCmdInContainer(cmd, containerName):
+    myClient = docker.from_env()
+    container = myClient.containers.get(containerName)
+    container.exec_run(cmd)
+
+
+def createServiceContainer(imageName):
     args = getBuildArgs()
     myClient = docker.from_env()
-    repoLink = "https://github.com/s-madhu-v/Dockerf.git"
     # the image name should always be lowercase
     obj = Container.dContainer(myClient, repoLink, imageName)
+    # TODO: enforce limits
     obj.createContainer(cores=1, memory="2g", storage="4G", buildArgs=args)
     return args["PASSWORD"]
-
-
-def main():
-    run()
