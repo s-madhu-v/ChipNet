@@ -51,7 +51,7 @@ class Container(ttk.Frame):
                 widget.pack(side="left", padx=10)
 
     def moveContainer(self):
-        # self.handleNoOfFramesChange()
+        self.handleNoOfFramesChange()
         for i in range(self.nofFrames):
             self.widgetDataFunc(
                 self.frameWidgets[i], self.dataFunc()[self.startIndex + i]

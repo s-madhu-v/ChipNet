@@ -2,7 +2,7 @@ import time
 import docker
 from scripts.service.run import createServiceContainer, runCmdInContainer
 from scripts.service.encrypt import encryptCredentials, readPublicKeyFromString
-from scripts.contract.getters import getTimeSpan
+from scripts.contract.getters import getNoOfHours
 from scripts.data import deployedChipnet, myAccount
 import subprocess
 
@@ -59,7 +59,7 @@ def newService(serviceIndex):
         password = createServiceContainer(f"service-{serviceIndex}")
         accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
         postCredentials(serviceIndex, accessLink, password)
-        timeSpan = int(getTimeSpan(serviceIndex)) * 60 * 60
+        timeSpan = int(getNoOfHours(serviceIndex)) * 60 * 60
         endServiceIn(timeSpan, theTerminator)
     except docker.errors.DockerException:
         print("Error: Docker is not running???")

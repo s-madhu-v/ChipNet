@@ -18,7 +18,7 @@ def isYourAd(adIndex, account=myAccount):
 
 
 # write a function to get the no of hours from the service index
-def getHours(serviceIndex):
+def getNoOfHours(serviceIndex):
     try:
         bid = contractData.allBids[contractData.allServices[serviceIndex].bidIndex]
         return bid.noOfHours
