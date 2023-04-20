@@ -1,0 +1,24 @@
+import sys
+from cx_Freeze import setup, Executable
+
+
+bdist_mac_options = {
+    "bundle_name": "ChipNet"
+}
+
+build_exe_options = {
+    "packages": ["brownie", "cytoolz", "multiaddr", "black", "eth_hash"],
+    "excludes": [],
+    "include_files": [],
+    "zip_include_packages": []
+}
+
+setup(
+    name="ChipNet",
+    version="1.0",
+    description="A Platform for trading computational power",
+    options={"build_exe": build_exe_options,
+             "bdist_mac": bdist_mac_options},
+    executables=[Executable("start.py", base=None)]
+)
+
