@@ -1,4 +1,7 @@
-import tkinter as tk
+from myTkinter import myTk, myTtk
+tk = myTk
+ttk = myTtk
+#import tkinter as tk
 from chipnetapp.data import setInterval, contractData
 
 tabs = ["Home", "Buy", "Sell", "My Services", "Settings", "Refresh"]

@@ -1,5 +1,8 @@
+from myTkinter import myTk, myTtk
+ttk = myTtk
+#tk = myTk
+#from tkinter import ttk
 from chipnetapp.gui.gui import root
-from tkinter import ttk
 
 style = ttk.Style(root)
 

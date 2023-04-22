@@ -1,4 +1,8 @@
-import tkinter as tk
+from myTkinter import myTk, myTtk
+tk = myTk
+#import tkinter as tk
+#ttk = myttk
+
 from chipnetapp.data import contractData
 from chipnetapp.gui.adFrame import adFrame
 from chipnetapp.gui.utils import createNewWindow, copy_text

@@ -1,5 +1,8 @@
-import tkinter as tk
-from tkinter import ttk
+from myTkinter import myTk, myTtk
+tk = myTk
+ttk = myTtk
+#import tkinter as tk
+#from tkinter import ttk
 from chipnetapp.gui.adCreator import adCreator
 
 

@@ -1,8 +1,13 @@
 import time
-import tkinter as tk
-from tkinter import ttk
-import tkinter.simpledialog as sd
-from tkinter.messagebox import askyesno
+from myTkinter import myTk, myTtk, mySd, myAskYesNo
+tk = myTk
+ttk = myTtk
+sd = mySd
+askyesno = myAskYesNo
+#import tkinter as tk
+#from tkinter import ttk
+#import tkinter.simpledialog as sd
+#from tkinter.messagebox import askyesno
 from chipnetapp.data import Ad, myAccount
 from chipnetapp.contract.setters import bidOnAd
 

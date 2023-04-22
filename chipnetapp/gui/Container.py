@@ -1,4 +1,8 @@
-from tkinter import ttk
+from myTkinter import myTk, myTtk
+tk = myTk
+ttk = myTtk
+
+# from tkinter import ttk
 
 adsContainerbackground = "blue"
 

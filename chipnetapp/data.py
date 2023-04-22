@@ -1,6 +1,9 @@
 from brownie import Contract, accounts, network
 import os
 import threading
+from myTkinter import myTk
+tk = myTk
+
 
 network.connect("ganache-GUI")
 contractAddress = os.getenv("CONTRACT_ADDRESS")
@@ -11,8 +14,28 @@ mutex = threading.Lock()
 
 print("on the way to import")
 
-def imtest():
+def imtest(module=tk):
     print("Working???")
+    print("This is from imtest")
+    # Create a new instance of moduleinter
+    root = module.Tk()
+
+# Set the title of the window
+    root.title("My App")
+
+# Create a label widget
+    label = module.Label(root, text="Welcome to my IMTEST!")
+
+# Create a button widget
+    button = module.Button(root, text="Click me!", command=root.destroy)
+
+# Pack the label and button widgets into the window
+    label.pack(padx=20, pady=20)
+    button.pack(padx=20, pady=20)
+
+# Run the main loop of moduleinter
+    root.mainloop()
+
 
 class Ad:
     def __init__(self, index, title, price, seller, active) -> None:
