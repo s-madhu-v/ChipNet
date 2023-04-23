@@ -4,7 +4,7 @@ from chipnetapp.gui.approvedBidFrame import approvedBidFrame
 from chipnetapp.gui.offerFrame import offerFrame
 from chipnetapp.gui.serviceFrame import serviceFrame
 from chipnetapp.gui.Container import Container
-from chipnetapp.data import contractData
+from chipnetapp.app import getTheApp
 
 
 # Ads Container
@@ -12,7 +12,7 @@ adsContainerbackground = "blue"
 
 
 def GUIAllAds():
-    return contractData.allAds
+    return getTheApp().contractData.allAds
 
 
 def AdWidgetDataUpdateFunc(adWidget, ad):
@@ -36,7 +36,7 @@ bidsContainerbackground = "yellow"
 
 
 def GUIAllBids():
-    return contractData.yourBids
+    return getTheApp().contractData.yourBids
 
 
 def bidWidgetDataUpdateFunc(bidWidget, bid):
@@ -57,7 +57,7 @@ def createBidsContainer(parent):
 
 # Approved Bids Container
 def GUIAllApprovedBids():
-    return contractData.yourOrders
+    return getTheApp().contractData.yourOrders
 
 
 def approvedBidWidgetDataUpdateFunc(approvedBidWidget, approvedBid):
@@ -80,7 +80,7 @@ def createApprovedBidsContainer(parent):
 
 
 def GUIYourAds():
-    return contractData.yourAds
+    return getTheApp().contractData.yourAds
 
 
 def createYourAdsContainer(parent):

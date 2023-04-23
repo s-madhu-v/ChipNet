@@ -1,8 +1,5 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-#ttk = myTtk
-#import tkinter as tk
-from chipnetapp.data import contractData
+import tkinter as tk
+from chipnetapp.app import getTheApp
 from chipnetapp.gui.adFrame import adFrame
 from chipnetapp.contract.setters import cancelBid
 
@@ -10,7 +7,7 @@ from chipnetapp.contract.setters import cancelBid
 class bidFrame(adFrame):
     def __init__(self, parent, bid):
         self.bid = bid
-        self.ad = contractData.allAds[bid.adIndex]
+        self.ad = getTheApp().contractData.allAds[bid.adIndex]
         super().__init__(parent, self.ad, width=210, height=160)
 
     def createWidgets(self):
@@ -35,10 +32,10 @@ class bidFrame(adFrame):
         self.rowconfigure(3, weight=1)
 
     def cancelBid(self):
-        print("Cancel Bid")
+        print("Cancelling Bid")
         cancelBid(self.bid.index)
 
     def updateWidget(self, bid):
         self.bid = bid
-        super().updateWidget(contractData.allAds[bid.adIndex])
+        super().updateWidget(getTheApp().contractData.allAds[bid.adIndex])
         # update status here...

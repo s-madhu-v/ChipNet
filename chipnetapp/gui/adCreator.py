@@ -1,10 +1,6 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-ttk = myTtk
-#import tkinter as tk
-#from tkinter import ttk
+import tkinter as tk
+from tkinter import ttk
 from chipnetapp.contract.setters import postAd
-from chipnetapp.data import myAccount
 
 
 class adCreator(ttk.Frame):
@@ -38,4 +34,4 @@ class adCreator(ttk.Frame):
     def createAd(self):
         title = self.titleEntry.get()
         price = self.priceEntry.get()
-        postAd(title, price, myAccount)
+        postAd(title, price)

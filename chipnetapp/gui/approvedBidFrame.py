@@ -1,7 +1,5 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-#import tkinter as tk
-#ttk = myttk
+import tkinter as tk
+
 
 from chipnetapp.data import contractData
 from chipnetapp.gui.adFrame import adFrame

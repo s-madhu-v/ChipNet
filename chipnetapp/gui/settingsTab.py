@@ -1,7 +1,5 @@
-from myTkinter import myTk, myTtk
-
-tk = myTk
-ttk = myTtk
+import tkinter as tk
+from tkinter import ttk
 
 from brownie import accounts
 from chipnetapp.data import (
@@ -43,18 +41,6 @@ class settingsPage(tk.Frame):
         self.createAccountButton = tk.Button(
             self.accountCreator, text="Create Account", command=self.createAccount
         )
-        # Network Selector
-        self.networkSelectorFrame = tk.Frame(self)
-        self.selectNetworkLabel = tk.Label(
-            self.networkSelectorFrame, text="Select your Network: "
-        )
-        self.networkComboBox = ttk.Combobox(
-            self.networkSelectorFrame, values=availabeNetworks
-        )
-        self.networkComboBox.set(getCurrentNetwork())
-        self.networkComboBox.bind(
-            "<<ComboboxSelected>>", lambda event: self.onNetworkSelect(event)
-        )
 
     def layoutWidgets(self):
         self.accountSelectorFrame.grid(row=1, column=0, padx=5, pady=5)
@@ -65,9 +51,6 @@ class settingsPage(tk.Frame):
         self.createLabel.pack(side="left")
         self.keyEntry.pack(side="left")
         self.createAccountButton.pack(side="left")
-        self.networkSelectorFrame.grid(row=3, column=0, padx=5, pady=5)
-        self.selectNetworkLabel.pack(side="left")
-        self.networkComboBox.pack(side="left")
         # self.columnconfigure(0, weight=1)
         # self.rowconfigure(0, weight=1)
 
@@ -82,11 +65,5 @@ class settingsPage(tk.Frame):
         setMyAccount(selectedAccount)
         contractData.updateAll()
 
-    def onNetworkSelect(self, event):
-        selectedNetwork = self.networkComboBox.get()
-        print(f"selectedNetwork: {selectedNetwork}")
-        changeToNetwork(selectedNetwork)
-        contractData.updateAll()
-
-    def refresh(self):
+    def refresh(self):  # TODO: fix this
         print("refreshing")

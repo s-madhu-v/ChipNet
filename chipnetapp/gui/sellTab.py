@@ -1,18 +1,15 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-# ttk = myTtk
-# import tkinter as tk
+import tkinter as tk
 from chipnetapp.gui.allConsoles import (
     createYourAdsConsole,
     createBidsOnYourAdsConsole,
     createYourServicesConsole,
 )
 from chipnetapp.gui.adCreator import adCreator
-from chipnetapp.gui.root import root
+from chipnetapp.app import getTheApp
 
 
 def createNewWindow():
-    new_window = tk.Toplevel(root)
+    new_window = tk.Toplevel(getTheApp().root)
     new_window.title("New Window")
     new_window.geometry("200x200+200+200")
     adCreatorFrame = adCreator(new_window)

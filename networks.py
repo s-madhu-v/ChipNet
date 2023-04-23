@@ -55,3 +55,8 @@ globalGanache = {
     "id": "globalGanache",
     "name": "globalGanache",
 }
+
+
+def setupNetworks():
+    addNetworkIfItDoesntExist(localGanache)
+    addNetworkIfItDoesntExist(globalGanache)

@@ -1,115 +1,88 @@
 # The entrypoint for the GUI
-
-from chipnetapp.data import updateDataRegularly, contractData
-from chipnetapp.contract.getters import getAllAds
-from chipnetapp.gui.populate import populateAds
+# This file is responsible for creating the main window and all of the tabs
 from chipnetapp.gui.tabsFrame import TabFrame
 from chipnetapp.gui.buyTab import buyPage
 from chipnetapp.gui.homeTab import homePage
 from chipnetapp.gui.sellTab import sellPage
 from chipnetapp.gui.settingsTab import settingsPage
-from chipnetapp.gui.root import root
-from chipnetapp.events.listener import listen
-
-if len(getAllAds()) == 1:
-    print("Populating Ads")
-    populateAds()
 
 
-def guiSetup():
-    # set the title for the window
-    root.title("ChipNet")
+class gui:
+    def __init__(self, app) -> None:
+        self.app = app
+        self.root = app.root
+        self.tabBar = TabFrame(self.root)
+        self.homeTab = homePage(self.root)
+        self.buyTab = buyPage(self.root)
+        self.sellTab = sellPage(self.root)
+        self.settingsTab = settingsPage(self.root)
+        self.allTabs = [self.homeTab, self.buyTab, self.sellTab, self.settingsTab]
+        self.setupAppWindow()
+        self.showHomeTab()
 
-    # set the size of the window
-    root.geometry("1000x750")
+    def setupAppWindow(self):
+        self.root.title = "ChipNet"
+        self.root.geometry = "1000x750"
+        self.root.resizable = False
 
-    # make the window unresizable
-    root.resizable(False, False)
+    def layoutWidgets(self):
+        self.tabBar.grid(row=0, column=0, sticky="nsew")
 
-    # Create the tabs
-    tabs = TabFrame(root)
-    tabs.grid(row=0, column=0, sticky="nsew")
-
-    # Create the homeTab
-    home = homePage(root)
-
-    # Create the buyTab
-    buy = buyPage(root)
-
-    # Create the sellTab
-    sell = sellPage(root)
-
-    # Create the settingsTab
-    settings = settingsPage(root)
-
-    allTabs = [home, buy, sell, settings]
-
-    def hideAllTabs(event):
-        for tab in allTabs:
+    def hideAllTabs(self):
+        for tab in self.allTabs:
             tab.grid_forget()
 
-    def showHomeTab(event):
-        if tabs.lastClickedTab == "Home":
+    def showHomeTab(self):
+        if self.tabBar.lastClickedTab == "Home":
             return
-        hideAllTabs(event)
-        home.grid(row=1, column=0, sticky="nsew")
-        tabs.lastClickedTab = "Home"
+        self.hideAllTabs()
+        self.homeTab.grid(row=1, column=0, sticky="nsew")
+        self.tabBar.lastClickedTab = "Home"
 
-    def showBuyTab(event):
-        if tabs.lastClickedTab == "Buy":
+    def showBuyTab(self):
+        if self.tabBar.lastClickedTab == "Buy":
             return
-        hideAllTabs(event)
-        buy.grid(row=1, column=0, sticky="nsew")
-        tabs.lastClickedTab = "Buy"
+        self.hideAllTabs()
+        self.buyTab.grid(row=1, column=0, sticky="nsew")
+        self.tabBar.lastClickedTab = "Buy"
 
-    def showSellTab(event):
-        if tabs.lastClickedTab == "Sell":
+    def showSellTab(self):
+        if self.tabBar.lastClickedTab == "Sell":
             return
-        hideAllTabs(event)
-        sell.grid(row=1, column=0, sticky="nsew")
-        tabs.lastClickedTab = "Sell"
+        self.hideAllTabs()
+        self.sellTab.grid(row=1, column=0, sticky="nsew")
+        self.tabBar.lastClickedTab = "Sell"
 
-    def showMyServicesTab(event):
-        if tabs.lastClickedTab == "My Services":
+    def showMyServicesTab(self):
+        if self.tabBar.lastClickedTab == "My Services":
             return
-        hideAllTabs(event)
+        self.hideAllTabs()
         print("my services")
-        tabs.lastClickedTab = "My Services"
+        self.tabBar.lastClickedTab = "My Services"
 
-    def showSettingsTab(event):
-        if tabs.lastClickedTab == "Settings":
+    def showSettingsTab(self):
+        if self.tabBar.lastClickedTab == "Settings":
             return
-        hideAllTabs(event)
-        settings.grid(row=1, column=0, sticky="nsew")
+        self.hideAllTabs()
+        self.settingsTab.grid(row=1, column=0, sticky="nsew")
         print("Settings")
-        tabs.lastClickedTab = "Settings"
+        self.tabBar.lastClickedTab = "Settings"
 
-    def showRefreshTab(event):
-        buy.refresh()
-        sell.refresh()
-        tabs.tabs[-1]["bg"] = "green"
-        contractData.updateChangeMetric()
-        tabs.lastClickedTab = "Refresh"
+    def showRefreshTab(self):
+        self.buyTab.refresh()
+        self.sellTab.refresh()
+        self.tabBar.tabs[-1]["bg"] = "green"
+        self.app.contractData.updateChangeMetric()
+        self.tabBar.lastClickedTab = "Refresh"
 
-    tabs.bindClickHandlers(
-        [
-            showHomeTab,
-            showBuyTab,
-            showSellTab,
-            showMyServicesTab,
-            showSettingsTab,
-            showRefreshTab,
-        ]
-    )
-
-    home.grid(row=1, column=0, sticky="nsew")
-
-
-def main():
-    # Setup gui
-    guiSetup()
-    # start listening for events
-    listen()
-    updateDataRegularly()
-    # run the event loop
-    root.mainloop()
+    def bindClickHandlers(self):
+        self.tabBar.bindClickHandlers(
+            [
+                self.showHomeTab,
+                self.showBuyTab,
+                self.showSellTab,
+                self.showMyServicesTab,
+                self.showSettingsTab,
+                self.showRefreshTab,
+            ]
+        )

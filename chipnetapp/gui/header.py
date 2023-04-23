@@ -1,7 +1,4 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-#ttk = myTtk
-#import tkinter as tk
+import tkinter as tk
 
 
 class Header(tk.Frame):

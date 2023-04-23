@@ -1,15 +1,12 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-#ttk = myTtk
-#import tkinter as tk
-from chipnetapp.data import contractData
+import tkinter as tk
+from chipnetapp.app import getTheApp
 from chipnetapp.gui.adFrame import adFrame
 
 
 class serviceFrame(adFrame):
     def __init__(self, parent, service):
         self.service = service
-        self.ad = contractData.allAds[service.adIndex]
+        self.ad = getTheApp().contractData.allAds[service.adIndex]
         super().__init__(parent, self.ad, width=210, height=160)
 
     def createWidgets(self):
@@ -37,4 +34,4 @@ class serviceFrame(adFrame):
 
     def updateWidget(self, service):
         self.service = service
-        super().updateWidget(contractData.allAds[service.adIndex])
+        super().updateWidget(getTheApp().contractData.allAds[service.adIndex])

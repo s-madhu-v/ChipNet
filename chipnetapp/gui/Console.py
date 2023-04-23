@@ -1,8 +1,5 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-ttk = myTtk
-# import tkinter as tk
-# from tkinter import ttk
+import tkinter as tk
+from tkinter import ttk
 from chipnetapp.gui.header import Header
 
 adConsolebackground = "red"

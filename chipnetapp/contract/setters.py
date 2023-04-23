@@ -1,10 +1,11 @@
-from chipnetapp.data import deployedChipnet
+from chipnetapp.app import getTheApp
 from chipnetapp.contract.getters import getAd
 from chipnetapp.service.encrypt import generateKeysIfTheyDontExist, readPublicKey
-from chipnetapp.data import myAccount
 
 
-def postAd(title, priceInETH, sellerAccount):
+def postAd(title, priceInETH):
+    sellerAccount = getTheApp().myAccount
+    deployedChipnet = getTheApp().deployedChipnet
     txn = deployedChipnet.postAd(
         title,
         int(priceInETH) * (10**18),
@@ -14,7 +15,9 @@ def postAd(title, priceInETH, sellerAccount):
     return txn
 
 
-def bidOnAd(adIndex, buyerAccount, noOfHours=1):
+def bidOnAd(adIndex, noOfHours=1):
+    buyerAccount = getTheApp().myAccount
+    deployedChipnet = getTheApp().deployedChipnet
     print(f"Bidding on an Ad: {adIndex}, with noOfHours: {noOfHours}")
     generateKeysIfTheyDontExist()
     ad = getAd(adIndex)
@@ -29,13 +32,17 @@ def bidOnAd(adIndex, buyerAccount, noOfHours=1):
     return txn
 
 
-def approveBid(bidIndex, sellerAccount=myAccount):
+def approveBid(bidIndex):
+    sellerAccount = getTheApp().myAccount
+    deployedChipnet = getTheApp().deployedChipnet
     txn = deployedChipnet.approveBid(bidIndex, {"from": sellerAccount})
     txn.wait(1)
     return txn
 
 
-def cancelBid(bidIndex, buyerAccount=myAccount):
+def cancelBid(bidIndex):
+    buyerAccount = getTheApp().myAccount
+    deployedChipnet = getTheApp().deployedChipnet
     txn = deployedChipnet.cancelBid(bidIndex, {"from": buyerAccount})
     txn.wait(1)
     return txn

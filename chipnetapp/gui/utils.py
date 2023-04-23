@@ -1,17 +1,14 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-ttk = myTtk
-#import tkinter as tk
-from chipnetapp.gui.root import root
+import tkinter as tk
+from chipnetapp.app import getTheApp
 
 
 def createNewWindow(title="New Window", geometry="200x200+200+200"):
-    new_window = tk.Toplevel(root)
+    new_window = tk.Toplevel(getTheApp().root)
     new_window.title(title)
     new_window.geometry(geometry)
     return new_window
 
 
 def copy_text(event):
-    root.clipboard_clear()
-    root.clipboard_append(event.widget.cget("text"))
+    getTheApp().root.clipboard_clear()
+    getTheApp().root.clipboard_append(event.widget.cget("text"))

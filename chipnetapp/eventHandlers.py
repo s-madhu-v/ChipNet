@@ -1,17 +1,17 @@
-from chipnetapp.contract.getters import isYourAd
-from chipnetapp.service.serviceWorker import newService
-from chipnetapp.data import contractData
 import time
 import threading
+from chipnetapp.app import getTheApp
+from chipnetapp.contract.getters import isYourAd
+from chipnetapp.service.serviceWorker import newService
 
 
 def handleBidApprovedEvent(event):
     bidIndex = event.args["bidIndex"]
-    adIndex = contractData.allBids[bidIndex].adIndex
+    adIndex = getTheApp().contractData.allBids[bidIndex].adIndex
     if isYourAd(adIndex):
         while True:
-            contractData.updateAll()
-            if len(contractData.allServices) >= event.args["serviceIndex"]:
+            getTheApp().contractData.updateAll()
+            if len(getTheApp().contractData.allServices) >= event.args["serviceIndex"]:
                 break
             else:
                 print("Waiting for contractData to be updated")

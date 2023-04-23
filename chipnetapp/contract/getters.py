@@ -1,28 +1,34 @@
-from chipnetapp.data import deployedChipnet, myAccount, contractData
+from chipnetapp.app import getTheApp
 
 
 def getAllAds():
-    return deployedChipnet.getAllAds()
+    return getTheApp().deployedChipnet.getAllAds()
 
 
 def getBidsOf(account):
-    return deployedChipnet.getPurchases(account)
+    return getTheApp().deployedChipnet.getPurchases(account)
 
 
 def getAd(index):
-    return deployedChipnet.getAd(index)
+    return getTheApp().deployedChipnet.getAd(index)
 
 
-def isYourAd(adIndex, account=myAccount):
-    return contractData.allAds[adIndex].seller == account.address
+def isYourAd(adIndex):
+    return (
+        getTheApp().contractData.allAds[adIndex].seller == getTheApp().myAccount.address
+    )
 
 
-# write a function to get the no of hours from the service index
+# A function to get the no of hours from the service index
 def getNoOfHours(serviceIndex):
     try:
-        bid = contractData.allBids[contractData.allServices[serviceIndex].bidIndex]
+        bid = getTheApp().contractData.allBids[
+            getTheApp().contractData.allServices[serviceIndex].bidIndex
+        ]
         return bid.noOfHours
     except:
-        contractData.updateAll()
-        bid = contractData.allBids[contractData.allServices[serviceIndex].bidIndex]
+        getTheApp().contractData.updateAll()
+        bid = getTheApp().contractData.allBids[
+            getTheApp().contractData.allServices[serviceIndex].bidIndex
+        ]
         return bid.noOfHours

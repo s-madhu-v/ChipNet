@@ -1,8 +1,5 @@
-from myTkinter import myTk, myTtk
-
-tk = myTk
-ttk = myTtk
-
+import tkinter as tk
+from tkinter import ttk
 from start import availableNetworks, defaultNetwork
 
 # from chipnetapp.data import (

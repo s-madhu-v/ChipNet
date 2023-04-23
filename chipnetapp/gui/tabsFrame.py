@@ -1,8 +1,6 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-ttk = myTtk
-#import tkinter as tk
-from chipnetapp.data import setInterval, contractData
+import tkinter as tk
+from chipnetapp.data import setInterval
+from chipnetapp.app import getTheApp
 
 tabs = ["Home", "Buy", "Sell", "My Services", "Settings", "Refresh"]
 
@@ -36,5 +34,5 @@ class TabFrame(tk.Frame):
             self.tabs[i].bind("<Button-1>", clickHandlersListInOrder[i])
 
     def checkForRefresh(self):
-        if contractData.isRefreshNeeded():
+        if getTheApp().contractData.isRefreshNeeded():
             self.tabs[-1]["bg"] = "red"

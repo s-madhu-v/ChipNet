@@ -1,15 +1,9 @@
 import time
-from myTkinter import myTk, myTtk, mySd, myAskYesNo
-
-tk = myTk
-ttk = myTtk
-sd = mySd
-askyesno = myAskYesNo
-# import tkinter as tk
-# from tkinter import ttk
-# import tkinter.simpledialog as sd
-# from tkinter.messagebox import askyesno
-from chipnetapp.data import Ad, getMyAccount
+import tkinter as tk
+from tkinter import ttk
+import tkinter.simpledialog as sd
+from tkinter.messagebox import askyesno
+from chipnetapp.data import Ad
 from chipnetapp.contract.setters import bidOnAd
 
 adFramebackground = "green"
@@ -36,7 +30,7 @@ class adFrame(tk.Frame):
             message="Are you sure you want to make Bid on this Ad?",
         )
         if answer:
-            bidOnAd(self.ad.index, getMyAccount(), int(noOfHours))
+            bidOnAd(self.ad.index, int(noOfHours))
             self.buyButton["text"] = "Bid Submitted"
             time.sleep(1)
         else:

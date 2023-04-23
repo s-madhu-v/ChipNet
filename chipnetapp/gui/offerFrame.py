@@ -1,8 +1,5 @@
-from myTkinter import myTk, myTtk
-tk = myTk
-#ttk = myTtk
-#import tkinter as tk
-from chipnetapp.data import contractData
+import tkinter as tk
+from chipnetapp.app import getTheApp
 from chipnetapp.gui.adFrame import adFrame
 from chipnetapp.contract.setters import approveBid
 
@@ -10,7 +7,7 @@ from chipnetapp.contract.setters import approveBid
 class offerFrame(adFrame):
     def __init__(self, parent, bid):
         self.bid = bid
-        self.ad = contractData.allAds[bid.adIndex]
+        self.ad = getTheApp().contractData.allAds[bid.adIndex]
         super().__init__(parent, self.ad, width=210, height=160)
 
     def createWidgets(self):
@@ -43,7 +40,7 @@ class offerFrame(adFrame):
 
     def updateWidget(self, bid):
         self.bid = bid
-        super().updateWidget(contractData.allAds[bid.adIndex])
+        super().updateWidget(getTheApp().contractData.allAds[bid.adIndex])
         if self.bid.approved:
             self.buyButton["text"] = "Approved"
             self.buyButton["state"] = "disabled"

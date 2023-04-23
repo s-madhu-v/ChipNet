@@ -3,7 +3,7 @@ import docker
 from chipnetapp.service.run import createServiceContainer, runCmdInContainer
 from chipnetapp.service.encrypt import encryptCredentials, readPublicKeyFromString
 from chipnetapp.contract.getters import getNoOfHours
-from chipnetapp.data import deployedChipnet, myAccount
+from chipnetapp.app import getTheApp
 import subprocess
 
 
@@ -41,6 +41,8 @@ def endServiceIn(seconds, terminator):
 
 
 def postCredentials(serviceIndex, accessLink, password):
+    deployedChipnet = getTheApp().deployedChipnet
+    myAccount = getTheApp().myAccount
     service = deployedChipnet.getService(serviceIndex)
     bid = deployedChipnet.getBid(service["bidIndex"])
     publicKey = readPublicKeyFromString(bid["publicKey"])
