@@ -1,13 +1,20 @@
 import yaml
 import shutil
 
-configFilePathMac = "/Users/imadhui/.brownie/network-config.yaml"
-configFilePathMacModified = "/Users/imadhui/.brownie/network-config-modified.yaml"
+
+def getConfigFilePath():
+    configFilePathMac = "/Users/imadhui/.brownie/network-config.yaml"
+    return configFilePathMac
+
+
+def getConfigFilePathModified():
+    configFilePathMacModified = "/Users/imadhui/.brownie/network-config-modified.yaml"
+    return configFilePathMacModified
 
 
 def getGlobalConfig():
     data = None
-    with open(configFilePathMac, "r") as f:  # change this for windows too
+    with open(getConfigFilePath(), "r") as f:  # change this for windows too
         data = yaml.safe_load(f)
     return data
 
@@ -32,9 +39,9 @@ def addNetwork(networkDict):
     data = getGlobalConfig()
     data["live"][0]["networks"].append(networkDict)
     # Write the modified data back to the YAML file
-    with open(configFilePathMacModified, "w") as f:  # change this for windows
+    with open(getConfigFilePathModified(), "w") as f:  # change this for windows
         yaml.dump(data, f)
-    shutil.move(configFilePathMacModified, configFilePathMac)
+    shutil.move(getConfigFilePathModified(), getConfigFilePath())
 
 
 def addNetworkIfItDoesntExist(networkDict):
@@ -42,21 +49,26 @@ def addNetworkIfItDoesntExist(networkDict):
         addNetwork(networkDict)
 
 
-localGanache = {
-    "chainid": 1337,
-    "host": "http://127.0.0.1:7545",
-    "id": "localGanache",
-    "name": "localGanache",
-}
-
-globalGanache = {
-    "chainid": 9999,
-    "host": "http://64.227.142.218",
-    "id": "globalGanache",
-    "name": "globalGanache",
-}
-
-
 def setupNetworks():
+    localGanache = {
+        "chainid": 1337,
+        "host": "http://127.0.0.1:7545",
+        "id": "localGanache",
+        "name": "localGanache",
+    }
+
+    globalGanache = {
+        "chainid": 9999,
+        "host": "http://64.227.142.218",
+        "id": "globalGanache",
+        "name": "globalGanache",
+    }
     addNetworkIfItDoesntExist(localGanache)
     addNetworkIfItDoesntExist(globalGanache)
+
+
+def getMyDeployments():
+    myDeployments = {}
+    myDeployments["localGanache"] = "0x64e12B3EB49A1684a108bF2C345D35badd45004A"
+    myDeployments["globalGanache"] = "0xb68b1F43b4C4C85FDEA689432d643Dc469b309ec"
+    return myDeployments

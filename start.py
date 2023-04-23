@@ -10,8 +10,21 @@ from networks import setupNetworks
 
 setupNetworks()
 
-from chipnetapp.gui.gui import main
+import tkinter as tk
+from initScreen import initPage
 
-print("Starting Main()")
-main()
-print("Ended Main()")
+myRoot = tk.Tk()
+myRoot.title("Madhu Surisetti")
+myRoot.geometry("1000x750")
+myRoot.resizable(False, False)
+
+
+def networkSelector(title="Select Network"):
+    new_window = tk.Toplevel(myRoot)
+    new_window.title(title)
+    return new_window
+
+
+x = initPage(networkSelector(), myRoot)
+x.pack()
+myRoot.mainloop()

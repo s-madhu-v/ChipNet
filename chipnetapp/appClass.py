@@ -1,7 +1,7 @@
 import tkinter as tk
 from brownie import Contract, network
 from chipnetapp.data import Data
-from chipnetapp.gui import gui
+from chipnetapp.gui.gui import appGui
 from chipnetapp.eventHandlers import handleBidApprovedEvent
 from chipnetapp.contract.setters import postAd
 from chipnetapp.contract.getters import getAllAds
@@ -9,23 +9,14 @@ from random import randint
 
 
 class App:
-    def __init__(
-        self,
-        contractAddress,
-        networkName,
-    ) -> None:
+    def __init__(self, contractAddress, networkName, root) -> None:
         self.contractAddress = contractAddress
         self.currentNetwork = networkName
-        self.root = tk.Tk()
+        self.root = root
         self.deployedChipnet = None
         self.myAccount = None
         self.chipnetEvents = None
         self.gui = None
-        self.switchToNetwork(self.currentNetwork)
-        self.contractData = Data(self)
-        self.listen()
-        self.populateAds()  # TODO: deal with this later
-        # do some setup here
 
     def setMyAccount(self, account):
         self.myAccount = account
@@ -46,12 +37,19 @@ class App:
     def listen(self):
         self.chipnetEvents.subscribe("bidApproved", handleBidApprovedEvent)
 
-    def populateAds():
+    def populateAds(self):
         if len(getAllAds()) == 1:
             print("Populating Ads")
             for i in range(10):
                 postAd(f"Ad {i}", randint(1, 10))
 
     def showGUI(self):
-        self.gui = gui(self)
+        self.gui = appGui(self)
         self.root.mainloop()
+
+    def setupApp(self):
+        self.switchToNetwork(self.currentNetwork)
+        self.contractData = Data(self)
+        self.listen()
+        self.populateAds()  # TODO: deal with this later
+        self.showGUI()

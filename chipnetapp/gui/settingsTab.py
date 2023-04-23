@@ -1,15 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-
+from chipnetapp.app import getTheApp
 from brownie import accounts
-from chipnetapp.data import (
-    setMyAccount,
-    contractData,
-    getMyAccount,
-    availabeNetworks,
-    getCurrentNetwork,
-    changeToNetwork,
-)
 
 
 class settingsPage(tk.Frame):
@@ -27,12 +19,13 @@ class settingsPage(tk.Frame):
         self.accountComboBox = ttk.Combobox(
             self.accountSelectorFrame, values=[x.address for x in accounts]
         )
-        self.accountComboBox.set(getMyAccount().address)
+        self.accountComboBox.set(getTheApp().myAccount.address)
         self.accountComboBox.bind(
             "<<ComboboxSelected>>", lambda event: self.onAccountSelect(event)
         )
         self.accountBalanceLabel = tk.Label(
-            self.accountSelectorFrame, text=f"Balance: {getMyAccount().balance()}"
+            self.accountSelectorFrame,
+            text=f"Balance: {getTheApp().myAccount.balance()}",
         )
         # Account Creator & Loader
         self.accountCreator = tk.Frame(self)
@@ -62,8 +55,8 @@ class settingsPage(tk.Frame):
 
     def onAccountSelect(self, event):
         selectedAccount = accounts.at(self.accountComboBox.get())
-        setMyAccount(selectedAccount)
-        contractData.updateAll()
+        getTheApp().myAccount = selectedAccount
+        getTheApp().contractData.updateAll()
 
     def refresh(self):  # TODO: fix this
         print("refreshing")

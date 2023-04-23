@@ -156,7 +156,7 @@ class Data:
 
     def updateYourAds(self, account=None):
         if not account:
-            account = self.app.myAccount()
+            account = self.app.myAccount
         self.yourAds = []
         for ad in self.allAds:
             if ad.seller == account.address:
@@ -164,7 +164,7 @@ class Data:
 
     def updateYourBids(self, account=None):
         if not account:
-            account = self.app.myAccount()
+            account = self.app.myAccount
         self.yourBids = []
         for bid in self.allBids:
             if bid.bidder == account.address:
@@ -172,7 +172,7 @@ class Data:
 
     def updateYourOrders(self, account=None):
         if not account:
-            account = self.app.myAccount()
+            account = self.app.myAccount
         self.yourOrders = []
         for service in self.allServices:
             if self.allBids[service.bidIndex].bidder == account.address:
@@ -180,7 +180,7 @@ class Data:
 
     def updateBidsOnYourAds(self, account=None):
         if not account:
-            account = self.app.myAccount()
+            account = self.app.myAccount
         self.bidsOnYourAds = []
         for bid in self.allBids:
             if (self.allAds[bid.adIndex]).seller == account.address:
@@ -188,7 +188,7 @@ class Data:
 
     def updateYourServices(self, account=None):
         if not account:
-            account = self.app.myAccount()
+            account = self.app.myAccount
         self.yourServices = []
         for service in self.allServices:
             if self.allAds[service.adIndex].seller == account.address:

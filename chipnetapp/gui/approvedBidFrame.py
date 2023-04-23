@@ -1,16 +1,14 @@
 import tkinter as tk
-
-
-from chipnetapp.data import contractData
 from chipnetapp.gui.adFrame import adFrame
 from chipnetapp.gui.utils import createNewWindow, copy_text
 from chipnetapp.service.encrypt import decryptCredentials
+from chipnetapp.app import getTheApp
 
 
 class credetialsViewer(tk.Frame):
     def __init__(self, parent, serviceIndex):
         super().__init__(parent)
-        self.service = contractData.allServices[serviceIndex]
+        self.service = getTheApp().contractData.allServices[serviceIndex]
         self.createWidgets()
         self.layoutWidgets()
 
@@ -54,8 +52,8 @@ class credetialsViewer(tk.Frame):
 class approvedBidFrame(adFrame):
     def __init__(self, parent, service):
         self.service = service
-        self.ad = contractData.allAds[service.adIndex]
-        self.bid = contractData.allBids[service.bidIndex]
+        self.ad = getTheApp().contractData.allAds[service.adIndex]
+        self.bid = getTheApp().contractData.allBids[service.bidIndex]
         super().__init__(parent, self.ad, width=210, height=160)
 
     def showCredentials(self):
@@ -82,5 +80,5 @@ class approvedBidFrame(adFrame):
 
     def updateWidget(self, service):
         self.service = service
-        super().updateWidget(contractData.allAds[self.service.adIndex])
+        super().updateWidget(getTheApp().contractData.allAds[self.service.adIndex])
         self.status.config(text="Status: Active")

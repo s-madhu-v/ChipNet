@@ -1,10 +1,10 @@
+from chipnetapp.app import getTheApp
 from chipnetapp.gui.adFrame import adFrame
 from chipnetapp.gui.bidFrame import bidFrame
-from chipnetapp.gui.approvedBidFrame import approvedBidFrame
+from chipnetapp.gui.Container import Container
 from chipnetapp.gui.offerFrame import offerFrame
 from chipnetapp.gui.serviceFrame import serviceFrame
-from chipnetapp.gui.Container import Container
-from chipnetapp.app import getTheApp
+from chipnetapp.gui.approvedBidFrame import approvedBidFrame
 
 
 # Ads Container
@@ -97,7 +97,7 @@ def createYourAdsContainer(parent):
 
 # bidsOnYourAds Container
 def GUIBidsOnYourAds():
-    return contractData.bidsOnYourAds
+    return getTheApp().contractData.bidsOnYourAds
 
 
 def createBidsOnYourAdsContainer(parent):
@@ -114,7 +114,7 @@ def createBidsOnYourAdsContainer(parent):
 
 # yourServices Container
 def GUIYourServices():
-    return contractData.yourServices
+    return getTheApp().contractData.yourServices
 
 
 def offerWidgetDataUpdateFunc(offerWidget, bid):
