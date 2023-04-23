@@ -70,5 +70,5 @@ def setupNetworks():
 def getMyDeployments():
     myDeployments = {}
     myDeployments["localGanache"] = "0x64e12B3EB49A1684a108bF2C345D35badd45004A"
-    myDeployments["globalGanache"] = "0xb68b1F43b4C4C85FDEA689432d643Dc469b309ec"
+    myDeployments["globalGanache"] = "0xC40FE2048F3Bbc75E533b4C86542b0c56AAfA060"
     return myDeployments

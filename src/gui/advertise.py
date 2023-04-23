@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from chipnetapp.gui.adCreator import adCreator
+from src.gui.adCreator import adCreator
 
 
 class advertise(ttk.Frame):

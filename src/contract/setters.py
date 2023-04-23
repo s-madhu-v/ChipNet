@@ -1,6 +1,6 @@
-from chipnetapp.app import getTheApp
-from chipnetapp.contract.getters import getAd
-from chipnetapp.service.encrypt import generateKeysIfTheyDontExist, readPublicKey
+from src.app import getTheApp
+from src.contract.getters import getAd
+from src.service.encrypt import generateKeysIfTheyDontExist, readPublicKey
 
 
 def postAd(title, priceInETH):

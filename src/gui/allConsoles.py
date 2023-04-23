@@ -1,4 +1,4 @@
-from chipnetapp.gui.allContainers import (
+from src.gui.allContainers import (
     createAdsContainer,
     createBidsContainer,
     createApprovedBidsContainer,
@@ -6,7 +6,7 @@ from chipnetapp.gui.allContainers import (
     createBidsOnYourAdsContainer,
     createYourServicesContainer,
 )
-from chipnetapp.gui.Console import Console
+from src.gui.Console import Console
 
 
 # Ads Console

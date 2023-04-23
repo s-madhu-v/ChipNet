@@ -1,5 +1,5 @@
 import tkinter as tk
-from chipnetapp.gui.allConsoles import (
+from src.gui.allConsoles import (
     createAdConsole,
     createBidConsole,
     createApprovedBidConsole,

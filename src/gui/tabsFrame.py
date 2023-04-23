@@ -1,6 +1,6 @@
 import tkinter as tk
-from chipnetapp.data import setInterval
-from chipnetapp.app import getTheApp
+from src.data import setInterval
+from src.app import getTheApp
 
 tabs = ["Home", "Buy", "Sell", "My Services", "Settings", "Refresh"]
 

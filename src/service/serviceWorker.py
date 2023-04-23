@@ -1,9 +1,9 @@
 import time
 import docker
-from chipnetapp.service.run import createServiceContainer, runCmdInContainer
-from chipnetapp.service.encrypt import encryptCredentials, readPublicKeyFromString
-from chipnetapp.contract.getters import getNoOfHours
-from chipnetapp.app import getTheApp
+from src.service.run import createServiceContainer, runCmdInContainer
+from src.service.encrypt import encryptCredentials, readPublicKeyFromString
+from src.contract.getters import getNoOfHours
+from src.app import getTheApp
 import subprocess
 
 

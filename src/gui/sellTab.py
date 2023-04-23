@@ -1,11 +1,11 @@
 import tkinter as tk
-from chipnetapp.gui.allConsoles import (
+from src.gui.allConsoles import (
     createYourAdsConsole,
     createBidsOnYourAdsConsole,
     createYourServicesConsole,
 )
-from chipnetapp.gui.adCreator import adCreator
-from chipnetapp.app import getTheApp
+from src.gui.adCreator import adCreator
+from src.app import getTheApp
 
 
 def createNewWindow():

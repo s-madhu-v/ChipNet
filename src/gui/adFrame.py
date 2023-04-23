@@ -3,8 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.simpledialog as sd
 from tkinter.messagebox import askyesno
-from chipnetapp.data import Ad
-from chipnetapp.contract.setters import bidOnAd
+from src.data import Ad
+from src.contract.setters import bidOnAd
 
 adFramebackground = "green"
 

@@ -1,4 +1,4 @@
-from chipnetapp.app import getTheApp
+from src.app import getTheApp
 
 
 def getAllAds():

@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from networks import getMyDeployments
-from chipnetapp.appClass import App
-from chipnetapp.app import setTheApp, getTheApp
+from src.appClass import App
+from src.app import setTheApp, getTheApp
 
 
 class initPage(tk.Frame):

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from chipnetapp.gui.header import Header
+from src.gui.header import Header
 
 adConsolebackground = "red"
 

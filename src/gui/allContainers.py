@@ -1,10 +1,10 @@
-from chipnetapp.app import getTheApp
-from chipnetapp.gui.adFrame import adFrame
-from chipnetapp.gui.bidFrame import bidFrame
-from chipnetapp.gui.Container import Container
-from chipnetapp.gui.offerFrame import offerFrame
-from chipnetapp.gui.serviceFrame import serviceFrame
-from chipnetapp.gui.approvedBidFrame import approvedBidFrame
+from src.app import getTheApp
+from src.gui.adFrame import adFrame
+from src.gui.bidFrame import bidFrame
+from src.gui.Container import Container
+from src.gui.offerFrame import offerFrame
+from src.gui.serviceFrame import serviceFrame
+from src.gui.approvedBidFrame import approvedBidFrame
 
 
 # Ads Container

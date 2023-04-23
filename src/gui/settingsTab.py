@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from chipnetapp.app import getTheApp
+from src.app import getTheApp
 from brownie import accounts
 
 

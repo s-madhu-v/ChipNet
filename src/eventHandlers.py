@@ -1,8 +1,8 @@
 import time
 import threading
-from chipnetapp.app import getTheApp
-from chipnetapp.contract.getters import isYourAd
-from chipnetapp.service.serviceWorker import newService
+from src.app import getTheApp
+from src.contract.getters import isYourAd
+from src.service.serviceWorker import newService
 
 
 def handleBidApprovedEvent(event):

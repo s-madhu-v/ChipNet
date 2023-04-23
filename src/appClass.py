@@ -1,10 +1,10 @@
 import tkinter as tk
 from brownie import Contract, network
-from chipnetapp.data import Data
-from chipnetapp.gui.gui import appGui
-from chipnetapp.eventHandlers import handleBidApprovedEvent
-from chipnetapp.contract.setters import postAd
-from chipnetapp.contract.getters import getAllAds
+from src.data import Data
+from src.gui.gui import appGui
+from src.eventHandlers import handleBidApprovedEvent
+from src.contract.setters import postAd
+from src.contract.getters import getAllAds
 from random import randint
 
 

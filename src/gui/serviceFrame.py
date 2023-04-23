@@ -1,6 +1,6 @@
 import tkinter as tk
-from chipnetapp.app import getTheApp
-from chipnetapp.gui.adFrame import adFrame
+from src.app import getTheApp
+from src.gui.adFrame import adFrame
 
 
 class serviceFrame(adFrame):

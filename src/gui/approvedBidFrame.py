@@ -1,8 +1,8 @@
 import tkinter as tk
-from chipnetapp.gui.adFrame import adFrame
-from chipnetapp.gui.utils import createNewWindow, copy_text
-from chipnetapp.service.encrypt import decryptCredentials
-from chipnetapp.app import getTheApp
+from src.gui.adFrame import adFrame
+from src.gui.utils import createNewWindow, copy_text
+from src.service.encrypt import decryptCredentials
+from src.app import getTheApp
 
 
 class credetialsViewer(tk.Frame):

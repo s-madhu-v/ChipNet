@@ -1,10 +1,10 @@
 # The entrypoint for the GUI
 # This file is responsible for creating the main window and all of the tabs
-from chipnetapp.gui.tabsFrame import TabFrame
-from chipnetapp.gui.buyTab import buyPage
-from chipnetapp.gui.homeTab import homePage
-from chipnetapp.gui.sellTab import sellPage
-from chipnetapp.gui.settingsTab import settingsPage
+from src.gui.tabsFrame import TabFrame
+from src.gui.buyTab import buyPage
+from src.gui.homeTab import homePage
+from src.gui.sellTab import sellPage
+from src.gui.settingsTab import settingsPage
 
 
 class appGui:

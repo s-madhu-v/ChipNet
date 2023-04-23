@@ -1,5 +1,5 @@
 import tkinter as tk
-from chipnetapp.app import getTheApp
+from src.app import getTheApp
 
 
 def createNewWindow(title="New Window", geometry="200x200+200+200"):

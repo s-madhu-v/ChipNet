@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from chipnetapp.contract.setters import postAd
+from src.contract.setters import postAd
 
 
 class adCreator(ttk.Frame):

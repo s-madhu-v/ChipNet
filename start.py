@@ -14,7 +14,7 @@ import tkinter as tk
 from initScreen import initPage
 
 myRoot = tk.Tk()
-myRoot.title("Madhu Surisetti")
+myRoot.title("ChipNet")
 myRoot.geometry("1000x750")
 myRoot.resizable(False, False)
 
