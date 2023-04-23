@@ -2,39 +2,48 @@ from brownie import Contract, accounts, network
 import os
 import threading
 from myTkinter import myTk
+
 tk = myTk
 
+myDeployments = {
+    "localGanache": "0x64e12B3EB49A1684a108bF2C345D35badd45004A",
+    "globalGanache": "0x25B3B1E44B7970dD5d1fC2Af3Fb78cf2FA8Aae83",
+}
 
-network.connect("ganache-GUI")
-contractAddress = os.getenv("CONTRACT_ADDRESS")
-deployedChipnet = Contract(contractAddress)
+myAccount = None
+currentNetwork = "localGanache"
+deployedChipnet = None
+contractData = None
+
+
+def changeToNetwork(networkName):
+    print(f"ACTIVE NETWORKS: {network.show_active()}")
+    setCurrentNetwork(networkName)
+    if network.is_connected():
+        network.disconnect()
+    network.connect(currentNetwork)
+    setDeployedChipnet(currentNetwork)
+    if contractData:
+        contractData.updateAll()
+    print(f"ACTIVE NETWORKS: {network.show_active()}")
+
+
+changeToNetwork("localGanache")
+availabeNetworks = ["localGanache", "globalGanache"]
+
+print(f"ACTIVE NETWORKS: {network.show_active()}")  # remove this
+
+# contractAddress = os.getenv("CONTRACT_ADDRESS")
+# deployedChipnet = Contract(contractAddress)
+
+
+setDeployedChipnet("localGanache")
 chipnetEvents = network.contract.ContractEvents(deployedChipnet)
-myAccount = accounts[0]
 mutex = threading.Lock()
 
-print("on the way to import")
+setMyAccount(accounts[3])
 
-def imtest(module=tk):
-    print("Working???")
-    print("This is from imtest")
-    # Create a new instance of moduleinter
-    root = module.Tk()
-
-# Set the title of the window
-    root.title("My App")
-
-# Create a label widget
-    label = module.Label(root, text="Welcome to my IMTEST!")
-
-# Create a button widget
-    button = module.Button(root, text="Click me!", command=root.destroy)
-
-# Pack the label and button widgets into the window
-    label.pack(padx=20, pady=20)
-    button.pack(padx=20, pady=20)
-
-# Run the main loop of moduleinter
-    root.mainloop()
+print("on the way to import")  # remove this
 
 
 class Ad:
@@ -178,42 +187,52 @@ class Data:
     def updateAllServices(self):
         self.allServices = convertServices(deployedChipnet.getAllServices())
 
-    def updateYourAds(self, account=myAccount):
+    def updateYourAds(self, account=None):
+        if not account:
+            account = getMyAccount()
         self.yourAds = []
         for ad in self.allAds:
             if ad.seller == account.address:
                 self.yourAds.append(ad)
 
-    def updateYourBids(self, account=myAccount):
+    def updateYourBids(self, account=None):
+        if not account:
+            account = getMyAccount()
         self.yourBids = []
         for bid in self.allBids:
             if bid.bidder == account.address:
                 self.yourBids.append(bid)
 
-    def updateYourOrders(self, account=myAccount):
+    def updateYourOrders(self, account=None):
+        if not account:
+            account = getMyAccount()
         self.yourOrders = []
         for service in self.allServices:
             if self.allBids[service.bidIndex].bidder == account.address:
                 self.yourOrders.append(service)
 
-    def updateBidsOnYourAds(self, account=myAccount):
+    def updateBidsOnYourAds(self, account=None):
+        if not account:
+            account = getMyAccount()
         self.bidsOnYourAds = []
         for bid in self.allBids:
             if (self.allAds[bid.adIndex]).seller == account.address:
                 self.bidsOnYourAds.append(bid)
 
-    def updateYourServices(self, account=myAccount):
+    def updateYourServices(self, account=None):
+        if not account:
+            account = getMyAccount()
         self.yourServices = []
         for service in self.allServices:
             if self.allAds[service.adIndex].seller == account.address:
                 self.yourServices.append(service)
 
-    def updateUserSpecificData(self, account=myAccount):
-        self.updateYourAds(account)
-        self.updateYourBids(account)
-        self.updateYourOrders(account)
-        self.updateBidsOnYourAds(account)
-        self.updateYourServices(account)
+    def updateUserSpecificData(self):
+        self.updateYourAds()
+        self.updateYourBids()
+        self.updateYourOrders()
+        self.updateBidsOnYourAds()
+        self.updateYourServices()
 
     def updateAll(self):
         mutex.acquire()
@@ -243,6 +262,6 @@ def updater():
 
 
 # also run event listener in gui.py
-# update data every 10 seconds
+# update contractData every 10 seconds
 def updateDataRegularly():
     setInterval(updater, 10)

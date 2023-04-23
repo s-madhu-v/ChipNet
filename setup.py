@@ -5,7 +5,7 @@ build_exe_options = {
     "packages": ["brownie", "cytoolz", "multiaddr", "black", "eth_hash"],
     # "packages": ["tkinter"],
     "excludes": [],
-    "include_files": [],
+    "include_files": ['brownie-config.yml'],
     "zip_include_packages": []
 }
 
