@@ -1,15 +1,24 @@
 import yaml
 import shutil
+import platform
 
 
 def getConfigFilePath():
-    configFilePathMac = "/Users/imadhui/.brownie/network-config.yaml"
-    return configFilePathMac
+    configFilePathMac = "/Users/imadhui/.brownie/network-config.yaml"  # change these paths to more generic ones
+    configFilePathWindows = "C:\Users\Administrator\.brownie\network-config.yaml"
+    if platform.system() == "Windows":
+        return configFilePathWindows
+    else:
+        return configFilePathMac
 
 
 def getConfigFilePathModified():
     configFilePathMacModified = "/Users/imadhui/.brownie/network-config-modified.yaml"
-    return configFilePathMacModified
+    configFilePathWindowsModified = "C:\Users\Administrator\.brownie\network-config-modified.yaml"
+    if platform.system() == "Windows":
+        return configFilePathWindowsModified
+    else:
+        return configFilePathMacModified
 
 
 def getGlobalConfig():
