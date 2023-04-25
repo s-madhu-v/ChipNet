@@ -7,3 +7,4 @@ pip install docker
 pip install Gitpython
 pip install eth-brownie
 pip install psutil
+pip install pyyaml

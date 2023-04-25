@@ -59,7 +59,7 @@ class style:
         self.adFrameStorageColor = self.containerBgColor
         self.adFramePriceColor = self.containerBgColor
         self.adFrameSellerColor = self.containerBgColor
-        self.adFrameBuyButtonColor = "#7C9070"
+        self.adFrameBuyButtonColor = "#FEE8B0"
         self.buyButtonFont = ("American Typewriter", 20)
         self.adFrameBuyButtonTextColor = "white"
         self.adFrameBuyButtonBorderColor = "black"
