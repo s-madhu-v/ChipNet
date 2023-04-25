@@ -1,5 +1,5 @@
 import tkinter as tk
-from brownie import Contract, network, Wei
+from brownie import Contract, network, Wei, accounts, ChipNet
 from src.data import Data
 from src.gui.gui import appGui
 from src.eventHandlers import handleBidApprovedEvent
@@ -29,8 +29,8 @@ class App:
         if network.is_connected():
             network.disconnect()
         network.connect(self.currentNetwork)
-        self.deployedChipnet = Contract(self.contractAddress)
-        self.setMyAccount(network.accounts[0])  # temporary. Change this to no account.
+        self.deployedChipnet = ChipNet.at(self.contractAddress)
+        self.setMyAccount(network.accounts[-1])  # temporary. Change this to no account.
         self.setChipnetEvents()
         print(f"ACTIVE NETWORKS: {network.show_active()}")
 
