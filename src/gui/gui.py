@@ -6,6 +6,7 @@ from src.gui.homeTab import homePage
 from src.gui.sellTab import sellPage
 from src.gui.settingsTab import settingsPage
 from src.style import myStyle
+from src.gui.adCreator import createNewAdWindow
 
 
 class appGui:
@@ -53,12 +54,9 @@ class appGui:
         self.sellTab.grid(row=1, column=0, sticky="nsew")
         self.tabBar.lastClickedTab = "Sell"
 
-    def showMyServicesTab(self, event):
-        if self.tabBar.lastClickedTab == "My Services":
-            return
-        self.hideAllTabs()
-        print("my services")
-        self.tabBar.lastClickedTab = "My Services"
+    def showAdCreator(self, event):
+        print("Ad Creator")
+        createNewAdWindow()
 
     def showSettingsTab(self, event):
         if self.tabBar.lastClickedTab == "Settings":
@@ -81,7 +79,7 @@ class appGui:
                 self.showHomeTab,
                 self.showBuyTab,
                 self.showSellTab,
-                self.showMyServicesTab,
+                self.showAdCreator,
                 self.showSettingsTab,
                 self.showRefreshTab,
             ]

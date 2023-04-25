@@ -3,7 +3,7 @@ from src.data import setInterval
 from src.app import getTheApp
 from src.style import myStyle
 
-tabs = ["Home", "Buy", "Sell", "My Services", "Settings", "Refresh"]
+tabs = ["Home", "Buy", "Sell", "Create Ad", "Settings", "Refresh"]
 
 
 class TabFrame(tk.Frame):

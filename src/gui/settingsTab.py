@@ -57,6 +57,9 @@ class settingsPage(tk.Frame):
 
     def onAccountSelect(self, event):
         selectedAccount = accounts.at(self.accountComboBox.get())
+        self.accountBalanceLabel[
+            "text"
+        ] = f"Balance: {(getTheApp().myAccount.balance())/(10**15)} Finney (1 ETH = 1000 Finney)"
         getTheApp().myAccount = selectedAccount
         getTheApp().contractData.updateAll()
 

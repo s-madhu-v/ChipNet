@@ -37,6 +37,8 @@ class style:
         self.headerFont = ("American Typewriter", 24)
         self.arrowColor = "#7C9070"
         self.arrowFont = ("American Typewriter", 60)
+        self.homePageFont = ("American Typewriter", 100)
+        self.homePageColor = "#7C9070"
         self.tabsFrameColor = "#F97B22"
         self.tabBoxColor = self.tabsFrameColor
         self.containerBgColor = "#9CA777"

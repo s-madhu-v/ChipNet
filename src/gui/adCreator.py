@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from brownie import Wei
 from src.contract.setters import postAd
+from src.app import getTheApp
 
 
 class adCreator(ttk.Frame):
@@ -12,6 +13,7 @@ class adCreator(ttk.Frame):
             height=400,
             relief="raised",
         )
+        self.parent = parent
         self.pack_propagate(False)
         self.grid_propagate(False)
         self.createWidgets()
@@ -53,3 +55,12 @@ class adCreator(ttk.Frame):
         if price.isdigit():
             price += " finney"
         postAd(title, cores, memory, storage, Wei(price.lower()))
+        self.parent.destroy()
+
+
+def createNewAdWindow():
+    new_window = tk.Toplevel(getTheApp().root)
+    new_window.title("New Window")
+    new_window.geometry("400x400+200+200")
+    adCreatorFrame = adCreator(new_window)
+    adCreatorFrame.grid(row=0, column=0, sticky="nsew")

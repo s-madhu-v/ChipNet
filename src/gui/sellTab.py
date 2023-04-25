@@ -9,25 +9,6 @@ from src.app import getTheApp
 from src.style import myStyle
 
 
-def createNewWindow():
-    new_window = tk.Toplevel(getTheApp().root)
-    new_window.title("New Window")
-    new_window.geometry("400x400+200+200")
-    adCreatorFrame = adCreator(new_window)
-    adCreatorFrame.grid(row=0, column=0, sticky="nsew")
-
-
-class postAdBtn(tk.Button):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.createWidgets()
-
-    def createWidgets(self):
-        self["text"] = "Post Ad"
-        self["command"] = createNewWindow
-        self.grid(row=0, column=0)
-
-
 class sellPage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
