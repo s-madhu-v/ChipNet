@@ -5,12 +5,11 @@ from src.gui.Container import Container
 from src.gui.offerFrame import offerFrame
 from src.gui.serviceFrame import serviceFrame
 from src.gui.approvedBidFrame import approvedBidFrame
+from src.gui.yourAdsFrame import yourAdsFrame
+from src.style import myStyle
 
 
 # Ads Container
-adsContainerbackground = "blue"
-
-
 def GUIAllAds():
     return getTheApp().contractData.allAds
 
@@ -22,8 +21,8 @@ def AdWidgetDataUpdateFunc(adWidget, ad):
 def createAdsContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.adsContainerWidth,
+        height=myStyle.adsContainerHeight,
         dataFunc=GUIAllAds,
         frameClass=adFrame,
         widgetDataFunc=AdWidgetDataUpdateFunc,
@@ -32,9 +31,6 @@ def createAdsContainer(parent):
 
 
 # Bids Container
-bidsContainerbackground = "yellow"
-
-
 def GUIAllBids():
     return getTheApp().contractData.yourBids
 
@@ -46,8 +42,8 @@ def bidWidgetDataUpdateFunc(bidWidget, bid):
 def createBidsContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.bidsContainerWidth,
+        height=myStyle.bidsContainerHeight,
         dataFunc=GUIAllBids,
         frameClass=bidFrame,
         widgetDataFunc=bidWidgetDataUpdateFunc,
@@ -67,8 +63,8 @@ def approvedBidWidgetDataUpdateFunc(approvedBidWidget, approvedBid):
 def createApprovedBidsContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.approvedBidsContainerWidth,
+        height=myStyle.approvedBidsContainerHeight,
         dataFunc=GUIAllApprovedBids,
         frameClass=approvedBidFrame,
         widgetDataFunc=approvedBidWidgetDataUpdateFunc,
@@ -86,10 +82,10 @@ def GUIYourAds():
 def createYourAdsContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.yourAdsContainerWidth,
+        height=myStyle.yourAdsContainerHeight,
         dataFunc=GUIYourAds,
-        frameClass=adFrame,
+        frameClass=yourAdsFrame,
         widgetDataFunc=AdWidgetDataUpdateFunc,
     )
     return container
@@ -103,8 +99,8 @@ def GUIBidsOnYourAds():
 def createBidsOnYourAdsContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.bidsOnYourAdsContainerWidth,
+        height=myStyle.bidsOnYourAdsContainerHeight,
         dataFunc=GUIBidsOnYourAds,
         frameClass=offerFrame,
         widgetDataFunc=bidWidgetDataUpdateFunc,
@@ -125,8 +121,8 @@ def offerWidgetDataUpdateFunc(offerWidget, bid):
 def createYourServicesContainer(parent):
     container = Container(
         parent,
-        width=770,
-        height=130,
+        width=myStyle.servicesContainerWidth,
+        height=myStyle.servicesContainerHeight,
         dataFunc=GUIYourServices,
         frameClass=serviceFrame,
         widgetDataFunc=offerWidgetDataUpdateFunc,

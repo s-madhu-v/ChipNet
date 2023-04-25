@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 from src.gui.header import Header
+from src.style import myStyle
 
-adConsolebackground = "red"
 
-
-class Console(ttk.Frame):
-    def __init__(self, parent, containerCreatorFunc, heading, backgroundColor="red"):
-        super().__init__(parent, width=1000, height=220, relief="raised")
+class Console(tk.Frame):
+    def __init__(self, parent, containerCreatorFunc, heading, height=220, width=1000):
+        super().__init__(parent, width=width, height=height, relief="raised")
+        self["bg"] = myStyle.consoleBgColor
         self.containerCreatorFunc = containerCreatorFunc
         self.heading = heading
         self.pack_propagate(False)
@@ -18,12 +18,12 @@ class Console(ttk.Frame):
     def createWidgets(self):
         # create the widgets
         self.header = Header(self, heading=self.heading)
-        self.leftButton = tk.Label(self, text="<")
-        self.leftButton["bg"] = "yellow"
+        self.leftButton = tk.Label(self, text="«", font=myStyle.arrowFont)
+        self.leftButton["bg"] = myStyle.arrowColor
         self.leftButton.bind("<Button-1>", self.leftButtonHandler)
         self.frameContainer = self.containerCreatorFunc(self)
-        self.rightButton = tk.Label(self, text=">")
-        self.rightButton["bg"] = "yellow"
+        self.rightButton = tk.Label(self, text="»", font=myStyle.arrowFont)
+        self.rightButton["bg"] = myStyle.arrowColor
         self.rightButton.bind("<Button-1>", self.rightButtonHandler)
 
     def createLayout(self):

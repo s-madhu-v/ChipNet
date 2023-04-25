@@ -3,6 +3,7 @@ from src.gui.adFrame import adFrame
 from src.gui.utils import createNewWindow, copy_text
 from src.service.encrypt import decryptCredentials
 from src.app import getTheApp
+from src.style import myStyle
 
 
 class credetialsViewer(tk.Frame):
@@ -21,22 +22,22 @@ class credetialsViewer(tk.Frame):
         if self.service.password != "":
             decryptedPassword = decryptCredentials(self.service.password)
         self.sshHeader = tk.Label(
-            self, text="SSH Command: ", font=("American Typewriter", 16)
+            self, text="SSH Command: ", font=myStyle.sshHeaderFont
         )
         self.ssh = tk.Label(
             self,
             text=decryptedAccessLink,
-            font=("American Typewriter", 16),
+            font=myStyle.sshAccessLinkFont,
             cursor="hand2",
         )
         self.ssh.bind("<Button-1>", copy_text)
         self.passwordHeader = tk.Label(
-            self, text="SSH Password: ", font=("American Typewriter", 16)
+            self, text="SSH Password: ", font=myStyle.sshPasswordHeaderFont
         )
         self.password = tk.Label(
             self,
             text=decryptedPassword,
-            font=("American Typewriter", 16),
+            font=myStyle.sshPasswordFont,
             cursor="hand2",
         )
         self.password.bind("<Button-1>", copy_text)
@@ -54,7 +55,12 @@ class approvedBidFrame(adFrame):
         self.service = service
         self.ad = getTheApp().contractData.allAds[service.adIndex]
         self.bid = getTheApp().contractData.allBids[service.bidIndex]
-        super().__init__(parent, self.ad, width=210, height=160)
+        super().__init__(
+            parent,
+            self.ad,
+            width=myStyle.serviceFrameWidth,
+            height=myStyle.serviceFrameHeight,
+        )
 
     def showCredentials(self):
         window = createNewWindow("Credentials", "")
@@ -62,21 +68,22 @@ class approvedBidFrame(adFrame):
 
     def createWidgets(self):
         super().createWidgets()
-        self.title["bg"] = "blue"
-        self.status = tk.Label(self, text="Status: Active")
-        self.status["bg"] = "green"
+        self.title["bg"] = myStyle.approvedBidTitleColor
+        self.status = tk.Label(
+            self, text="Status       :   Active", font=myStyle.attributeFont, anchor="w"
+        )
+        self.status["bg"] = myStyle.approvedBidStatusColor
         self.showCredentialsButton = tk.Button(
             self, text="Show Credentials", command=self.showCredentials
         )
 
     def layoutWidgets(self):
-        self.title.grid(row=0, column=0, sticky="nsew")
-        self.status.grid(row=1, column=0, sticky="nsew")
-        self.showCredentialsButton.grid(row=2, column=0, sticky="nsew")
+        # self.title.grid(row=0, column=0, sticky="nsew")
+        self.status.grid(row=0, column=0, sticky="nsew")
+        self.status["bg"] = myStyle.serviceStatusColor
+        self.showCredentialsButton.grid(row=1, column=0, sticky="nsew")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        self.rowconfigure(1, weight=1)
-        self.rowconfigure(2, weight=1)
 
     def updateWidget(self, service):
         self.service = service

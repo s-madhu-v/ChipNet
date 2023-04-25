@@ -5,6 +5,10 @@ contract ChipNet {
     struct Advertisement {
         uint256 index;
         string title;
+        string processingPower;
+        uint256 coresAllocation;
+        string memoryAllocation;
+        string storageAllocation;
         uint256 pricePerHour;
         address payable seller;
         bool active;
@@ -57,7 +61,11 @@ contract ChipNet {
             index: 0,
             pricePerHour: 0,
             seller: payable(address(0)),
-            active: false
+            active: false,
+            coresAllocation: 0,
+            memoryAllocation: "0g",
+            storageAllocation: "0G",
+            processingPower: "0 GHz"
         });
 
     Service initService =
@@ -86,9 +94,9 @@ contract ChipNet {
         });
 
     constructor() {
-        ads.push(initAd);
-        services.push(initService);
-        bids.push(initBid);
+        //ads.push(initAd);
+        //services.push(initService);
+        //bids.push(initBid);
     }
 
     mapping(address => uint256[]) private adsOf;
@@ -161,10 +169,18 @@ contract ChipNet {
 
     function postAd(
         string memory _title,
+        string memory _processingPower,
+        uint256 _coresAllocation,
+        string memory _memoryAllocation,
+        string memory _storageAllocation,
         uint256 _pricePerHour
     ) public returns (uint256) {
         Advertisement memory ad = Advertisement({
             title: _title,
+            processingPower: _processingPower,
+            coresAllocation: _coresAllocation,
+            memoryAllocation: _memoryAllocation,
+            storageAllocation: _storageAllocation,
             index: ads.length,
             pricePerHour: _pricePerHour,
             seller: payable(msg.sender),

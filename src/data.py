@@ -12,9 +12,24 @@ def setInterval(func, sec):
 
 
 class Ad:
-    def __init__(self, index, title, price, seller, active) -> None:
+    def __init__(
+        self,
+        index,
+        title,
+        processingPower,
+        coresAllocation,
+        memoryAllocation,
+        storageAllocation,
+        price,
+        seller,
+        active,
+    ) -> None:
         self.index = index
         self.title = title
+        self.processingPower = processingPower
+        self.coresAllocation = coresAllocation
+        self.memoryAllocation = memoryAllocation
+        self.storageAllocation = storageAllocation
         self.pricePerHour = price
         self.seller = seller
         self.active = active
@@ -70,7 +85,9 @@ class Service:
 def convertAds(ads):
     adObjects = []
     for ad in ads:
-        adObjects.append(Ad(ad[0], ad[1], ad[2], ad[3], ad[4]))
+        adObjects.append(
+            Ad(ad[0], ad[1], ad[2], ad[3], ad[4], ad[5], ad[6], ad[7], ad[8])
+        )
     return adObjects
 
 
@@ -129,7 +146,7 @@ class Data:
             len(self.allServices),
         ]  # add more metrics here
         self.mutex = threading.Lock()
-        setInterval(self.updater, 10)
+        setInterval(self.updater, 5)
 
     def isRefreshNeeded(self):
         return self.changeMetric != [

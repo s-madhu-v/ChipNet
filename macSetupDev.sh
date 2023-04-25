@@ -6,3 +6,4 @@ pip install black-22.10.0-py3-none-any.whl
 pip install docker
 pip install Gitpython
 pip install eth-brownie
+pip install psutil

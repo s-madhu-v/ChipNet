@@ -2,11 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from src.app import getTheApp
 from brownie import accounts
+from src.style import myStyle
 
 
 class settingsPage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        self["bg"] = myStyle.settingsPageColor
         self.createWidgets()
         self.layoutWidgets()
 
@@ -25,7 +27,7 @@ class settingsPage(tk.Frame):
         )
         self.accountBalanceLabel = tk.Label(
             self.accountSelectorFrame,
-            text=f"Balance: {getTheApp().myAccount.balance()}",
+            text=f"Balance: {(getTheApp().myAccount.balance())/(10**15)} Finney (1 ETH = 1000 Finney)",
         )
         # Account Creator & Loader
         self.accountCreator = tk.Frame(self)

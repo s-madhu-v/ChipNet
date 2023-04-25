@@ -2,17 +2,35 @@ import tkinter as tk
 from src.app import getTheApp
 from src.gui.adFrame import adFrame
 from src.contract.setters import approveBid
+from src.style import myStyle
 
 
 class offerFrame(adFrame):
     def __init__(self, parent, bid):
         self.bid = bid
         self.ad = getTheApp().contractData.allAds[bid.adIndex]
-        super().__init__(parent, self.ad, width=210, height=160)
+        self.totalPrice = self.bid.noOfHours * self.ad.pricePerHour
+        super().__init__(
+            parent,
+            self.ad,
+            width=myStyle.offerFrameWidth,
+            height=myStyle.offerFrameHeight,
+        )
 
     def createWidgets(self):
         super().createWidgets()
-        self.hours = tk.Label(self, text=f"Hours: {self.bid.noOfHours}")
+        self.hours = tk.Label(
+            self,
+            text=f"Hours            :   {self.bid.noOfHours}",
+            font=myStyle.attributeFont,
+            anchor="w",
+        )
+        self.totalPriceLabel = tk.Label(
+            self,
+            text=f"Total Price   :   {(self.totalPrice)/(10**15)} Finney",
+            font=myStyle.attributeFont,
+            anchor="w",
+        )
         self.approveButton = tk.Button(
             self, text="Approve", command=self.approveBidHandler
         )
@@ -21,19 +39,20 @@ class offerFrame(adFrame):
             self.approveButton["state"] = "disabled"
 
     def layoutWidgets(self):
-        self.title.grid(row=0, column=0, sticky="nsew")
-        self.title["bg"] = "blue"
-        self.price.grid(row=1, column=0, sticky="nsew")
-        self.price["bg"] = "yellow"
-        self.hours.grid(row=2, column=0, sticky="nsew")
-        self.hours["bg"] = "green"
-        self.approveButton.grid(row=3, column=0, sticky="nsew")
-        self.approveButton["bg"] = "red"
+        # self.title.grid(row=0, column=0, sticky="nsew")
+        # self.title["bg"] = myStyle.offerTitleColor
+        # self.price.grid(row=1, column=0, sticky="nsew")
+        # self.price["bg"] = myStyle.offerPriceColor
+        self.hours.grid(row=0, column=0, sticky="nsew")
+        self.hours["bg"] = myStyle.offerHoursColor
+        self.totalPriceLabel.grid(row=1, column=0, sticky="nsew")
+        self.totalPriceLabel["bg"] = myStyle.offerTotalPriceColor
+        self.approveButton.grid(row=2, column=0, sticky="nsew")
+        self.approveButton.configure(bg=myStyle.offerApproveButtonColor)
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=1)
-        self.rowconfigure(3, weight=1)
 
     def approveBidHandler(self):
         approveBid(self.bid.index)

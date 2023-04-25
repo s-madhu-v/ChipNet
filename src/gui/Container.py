@@ -1,9 +1,9 @@
+import tkinter as tk
 from tkinter import ttk
+from src.style import myStyle
 
-adsContainerbackground = "blue"
 
-
-class Container(ttk.Frame):
+class Container(tk.Frame):
     def __init__(
         self,
         parent,
@@ -14,11 +14,9 @@ class Container(ttk.Frame):
         height,
         containerSize=4,
         startIndex=0,
-        backgroundColor="green",
     ):
-        super().__init__(
-            parent, width=width, height=height, relief="raised", padding=10
-        )
+        super().__init__(parent, width=width, height=height)
+        self["bg"] = myStyle.containerBgColor
         self.dataFunc = dataFunc
         self.widgetDataFunc = widgetDataFunc
         self.frameClass = frameClass

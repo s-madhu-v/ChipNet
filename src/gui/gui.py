@@ -5,6 +5,7 @@ from src.gui.buyTab import buyPage
 from src.gui.homeTab import homePage
 from src.gui.sellTab import sellPage
 from src.gui.settingsTab import settingsPage
+from src.style import myStyle
 
 
 class appGui:
@@ -70,7 +71,7 @@ class appGui:
     def showRefreshTab(self, event):
         self.buyTab.refresh()
         self.sellTab.refresh()
-        self.tabBar.tabs[-1]["bg"] = "green"
+        self.tabBar.tabs[-1]["bg"] = myStyle.tabBoxColor
         self.app.contractData.updateChangeMetric()
         self.tabBar.lastClickedTab = "Refresh"
 

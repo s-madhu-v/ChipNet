@@ -14,8 +14,9 @@ import tkinter as tk
 from initScreen import initPage
 
 myRoot = tk.Tk()
+myRoot["bg"] = "#9CA777"
 myRoot.title("ChipNet")
-myRoot.geometry("1000x750")
+myRoot.geometry("1000x700")
 myRoot.resizable(False, False)
 
 

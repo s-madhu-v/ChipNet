@@ -26,11 +26,11 @@ def runCmdInContainer(cmd, containerName):
     container.exec_run(cmd)
 
 
-def createServiceContainer(imageName):
+def createServiceContainer(imageName, cores, memory):
     args = getBuildArgs()
     myClient = docker.from_env()
     # the image name should always be lowercase
     obj = Container.dContainer(myClient, repoLink, imageName)
     # TODO: enforce limits
-    obj.createContainer(cores=1, memory="2g", storage="4G", buildArgs=args)
+    obj.createContainer(cores=int(cores), memory=memory, storage="4G", buildArgs=args)
     return args["PASSWORD"]

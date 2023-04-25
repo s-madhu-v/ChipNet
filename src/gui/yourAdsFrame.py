@@ -7,7 +7,7 @@ from src.contract.setters import bidOnAd
 from src.style import myStyle
 
 
-class adFrame(tk.LabelFrame):
+class yourAdsFrame(tk.LabelFrame):
     def __init__(
         self,
         parent,
@@ -19,34 +19,11 @@ class adFrame(tk.LabelFrame):
     ):
         super().__init__(parent, width=width, height=height, text=ad.title, font=font)
         self.configure(background=myStyle.containerBgColor)
-        # self["bg"] = myStyle.adFramebg
         self.ad = ad
         self.createWidgets()
         self.layoutWidgets()
         self.pack_propagate(False)
         self.grid_propagate(False)
-
-    def buyThisAd(self, event):
-        print("buying this ad...")
-        if self.ad.active:
-            print("Bidding on an Ad..")
-            noOfHours = sd.askstring("Hours", "How many Hours?")
-            if noOfHours != None:
-                self.confirmBid(noOfHours)
-        else:
-            print("Already Sold!!!")
-
-    def confirmBid(self, noOfHours):
-        answer = askyesno(
-            title="Confirmation",
-            message="Are you sure you want to make Bid on this Ad?",
-        )
-        if answer:
-            bidOnAd(self.ad.index, int(noOfHours))
-            self.buyButton["text"] = "Bid Submitted"
-            time.sleep(1)
-        else:
-            print("Bid Cancelled")
 
     def createWidgets(self):
         # create the widgets
@@ -89,10 +66,14 @@ class adFrame(tk.LabelFrame):
             anchor="w",
             font=myStyle.attributeFont,
         )
-        self.buyButton = tk.Label(self, text="MAKE A BID", font=myStyle.buyButtonFont)
-        self.buyButton.bind("<Button-1>", self.buyThisAd)
+        self.status = tk.Label(
+            self,
+            text="Status       :   Not Sold",
+            font=myStyle.attributeFont,
+            anchor="w",
+        )
         if not self.ad.active:
-            self.buyButton["text"] = "Sold"
+            self.status["text"] = "Status       :   Sold"
 
     def updateWidget(self, ad):
         # create the widgets
@@ -106,9 +87,9 @@ class adFrame(tk.LabelFrame):
         self.price["text"] = f"Price: {int(ad.pricePerHour/(10**15))} finney"
         self.sellerAccount["text"] = ad.seller[:10]
         if not ad.active:
-            self.buyButton["text"] = "Sold"
+            self.status["text"] = "Status       :   Sold"
         else:
-            self.buyButton["text"] = "Make a Bid"
+            self.status["text"] = "Status       :   Not Sold"
 
     def layoutWidgets(self):
         # layout the widgets
@@ -126,8 +107,8 @@ class adFrame(tk.LabelFrame):
         self.price["bg"] = myStyle.adFramePriceColor
         self.sellerAccount.grid(row=5, column=0, sticky="nsew")
         self.sellerAccount["bg"] = myStyle.adFrameSellerColor
-        self.buyButton.grid(row=6, column=0, sticky="nsew", padx=5)
-        self.buyButton["bg"] = myStyle.adFrameBuyButtonColor
+        self.status.grid(row=6, column=0, sticky="nsew")
+        self.status["bg"] = myStyle.adFramePriceColor  # same as price color
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)

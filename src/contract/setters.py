@@ -1,14 +1,21 @@
+import psutil
 from src.app import getTheApp
 from src.contract.getters import getAd
 from src.service.encrypt import generateKeysIfTheyDontExist, readPublicKey
 
 
-def postAd(title, priceInETH):
+def postAd(
+    title, coresAllocation, memoryAllocation, storageAllocation, pricePerHour
+):  # change the variable name to just price
     sellerAccount = getTheApp().myAccount
     deployedChipnet = getTheApp().deployedChipnet
     txn = deployedChipnet.postAd(
         title,
-        int(priceInETH) * (10**18),
+        f"{(psutil.cpu_freq().max)/1000} GHz",
+        coresAllocation,
+        memoryAllocation,
+        storageAllocation,
+        pricePerHour,
         {"from": sellerAccount},
     )
     txn.wait(1)

@@ -2,7 +2,8 @@ import time
 import docker
 from src.service.run import createServiceContainer, runCmdInContainer
 from src.service.encrypt import encryptCredentials, readPublicKeyFromString
-from src.contract.getters import getNoOfHours
+from src.contract.getters import getNoOfHours, getAd
+from src.data import convertAds, convertServices
 from src.app import getTheApp
 import subprocess
 
@@ -53,12 +54,15 @@ def postCredentials(serviceIndex, accessLink, password):
     )
 
 
-def newService(serviceIndex):
+def newService(serviceIndex, adIndex):
     def theTerminator():
         runCmdInContainer(["killall ngrok"], f"service-{serviceIndex}" + "-container")
 
     try:
-        password = createServiceContainer(f"service-{serviceIndex}")
+        ad = convertAds([getAd(adIndex)])[0]
+        password = createServiceContainer(
+            f"service-{serviceIndex}", ad.coresAllocation, ad.memoryAllocation
+        )
         accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
         postCredentials(serviceIndex, accessLink, password)
         timeSpan = int(getNoOfHours(serviceIndex)) * 60 * 60

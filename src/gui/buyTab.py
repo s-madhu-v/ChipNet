@@ -4,23 +4,25 @@ from src.gui.allConsoles import (
     createBidConsole,
     createApprovedBidConsole,
 )
+from src.style import myStyle
 
 
 class buyPage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        self["bg"] = myStyle.buyPageColor
         self.createWidgets()
 
     def createWidgets(self):
         # create a adConsole
         self.adConsole = createAdConsole(self)
-        self.adConsole.grid(row=1, column=0, pady=5, sticky="nsew")
+        self.adConsole.grid(row=1, column=0, sticky="nsew")
         # create a bidConsole
         self.bidConsole = createBidConsole(self)
-        self.bidConsole.grid(row=2, column=0, pady=5, sticky="nsew")
+        self.bidConsole.grid(row=2, column=0, sticky="nsew")
         # create a approvedBidConsole
         self.approvedBidConsole = createApprovedBidConsole(self)
-        self.approvedBidConsole.grid(row=3, column=0, pady=5, sticky="nsew")
+        self.approvedBidConsole.grid(row=3, column=0, sticky="nsew")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)

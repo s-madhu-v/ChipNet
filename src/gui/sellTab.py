@@ -6,12 +6,13 @@ from src.gui.allConsoles import (
 )
 from src.gui.adCreator import adCreator
 from src.app import getTheApp
+from src.style import myStyle
 
 
 def createNewWindow():
     new_window = tk.Toplevel(getTheApp().root)
     new_window.title("New Window")
-    new_window.geometry("200x200+200+200")
+    new_window.geometry("400x400+200+200")
     adCreatorFrame = adCreator(new_window)
     adCreatorFrame.grid(row=0, column=0, sticky="nsew")
 
@@ -24,30 +25,28 @@ class postAdBtn(tk.Button):
     def createWidgets(self):
         self["text"] = "Post Ad"
         self["command"] = createNewWindow
-        self.grid(row=0, column=0, padx=5, pady=5)
-
-    def postAd(self):
-        print("postAd")
+        self.grid(row=0, column=0)
 
 
 class sellPage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        self["bg"] = myStyle.sellPageColor
         self.createWidgets()
 
     def createWidgets(self):
         # create a postAdBtn
-        self.postAdBtn = postAdBtn(self)
-        self.postAdBtn.grid(row=0, column=0, padx=5, pady=5)
+        # self.postAdBtn = postAdBtn(self)
+        # self.postAdBtn.grid(row=0, column=0)
         # create a yourAdsConsole
         self.yourAdsConsole = createYourAdsConsole(self)
-        self.yourAdsConsole.grid(row=1, column=0, pady=5, sticky="nsew")
+        self.yourAdsConsole.grid(row=1, column=0, sticky="nsew")
         # create a bidsOnYourAdsConsole
         self.bidsOnYourAdsConsole = createBidsOnYourAdsConsole(self)
-        self.bidsOnYourAdsConsole.grid(row=2, column=0, pady=5, sticky="nsew")
+        self.bidsOnYourAdsConsole.grid(row=2, column=0, sticky="nsew")
         # create a yourServicesConsole
         self.yourServicesConsole = createYourServicesConsole(self)
-        self.yourServicesConsole.grid(row=3, column=0, pady=5, sticky="nsew")
+        self.yourServicesConsole.grid(row=3, column=0, sticky="nsew")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)

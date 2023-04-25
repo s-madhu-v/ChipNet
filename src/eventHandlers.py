@@ -22,7 +22,7 @@ def handleBidApprovedEvent(event):
 
         def threadFunction():
             print("Thread started")
-            newService(serviceIndex)
+            newService(serviceIndex, adIndex)
 
         # Create a new thread and start it
         thread = threading.Thread(target=threadFunction)

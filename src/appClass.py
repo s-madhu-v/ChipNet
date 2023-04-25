@@ -1,5 +1,5 @@
 import tkinter as tk
-from brownie import Contract, network
+from brownie import Contract, network, Wei
 from src.data import Data
 from src.gui.gui import appGui
 from src.eventHandlers import handleBidApprovedEvent
@@ -38,13 +38,14 @@ class App:
         self.chipnetEvents.subscribe("bidApproved", handleBidApprovedEvent)
 
     def populateAds(self):
-        if len(getAllAds()) == 1:
+        if len(getAllAds()) <= 1:
             print("Populating Ads")
             for i in range(10):
-                postAd(f"Ad {i}", randint(1, 10))
+                postAd(f"Ad {i}", 1, "1g", "5g", Wei(f"{randint(4, 24)} finney"))
 
     def showGUI(self):
         self.gui = appGui(self)
+        self.root.bind("<Escape>", self.gui.showRefreshTab)
         self.root.mainloop()
 
     def setupApp(self):
