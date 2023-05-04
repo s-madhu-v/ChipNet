@@ -1,0 +1,1 @@
+brownie networks add "Ethereum" "sepolia" host=https://eth-sepolia.g.alchemy.com/v2/DbIipYeF-B69nWfivtVw6nKarvovC-h9 chainid=11155111
