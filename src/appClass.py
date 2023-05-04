@@ -19,7 +19,8 @@ class App:
         self.myAccount = None
         self.chipnetEvents = None
         self.gui = None
-        accounts.add("a2ace2fbda7b6a4b3830fbd21737a803b2bc570115f4ade13f092242cdd5abda")
+        #accounts.add("a2ace2fbda7b6a4b3830fbd21737a803b2bc570115f4ade13f092242cdd5abda")
+        accounts.add("65374019dc6a5281a58e6aef720927eeed63b564932245cc8b4f47f965921876")
 
     def setMyAccount(self, account):
         self.myAccount = account
