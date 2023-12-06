@@ -70,7 +70,7 @@ def setupNetworks():
 
     globalGanache = {
         "chainid": 9999,
-        "host": "http://64.227.142.218",
+        "host": "http://139.59.26.75",
         "id": "globalGanache",
         "name": "globalGanache",
     }
