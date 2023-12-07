@@ -13,10 +13,10 @@ def pollForComments(containerName):
     while True:
         try:
             comments = getComments(containerName)
-            print(f"Access Link: {comments}")
+            print(f"Comments: {comments}")
             break
         except subprocess.CalledProcessError:
-            print("Access Link not found yet")
+            print("Comments File not found yet")
             time.sleep(1)
     return comments
 

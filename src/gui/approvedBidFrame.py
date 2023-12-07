@@ -33,7 +33,8 @@ class approvedBidFrame(adFrame):
         )
 
     def showComments(self):
-        display_text_window(self.service.comments)
+        decryptedComments = decryptCredentials(self.service.comments)
+        display_text_window(decryptedComments)
 
     def createWidgets(self):
         super().createWidgets()
@@ -47,7 +48,6 @@ class approvedBidFrame(adFrame):
         )
 
     def layoutWidgets(self):
-        # self.title.grid(row=0, column=0, sticky="nsew")
         self.status.grid(row=0, column=0, sticky="nsew")
         self.status["bg"] = myStyle.serviceStatusColor
         self.showCommentsButton.grid(row=1, column=0, sticky="nsew")

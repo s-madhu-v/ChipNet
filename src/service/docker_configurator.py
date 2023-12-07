@@ -112,6 +112,7 @@ def show_docker_configurator(bid_submission_func):
 
     def submit_bid():
         current_template = output_json_template()
+        print(current_template)
         bid_submission_func(current_template)
         docker_configurator_window.destroy()
         # print("Bid Fake Submitted")

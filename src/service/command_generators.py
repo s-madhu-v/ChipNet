@@ -3,7 +3,8 @@ import shlex
 import subprocess
 
 def generate_docker_build_command(template):
-    template = json.loads(template)
+    if type(template) == str:
+        template = json.loads(template)
     path = template["path"]
     tag = template["tag"]
     build_args = template["build_args"]
@@ -16,7 +17,8 @@ def generate_docker_build_command(template):
     return cmd
 
 def generate_docker_run_command(template):
-    template = json.loads(template)
+    if type(template) == str:
+        template = json.loads(template)
     image = template["image"]
     command = template["command"]
     ports = template["ports"]
@@ -24,7 +26,7 @@ def generate_docker_run_command(template):
     environment = template["environment"]
     memory = template["memory"]
     cpus = template["cpus"]
-    cap_add =  template["cap_add"]
+    cap_add =  template["cap_add"].split(',')
     network = template["network"]
     name = template["name"]
     cmd = "docker run"
@@ -96,3 +98,11 @@ def execute_docker_template(template):
     print("Executing the run command:")
     execute_bash_command(docker_run_command)
     print("Docker template executed!")
+
+if __name__ == "__main__":
+    with open('templates.json', 'r') as f:
+        templates = json.load(f)
+        for template in templates.values():
+            print(generate_docker_build_command(template))
+            print(generate_docker_run_command(template))
+            print("\n\n\n")
