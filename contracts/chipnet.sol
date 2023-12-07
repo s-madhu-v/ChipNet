@@ -21,7 +21,7 @@ contract ChipNet {
         uint256 bidIndex;
         uint256 serviceIndex;
         string accessLink;
-        string password;
+        string comments;
         uint256 SOSTimestamp;
         uint256 EOSTimestamp;
         bool active;
@@ -77,7 +77,7 @@ contract ChipNet {
             index: 0,
             serviceIndex: 0,
             accessLink: "",
-            password: "",
+            comments: "",
             SOSTimestamp: 0,
             EOSTimestamp: 0,
             active: false
@@ -258,7 +258,7 @@ contract ChipNet {
             index: services.length,
             serviceIndex: services.length,
             accessLink: "",
-            password: "",
+            comments: "",
             SOSTimestamp: 0,
             EOSTimestamp: 0,
             active: true
@@ -276,7 +276,7 @@ contract ChipNet {
     function postCredentials(
         uint256 _serviceIndex,
         string memory _accessLink,
-        string memory _password
+        string memory _comments
     ) public {
         Service memory service = services[_serviceIndex];
         Bid memory bid = bids[service.bidIndex];
@@ -285,9 +285,25 @@ contract ChipNet {
         require(service.active == true, "Service is already inactive");
         require(service.SOSTimestamp == 0, "Service has not started");
         require(bytes(_accessLink).length > 0, "Access link cannot be empty");
-        require(bytes(_password).length > 0, "Password cannot be empty");
         services[_serviceIndex].accessLink = _accessLink;
-        services[_serviceIndex].password = _password;
+        services[_serviceIndex].comments = _comments;
+        services[_serviceIndex].SOSTimestamp = block.timestamp;
+        services[_serviceIndex].EOSTimestamp =
+            block.timestamp +
+            (bid.noOfHours * 1 hours);
+    }
+
+    function postComments(
+        uint256 _serviceIndex,
+        string memory _comments
+    ) public {
+        Service memory service = services[_serviceIndex];
+        Bid memory bid = bids[service.bidIndex];
+        Advertisement memory ad = ads[bid.adIndex];
+        require(msg.sender == ad.seller, "Only seller can post access link");
+        require(service.active == true, "Service is already inactive");
+        require(service.SOSTimestamp == 0, "Service has not started");
+        services[_serviceIndex].comments = _comments;
         services[_serviceIndex].SOSTimestamp = block.timestamp;
         services[_serviceIndex].EOSTimestamp =
             block.timestamp +

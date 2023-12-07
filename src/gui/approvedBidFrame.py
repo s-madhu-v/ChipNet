@@ -5,6 +5,20 @@ from src.service.encrypt import decryptCredentials
 from src.app import getTheApp
 from src.style import myStyle
 
+def display_text_window():
+    # Create a new window
+    text_window = tk.Toplevel()
+
+    # Create a Text widget in the new window
+    text_widget = tk.Text(text_window)
+    text_widget.pack()
+
+    # Add your text content to the Text widget
+    text_content = """
+    This is a bunch of text that will be displayed in a new window.
+    You can add as much text as you want here.
+    """
+    text_widget.insert(tk.END, text_content)
 
 class credetialsViewer(tk.Frame):
     def __init__(self, parent, serviceIndex):
@@ -62,9 +76,10 @@ class approvedBidFrame(adFrame):
             height=myStyle.serviceFrameHeight,
         )
 
-    def showCredentials(self):
-        window = createNewWindow("Credentials", "")
-        credetialsViewer(window, self.service.index).pack(fill="both", expand=True)
+    def showComments(self):
+        display_text_window()
+        # window = createNewWindow("Credentials", "")
+        # credetialsViewer(window, self.service.index).pack(fill="both", expand=True)
 
     def createWidgets(self):
         super().createWidgets()
@@ -74,7 +89,7 @@ class approvedBidFrame(adFrame):
         )
         self.status["bg"] = myStyle.approvedBidStatusColor
         self.showCredentialsButton = tk.Button(
-            self, text="Show Credentials", command=self.showCredentials
+            self, text="Show Comments", command=self.showComments
         )
 
     def layoutWidgets(self):

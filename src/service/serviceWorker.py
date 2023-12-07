@@ -1,4 +1,5 @@
 import time
+import json
 import docker
 from src.service.run import createServiceContainer, runCmdInContainer
 from src.service.encrypt import encryptString, readPublicKeyFromString
@@ -6,33 +7,33 @@ from src.contract.getters import getNoOfHours, getAd
 from src.data import convertAds, convertServices
 from src.app import getTheApp
 import subprocess
-
 from src.service.command_generators import execute_docker_template
+import threading
 
 
-def pollForAccessLink(containerName):
-    link = ""
+def pollForComments(containerName):
+    comments = ""
     while True:
         try:
-            link = getAccessLink(containerName)
-            print(f"Access Link: {link}")
+            comments = getComments(containerName)
+            print(f"Access Link: {comments}")
             break
         except subprocess.CalledProcessError:
             print("Access Link not found yet")
             time.sleep(1)
-    return link
+    return comments
 
 
-def getAccessLink(containerName):
-    containerPath = containerName + ":/access-link.txt"
+def getComments(containerName):
+    containerPath = containerName + ":/chipnet_comments.txt"
     localPath = "."
     dockerCommand = ["docker", "cp", containerPath, localPath]
     subprocess.run(dockerCommand, check=True)
-    link = ""
+    comments = ""
     with open("access-link.txt", "r") as f:
         for line in f:
-            link = line
-    return link
+            comments += (line + "\n")
+    return comments
 
 
 def endServiceIn(seconds, terminator):
@@ -55,6 +56,17 @@ def postCredentials(serviceIndex, accessLink, password):
         serviceIndex, encryptedAccessLink, encryptedPassword, {"from": myAccount}
     )
 
+def postComments(serviceIndex, comments):
+    deployedChipnet = getTheApp().deployedChipnet
+    myAccount = getTheApp().myAccount
+    service = deployedChipnet.getService(serviceIndex)
+    bid = deployedChipnet.getBid(service["bidIndex"])
+    publicKey = readPublicKeyFromString(bid["publicKey"])
+    encryptedComments = encryptString(comments, publicKey)
+    deployedChipnet.postCredentials(
+        serviceIndex, encryptedComments, {"from": myAccount}
+    )
+
 
 def newService(serviceIndex, adIndex):
     try:
@@ -62,7 +74,7 @@ def newService(serviceIndex, adIndex):
         password = createServiceContainer(
             f"service-{serviceIndex}", ad.coresAllocation, ad.memoryAllocation
         )
-        accessLink = pollForAccessLink(f"service-{serviceIndex}" + "-container")
+        accessLink = pollForComments(f"service-{serviceIndex}" + "-container")
         postCredentials(serviceIndex, accessLink, password)
     except docker.errors.DockerException:
         print("Error: Docker is not running???")
@@ -71,7 +83,11 @@ def setupServiceFromTemplate(serviceIndex, bidIndex):
     try:
         bid = getTheApp().contractData.allBids[bidIndex]
         template = bid.encryptedTemplate
-        execute_docker_template(template)
-        postCredentials(serviceIndex, "Executed", "docker commands")
+        # Create a new thread and start it
+        thread = threading.Thread(target=lambda: execute_docker_template(template))
+        thread.start()
+        print("posting credentials")
+        template = json.loads(template)
+        postComments(serviceIndex, pollForComments(template["name"]))
     except docker.errors.DockerException:
         print("Error: Docker is not running???")

@@ -39,10 +39,6 @@ class offerFrame(adFrame):
             self.approveButton["state"] = "disabled"
 
     def layoutWidgets(self):
-        # self.title.grid(row=0, column=0, sticky="nsew")
-        # self.title["bg"] = myStyle.offerTitleColor
-        # self.price.grid(row=1, column=0, sticky="nsew")
-        # self.price["bg"] = myStyle.offerPriceColor
         self.hours.grid(row=0, column=0, sticky="nsew")
         self.hours["bg"] = myStyle.offerHoursColor
         self.totalPriceLabel.grid(row=1, column=0, sticky="nsew")

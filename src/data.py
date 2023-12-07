@@ -44,6 +44,7 @@ class Bid:
         bidder,
         noOfHours,
         publicKey,
+        encryptedTemplate,
         approved,
         active,
     ) -> None:
@@ -53,6 +54,7 @@ class Bid:
         self.bidder = bidder
         self.noOfHours = noOfHours
         self.publicKey = publicKey
+        self.encryptedTemplate = encryptedTemplate
         self.approved = approved
         self.active = active
 
@@ -105,6 +107,7 @@ def convertBids(bids):
                 bid[5],
                 bid[6],
                 bid[7],
+                bid[8],
             )
         )
     return bidObjects
