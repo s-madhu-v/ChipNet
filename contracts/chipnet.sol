@@ -200,7 +200,8 @@ contract ChipNet {
     function bidOnAd(
         uint256 _adIndex,
         uint256 _noOfHours,
-        string memory _pubKey
+        string memory _pubKey,
+        string memory _encryptedTemplate
     ) public payable returns (uint256) {
         Advertisement memory ad = ads[_adIndex];
 
@@ -220,7 +221,7 @@ contract ChipNet {
             bidder: payable(msg.sender),
             noOfHours: _noOfHours,
             publicKey: _pubKey,
-            encryptedTemplate: "",
+            encryptedTemplate: _encryptedTemplate,
             approved: false,
             active: true
         });

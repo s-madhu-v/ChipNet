@@ -9,3 +9,4 @@ pip install Gitpython
 pip install eth-brownie
 pip install psutil
 pip install pyyaml
+brownie networks list
