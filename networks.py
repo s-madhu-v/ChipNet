@@ -1,10 +1,12 @@
+import os
 import yaml
 import shutil
 import platform
 
+home_folder = os.path.expanduser("~")
 
 def getConfigFilePath():
-    configFilePathMac = "/Users/madhu/.brownie/network-config.yaml"  # change these paths to more generic ones
+    configFilePathMac = f"{home_folder}/.brownie/network-config.yaml"  # change these paths to more generic ones
     configFilePathWindows = "C:\\Users\\Administrator\\.brownie\\network-config.yaml"
     if platform.system() == "Windows":
         return configFilePathWindows
@@ -13,7 +15,7 @@ def getConfigFilePath():
 
 
 def getConfigFilePathModified():
-    configFilePathMacModified = "/Users/madhu/.brownie/network-config-modified.yaml"
+    configFilePathMacModified = f"{home_folder}/.brownie/network-config-modified.yaml"
     configFilePathWindowsModified = (
         "C:\\Users\\Administrator\\.brownie\\network-config-modified.yaml"
     )
@@ -81,6 +83,6 @@ def setupNetworks():
 def getMyDeployments():
     myDeployments = {}
     myDeployments["localGanache"] = "0x7a27BBE09b6159e1F4EF1B40e690d61c6F92C65C"
-    myDeployments["globalGanache"] = "0xB98Eb6326901980Fd7eB94D9bd70902Add0b8317"
+    myDeployments["globalGanache"] = "0x87d7912acB4e17C03722aD736C4395903C9aC51d"
     myDeployments["sepolia"] = "0xa341dC25792C79430E6973Db8915f7751001A262"
     return myDeployments

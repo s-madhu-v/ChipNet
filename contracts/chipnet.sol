@@ -12,6 +12,7 @@ contract ChipNet {
         uint256 pricePerHour;
         address payable seller;
         bool active;
+        // string sellerPublicKey;
     }
 
     struct Service {
@@ -33,6 +34,7 @@ contract ChipNet {
         address payable bidder;
         uint256 noOfHours;
         string publicKey;
+        string encryptedTemplate; // not yet encrypted, publicly readable for now...
         bool approved;
         bool active;
     }
@@ -89,6 +91,7 @@ contract ChipNet {
             bidder: payable(address(0)),
             noOfHours: 0,
             publicKey: "",
+            encryptedTemplate: "",
             approved: false,
             active: false
         });
@@ -217,6 +220,7 @@ contract ChipNet {
             bidder: payable(msg.sender),
             noOfHours: _noOfHours,
             publicKey: _pubKey,
+            encryptedTemplate: "",
             approved: false,
             active: true
         });

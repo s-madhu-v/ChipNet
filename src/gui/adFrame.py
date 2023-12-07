@@ -6,6 +6,10 @@ from src.data import Ad
 from src.contract.setters import bidOnAd
 from src.style import myStyle
 
+from src.service.docker_configurator import show_docker_configurator
+
+# temporary
+from src.service.command_generators import generate_docker_build_command, generate_docker_run_command, execute_docker_template
 
 class adFrame(tk.LabelFrame):
     def __init__(
@@ -25,28 +29,29 @@ class adFrame(tk.LabelFrame):
         self.layoutWidgets()
         self.pack_propagate(False)
         self.grid_propagate(False)
+    
+    def sendBid(self, template):
+        # remove these
+        # print(generate_docker_build_command(template))
+        # print(generate_docker_run_command(template))
+        # execute_docker_template(template)
+        bidOnAd(self.ad.index,
+                template,
+                # int(noOfHours)
+                )
+        self.buyButton["text"] = "Bid Submitted"
+        time.sleep(1)
 
     def buyThisAd(self, event):
-        print("buying this ad...")
+        print("attempting to buying this ad...")
         if self.ad.active:
             print("Bidding on an Ad..")
-            noOfHours = sd.askstring("Hours", "How many Hours?")
-            if noOfHours != None:
-                self.confirmBid(noOfHours)
+            # noOfHours = sd.askstring("Hours", "How many Hours?")
+            # if noOfHours != None:
+            #     self.confirmBid(noOfHours)
+            show_docker_configurator(self.sendBid)
         else:
             print("Already Sold!!!")
-
-    def confirmBid(self, noOfHours):
-        answer = askyesno(
-            title="Confirmation",
-            message="Are you sure you want to make Bid on this Ad?",
-        )
-        if answer:
-            bidOnAd(self.ad.index, int(noOfHours))
-            self.buyButton["text"] = "Bid Submitted"
-            time.sleep(1)
-        else:
-            print("Bid Cancelled")
 
     def createWidgets(self):
         # create the widgets
@@ -108,12 +113,10 @@ class adFrame(tk.LabelFrame):
         if not ad.active:
             self.buyButton["text"] = "Sold"
         else:
-            self.buyButton["text"] = "Make a Bid"
+            self.buyButton["text"] = "MAKE A BID"
 
     def layoutWidgets(self):
         # layout the widgets
-        # self.title.grid(row=0, column=0, sticky="nsew")
-        # self.title["bg"] = myStyle.adFrameTitleColor
         self.power.grid(row=0, column=0, sticky="nsew")
         self.power["bg"] = myStyle.adFramePowerColor
         self.cores.grid(row=1, column=0, sticky="nsew")

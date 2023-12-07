@@ -22,7 +22,7 @@ def postAd(
     return txn
 
 
-def bidOnAd(adIndex, noOfHours=1):
+def bidOnAd(adIndex, template, noOfHours=1):
     buyerAccount = getTheApp().myAccount
     deployedChipnet = getTheApp().deployedChipnet
     print(f"Bidding on an Ad: {adIndex}, with noOfHours: {noOfHours}")
@@ -33,6 +33,7 @@ def bidOnAd(adIndex, noOfHours=1):
         adIndex,
         noOfHours,
         readPublicKey().export_key().decode("utf-8"),
+        template,
         {"from": buyerAccount, "value": ad["pricePerHour"] * noOfHours},
     )
     txn.wait(1)

@@ -66,7 +66,7 @@ def decryptCredentials(msg):
     return msg
 
 
-def encryptCredentials(msg, publicKey=readPublicKey()):
+def encryptString(msg, publicKey=readPublicKey()):
     msg = msg.encode("utf-8")
     msg = encryptMsg(msg, publicKey)
     msg = base64.b64encode(msg).decode("utf-8")

@@ -1,0 +1,62 @@
+{
+    "Template1": {
+        "path": "/path/to/context",
+        "tag": "latest",
+        "build_args": "ARG1=value1,ARG2=value2",
+        "image": "nginx:latest",
+        "command": "",
+        "ports": "80:80,443:443",
+        "volumes": "/host/path:/container/path",
+        "environment": "ENV1=val1,ENV2=val2",
+        "memory": "500m",
+        "cpus": "2",
+        "cap_add": "NET_ADMIN,SYS_MODULE",
+        "network": "network1",
+        "name": "mycontainer"
+    },
+    "Template2": {
+        "path": "/other/path",
+        "tag": "v1.0",
+        "build_args": "ARG3=value3,ARG4=value4",
+        "image": "myimage:v1",
+        "command": "start",
+        "ports": "8080:80",
+        "volumes": "/data:/data",
+        "environment": "ENV3=val3,ENV4=val4",
+        "memory": "1g",
+        "cpus": "4",
+        "cap_add": "NET_RAW",
+        "network": "network2",
+        "name": "mysecondcontainer"
+    },
+    "Empty Template": {
+        "path": "",
+        "tag": "",
+        "build_args": "",
+        "image": "",
+        "command": "",
+        "ports": "",
+        "volumes": "",
+        "environment": "",
+        "memory": "",
+        "cpus": "",
+        "cap_add": "",
+        "network": "",
+        "name": ""
+    },
+    "Simple Linux": {
+    "path": "https://github.com/s-madhu-v/ChipNet-Base-Image.git",
+    "tag": "arti",
+    "build_args": "PASSWORD=woohoo,NGROK_AUTH_KEY=2QGtIWhlqikISJ8RSVFHmqtzmbx_6uipN8vHJyV82Rquz7i8o",
+    "image": "arti",
+    "command": "",
+    "ports": "",
+    "volumes": "",
+    "environment": "",
+    "memory": "1g",
+    "cpus": "1",
+    "cap_add": "",
+    "network": "",
+    "name": "ficial"
+    }
+}
