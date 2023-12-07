@@ -1,4 +1,4 @@
-# Run me as source init.sh venv_name
+# Run me as "source macSetupDev.sh venv_name"
 # run with python3.9 because brownie doesn't support other versions of python!
 python3 -m venv $1
 source $1/bin/activate
