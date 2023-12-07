@@ -63,7 +63,7 @@ def postComments(serviceIndex, comments):
     bid = deployedChipnet.getBid(service["bidIndex"])
     publicKey = readPublicKeyFromString(bid["publicKey"])
     encryptedComments = encryptString(comments, publicKey)
-    deployedChipnet.postCredentials(
+    deployedChipnet.postComments(
         serviceIndex, encryptedComments, {"from": myAccount}
     )
 
