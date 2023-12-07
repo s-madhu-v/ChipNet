@@ -1,10 +1,7 @@
 import time
 import json
 import docker
-from src.service.run import createServiceContainer, runCmdInContainer
 from src.service.encrypt import encryptString, readPublicKeyFromString
-from src.contract.getters import getNoOfHours, getAd
-from src.data import convertAds, convertServices
 from src.app import getTheApp
 import subprocess
 from src.service.command_generators import execute_docker_template
@@ -66,18 +63,6 @@ def postComments(serviceIndex, comments):
     deployedChipnet.postComments(
         serviceIndex, encryptedComments, {"from": myAccount}
     )
-
-
-def newService(serviceIndex, adIndex):
-    try:
-        ad = convertAds([getAd(adIndex)])[0]
-        password = createServiceContainer(
-            f"service-{serviceIndex}", ad.coresAllocation, ad.memoryAllocation
-        )
-        accessLink = pollForComments(f"service-{serviceIndex}" + "-container")
-        postCredentials(serviceIndex, accessLink, password)
-    except docker.errors.DockerException:
-        print("Error: Docker is not running???")
 
 def setupServiceFromTemplate(serviceIndex, bidIndex):
     try:

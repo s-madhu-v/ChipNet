@@ -40,10 +40,6 @@ class bidFrame(adFrame):
         )
 
     def layoutWidgets(self):
-        # self.title.grid(row=0, column=0, sticky="nsew")
-        # self.title["bg"] = myStyle.bidTitleColor
-        # self.price.grid(row=1, column=0, sticky="nsew")
-        # self.price["bg"] = myStyle.bidPriceColor
         self.hours.grid(row=0, column=0, sticky="nsew")
         self.hours["bg"] = myStyle.bidHoursColor
         self.totalPriceLabel.grid(row=1, column=0, sticky="nsew")

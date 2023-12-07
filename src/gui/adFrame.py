@@ -1,15 +1,11 @@
 import time
 import tkinter as tk
 import tkinter.simpledialog as sd
-from tkinter.messagebox import askyesno
 from src.data import Ad
 from src.contract.setters import bidOnAd
 from src.style import myStyle
-
 from src.service.docker_configurator import show_docker_configurator
 
-# temporary
-from src.service.command_generators import generate_docker_build_command, generate_docker_run_command, execute_docker_template
 
 class adFrame(tk.LabelFrame):
     def __init__(
@@ -31,14 +27,7 @@ class adFrame(tk.LabelFrame):
         self.grid_propagate(False)
     
     def sendBid(self, template):
-        # remove these
-        # print(generate_docker_build_command(template))
-        # print(generate_docker_run_command(template))
-        # execute_docker_template(template)
-        bidOnAd(self.ad.index,
-                template,
-                # int(noOfHours)
-                )
+        bidOnAd(self.ad.index, template)
         self.buyButton["text"] = "Bid Submitted"
         time.sleep(1)
 
@@ -46,9 +35,6 @@ class adFrame(tk.LabelFrame):
         print("attempting to buying this ad...")
         if self.ad.active:
             print("Bidding on an Ad..")
-            # noOfHours = sd.askstring("Hours", "How many Hours?")
-            # if noOfHours != None:
-            #     self.confirmBid(noOfHours)
             show_docker_configurator(self.sendBid)
         else:
             print("Already Sold!!!")

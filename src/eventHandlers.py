@@ -2,7 +2,7 @@ import time
 import threading
 from src.app import getTheApp
 from src.contract.getters import isYourAd
-from src.service.serviceWorker import newService, setupServiceFromTemplate
+from src.service.serviceWorker import setupServiceFromTemplate
 
 
 def handleBidApprovedEvent(event):
@@ -22,7 +22,6 @@ def handleBidApprovedEvent(event):
 
         def threadFunction():
             print("Thread started")
-            # newService(serviceIndex, adIndex)
             setupServiceFromTemplate(serviceIndex, bidIndex)
 
         # Create a new thread and start it

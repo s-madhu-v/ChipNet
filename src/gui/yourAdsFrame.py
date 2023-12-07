@@ -92,9 +92,6 @@ class yourAdsFrame(tk.LabelFrame):
             self.status["text"] = "Status       :   Not Sold"
 
     def layoutWidgets(self):
-        # layout the widgets
-        # self.title.grid(row=0, column=0, sticky="nsew")
-        # self.title["bg"] = myStyle.adFrameTitleColor
         self.power.grid(row=0, column=0, sticky="nsew")
         self.power["bg"] = myStyle.adFramePowerColor
         self.cores.grid(row=1, column=0, sticky="nsew")

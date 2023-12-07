@@ -16,10 +16,6 @@ class sellPage(tk.Frame):
         self.createWidgets()
 
     def createWidgets(self):
-        # create a postAdBtn
-        # self.postAdBtn = postAdBtn(self)
-        # self.postAdBtn.grid(row=0, column=0)
-        # create a yourAdsConsole
         self.yourAdsConsole = createYourAdsConsole(self)
         self.yourAdsConsole.grid(row=1, column=0, sticky="nsew")
         # create a bidsOnYourAdsConsole
