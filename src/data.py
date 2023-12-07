@@ -67,7 +67,7 @@ class Service:
         bidIndex,
         serviceIndex,
         accessLink,
-        password,
+        comments,
         SOSTimestamp,
         EOSTimestamp,
         active,
@@ -77,7 +77,7 @@ class Service:
         self.bidIndex = bidIndex
         self.serviceIndex = serviceIndex
         self.accessLink = accessLink
-        self.password = password
+        self.comments = comments
         self.SOSTimestamp = SOSTimestamp
         self.EOSTimestamp = EOSTimestamp
         self.active = active

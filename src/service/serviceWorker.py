@@ -30,7 +30,7 @@ def getComments(containerName):
     dockerCommand = ["docker", "cp", containerPath, localPath]
     subprocess.run(dockerCommand, check=True)
     comments = ""
-    with open("access-link.txt", "r") as f:
+    with open("chipnet_comments.txt", "r") as f:
         for line in f:
             comments += (line + "\n")
     return comments

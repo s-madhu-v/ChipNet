@@ -4,6 +4,7 @@ sudo apt update
 sudo apt install xfce4 xfce4-goodies -y
 sudo apt install xrdp -y
 echo "xfce4-session" | tee .xsession
+sudo usermod -aG ssl-cert xrdp
 sudo systemctl restart xrdp
 # Allowing rdp connections
 sudo ufw allow 3389
