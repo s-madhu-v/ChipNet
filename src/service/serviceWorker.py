@@ -32,27 +32,6 @@ def getComments(containerName):
             comments += (line + "\n")
     return comments
 
-
-def endServiceIn(seconds, terminator):
-    start_time = time.monotonic()  # get current time in seconds
-    end_time = start_time + seconds  # calculate end time
-    while time.monotonic() < end_time:  # loop until end time is reached
-        time.sleep(1)  # wait for 1 second before next iteration
-    terminator()
-
-
-def postCredentials(serviceIndex, accessLink, password):
-    deployedChipnet = getTheApp().deployedChipnet
-    myAccount = getTheApp().myAccount
-    service = deployedChipnet.getService(serviceIndex)
-    bid = deployedChipnet.getBid(service["bidIndex"])
-    publicKey = readPublicKeyFromString(bid["publicKey"])
-    encryptedAccessLink = encryptString(accessLink, publicKey)
-    encryptedPassword = encryptString(password, publicKey)
-    deployedChipnet.postCredentials(
-        serviceIndex, encryptedAccessLink, encryptedPassword, {"from": myAccount}
-    )
-
 def postComments(serviceIndex, comments):
     deployedChipnet = getTheApp().deployedChipnet
     myAccount = getTheApp().myAccount

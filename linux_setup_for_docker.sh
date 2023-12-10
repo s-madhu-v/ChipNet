@@ -20,6 +20,7 @@ sudo apt install python3.9 -y
 sudo apt-get install python3.9-venv -y
 sudo apt-get install python3.9-tk -y
 # Setting up Github Desktop
+sudo apt --fix-broken install
 sudo apt-get update
 sudo apt-get install gdebi-core -y
 sudo wget https://github.com/shiftkey/desktop/releases/download/release-3.1.1-linux1/GitHubDesktop-linux-3.1.1-linux1.deb

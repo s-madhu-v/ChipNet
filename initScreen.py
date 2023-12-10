@@ -4,6 +4,7 @@ from networks import getMyDeployments
 from src.appClass import App
 from src.app import setTheApp, getTheApp
 
+defaultNetwork = "globalGanache" # set this to None to force user to select network
 
 class initPage(tk.Frame):
     def __init__(self, parent, root):
@@ -12,6 +13,7 @@ class initPage(tk.Frame):
         self.root = root
         self.createWidgets()
         self.layoutWidgets()
+        self.okButton.invoke() if defaultNetwork else None
 
     def createWidgets(self):
         # Network Selector
@@ -32,11 +34,9 @@ class initPage(tk.Frame):
         self.selectNetworkLabel.pack(side="left")
         self.networkComboBox.pack(side="left")
         self.okButton.pack(pady=10)
-        # self.columnconfigure(0, weight=1)
-        # self.rowconfigure(0, weight=1)
 
     def onSubmit(self):
-        selectedNetwork = self.networkComboBox.get()
+        selectedNetwork = defaultNetwork if defaultNetwork else self.networkComboBox.get()
         print(f"selectedNetwork: {selectedNetwork}")
         self.parent.destroy()
         setTheApp(App(getMyDeployments()[selectedNetwork], selectedNetwork, self.root))
