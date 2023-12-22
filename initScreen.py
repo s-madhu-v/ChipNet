@@ -4,7 +4,7 @@ from networks import getMyDeployments
 from src.appClass import App
 from src.app import setTheApp, getTheApp
 
-defaultNetwork = "globalGanache" # set this to None to force user to select network
+defaultNetwork = "globalGanache" # set this to `None` to force user to select network
 
 class initPage(tk.Frame):
     def __init__(self, parent, root):

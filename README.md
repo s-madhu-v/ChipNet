@@ -5,13 +5,12 @@
 - Smart Contract
     - ~~Advertising~~
     - ~~Buying~~
-    - Service
-    - Authentication
+    - ~~Service~~
+    - ~~Authentication~~
     - ~~Storing sensitive data~~
-    - Deployment to a testnet
+    - ~~Deployment to a testnet~~
     - ~~Setup Event Listeners~~
     - Penalties & QoS
-    - ERC20 Token
     - Error Handling
 - Docker
     - ~~Create a base Alpine Linux image~~
@@ -22,7 +21,7 @@
     - ~~Automatically Send SSH Access Link securely~~
     - ~~Automatically Send Password securely~~
     - ~~Creating a Docker container automatically~~
-    - Setup SSH Keys
+    - ~~Setup SSH Keys~~
     - Disruption
         - Network
         - System
@@ -33,7 +32,7 @@
     - Hadoop services?
     - Error Handling
 - GUI
-    - Make the GUI not ugly
-    - Cross Platform Support
+    - ~~Make the GUI not ugly~~
+    - ~~Cross Platform Support~~
     - Non GUI (terminal based)
     - Error Handling
