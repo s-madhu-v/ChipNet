@@ -71,8 +71,8 @@ def setupNetworks():
     }
 
     globalGanache = {
-        "chainid": 9999,
-        "host": "http://139.59.26.75",
+        "chainid": 1337,
+        "host": "http://143.244.141.103",
         "id": "globalGanache",
         "name": "globalGanache",
     }
@@ -83,6 +83,6 @@ def setupNetworks():
 def getMyDeployments():
     myDeployments = {}
     myDeployments["localGanache"] = "0x7a27BBE09b6159e1F4EF1B40e690d61c6F92C65C"
-    myDeployments["globalGanache"] = "0x35C7BbFd5cD2A70709f4f70FB8f3858c30Fd49a2"
+    myDeployments["globalGanache"] = "0x8E73f9a272EA7a41a05D0153665c8c6011e94B43"
     myDeployments["sepolia"] = "0xa341dC25792C79430E6973Db8915f7751001A262"
     return myDeployments
