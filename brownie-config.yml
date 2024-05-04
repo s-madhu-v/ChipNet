@@ -9,3 +9,7 @@ networks:
     host: 13.50.224.40
     port: 8545
     chainid: 1337
+  globalGanache:
+    host: 159.65.146.245
+    port: 8080
+    chainid: 1338
