@@ -79,10 +79,16 @@ def setupNetworks():
     addNetworkIfItDoesntExist(localGanache)
     addNetworkIfItDoesntExist(globalGanache)
 
+def read_2nd_line(file_path):
+    with open(file_path, 'r') as file:
+        first_line = file.readline().strip()
+        second_line = file.readline().strip()
+    return second_line
 
 def getMyDeployments():
     myDeployments = {}
     myDeployments["localGanache"] = "0x3194cBDC3dbcd3E11a07892e7bA5c3394048Cc87"
-    myDeployments["globalGanache"] = "0xA1e8F5134b446Ed8213E1e62EDAEbD9467fFeea0"
+    # myDeployments["globalGanache"] = "0x761A4B1E2d7D2c6a7d14F1445C44C4636c055651"
+    myDeployments["globalGanache"] = read_2nd_line("./deployment.txt")
     myDeployments["sepolia"] = "0xa341dC25792C79430E6973Db8915f7751001A262"
     return myDeployments

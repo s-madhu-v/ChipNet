@@ -20,7 +20,12 @@ class App:
         self.chipnetEvents = None
         self.gui = None
         #accounts.add("a2ace2fbda7b6a4b3830fbd21737a803b2bc570115f4ade13f092242cdd5abda")
-        accounts.add("65374019dc6a5281a58e6aef720927eeed63b564932245cc8b4f47f965921876")
+        accounts.clear()
+        accounts.add("364ff8f88e92a8dfb7dabf0b4b2b9bfc0418d55588363dbca030c47d705ab29a")
+        accounts.add("07acb6e167863041c99b515db4b06c7ba226110ca671f7b20091752e97e24ba0")
+        accounts.add("eebdbd2000164fc3066d6795cffc7e3d70647e8724c26ada340a4dfbf0a60c23")
+        accounts.add("cbb294a907152b93c4a75c0c8c87b1bb2c8ec022e28701521cbbd6a240ee7fd9")
+        print(accounts)
 
     def setMyAccount(self, account):
         self.myAccount = account
